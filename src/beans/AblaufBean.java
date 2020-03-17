@@ -1,25 +1,16 @@
 package beans;
 
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.annotation.ManagedBean;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
-/**
- * Session Bean implementation class AblaufBean
- */
-@Stateless
-@LocalBean
-public class AblaufBean implements AblaufBeanLocal {
+import ejb.AblaufEJB;
+
+@ApplicationScoped
+@ManagedBean
+public class AblaufBean {
+
+	@Inject
+	AblaufEJB ablaufEJB;
 	
-	@PersistenceContext(unitName = "fvs")
-	EntityManager em;
-
-    /**
-     * Default constructor. 
-     */
-    public AblaufBean() {
-        // TODO Auto-generated constructor stub
-    }
-
 }

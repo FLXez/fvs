@@ -1,25 +1,29 @@
 package beans;
 
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.List;
 
-/**
- * Session Bean implementation class UserBean
- */
-@Stateless
-@LocalBean
-public class UserBean implements UserBeanLocal {
+import javax.annotation.ManagedBean;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
+import ejb.UserEJB;
+import entities.User;
+
+@ApplicationScoped
+@ManagedBean
+public class UserBean {
+
+	@Inject
+	UserEJB userEJB;
 	
-	@PersistenceContext(unitName = "fvs")
-	EntityManager em;
-
-    /**
-     * Default constructor. 
-     */
-    public UserBean() {
-        // TODO Auto-generated constructor stub
-    }
-
+	public List<User> getAllUsers() {
+		return userEJB.getAll();
+	}
+	
+	public void add() {
+		User user = new User();
+		user.setEmail("YoutubeTest");
+		userEJB.userSpeichern(user);
+		
+	}
 }

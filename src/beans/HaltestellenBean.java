@@ -1,25 +1,16 @@
 package beans;
 
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.annotation.ManagedBean;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
-/**
- * Session Bean implementation class HaltestellenBean
- */
-@Stateless
-@LocalBean
-public class HaltestellenBean implements HaltestellenBeanLocal {
+import ejb.HaltestellenEJB;
+
+@ApplicationScoped
+@ManagedBean
+public class HaltestellenBean {
+
+	@Inject
+	HaltestellenEJB haltestellenEJB;
 	
-	@PersistenceContext(unitName = "fvs")
-	EntityManager em;
-
-    /**
-     * Default constructor. 
-     */
-    public HaltestellenBean() {
-        // TODO Auto-generated constructor stub
-    }
-
 }
