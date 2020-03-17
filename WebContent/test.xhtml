@@ -10,11 +10,10 @@
 </head>
    <body>
       <h2>Sachen aktiv Testen</h2>
-      <h:commandButton value="Submit">
-      	<f:actionListener binding="#{userBean.add()}" />
-      </h:commandButton>
-      
-      <h:dataTable value="#{userBean.getAllUsers()}" var="user">
+      <h:form>
+      	<h:commandButton value="Add user" action="#{userBean.add()}"></h:commandButton>
+      </h:form>
+      <h:dataTable id="userTable" value="#{userBean.allUsers}" var="user">
       	<h:column>
       		<f:facet name="header">Index</f:facet>
       		<h:outputText value="#{user.UId}" />
