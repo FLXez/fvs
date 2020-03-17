@@ -14,14 +14,14 @@
       	<f:actionListener binding="#{userBean.add()}" />
       </h:commandButton>
       
-      <h:dataTable value="#{userBean.allUsers}" var="user">
+      <h:dataTable value="#{userBean.getAllUsers()}" var="user">
       	<h:column>
       		<f:facet name="header">Index</f:facet>
-      		<h:outputText value="#{user.uId}"></h:outputText>
+      		<h:outputText value="#{user.UId}" />
       	</h:column>
       	<h:column>
       		<f:facet name="header">E-Mail</f:facet>
-      		<h:outputText value="#{user.email}"></h:outputText>
+      		<h:outputText value="#{user.email}" />
       	</h:column>
       </h:dataTable>   
    </body>
