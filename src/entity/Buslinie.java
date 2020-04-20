@@ -1,4 +1,4 @@
-package entities;
+package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -6,12 +6,12 @@ import java.util.List;
 
 
 /**
- * The persistent class for the buslinien database table.
+ * The persistent class for the buslinie database table.
  * 
  */
 @Entity
-@NamedQuery(name="Buslinien.findAll", query="SELECT b FROM Buslinien b")
-public class Buslinien implements Serializable {
+@NamedQuery(name="Buslinie.findAll", query="SELECT b FROM Buslinie b")
+public class Buslinie implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -23,10 +23,10 @@ public class Buslinien implements Serializable {
 	private String richtung;
 
 	//bi-directional many-to-one association to Fahrplan
-	@OneToMany(mappedBy="buslinien")
+	@OneToMany(mappedBy="buslinie")
 	private List<Fahrplan> fahrplans;
 
-	public Buslinien() {
+	public Buslinie() {
 	}
 
 	public int getBId() {
@@ -63,14 +63,14 @@ public class Buslinien implements Serializable {
 
 	public Fahrplan addFahrplan(Fahrplan fahrplan) {
 		getFahrplans().add(fahrplan);
-		fahrplan.setBuslinien(this);
+		fahrplan.setBuslinie(this);
 
 		return fahrplan;
 	}
 
 	public Fahrplan removeFahrplan(Fahrplan fahrplan) {
 		getFahrplans().remove(fahrplan);
-		fahrplan.setBuslinien(null);
+		fahrplan.setBuslinie(null);
 
 		return fahrplan;
 	}

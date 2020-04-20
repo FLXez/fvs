@@ -1,21 +1,12 @@
-package entity;
+package dto;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import entity.User;
 
-/**
- * The persistent class for the user database table.
- * 
- */
-@Entity
-@Table(name="user")
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
-public class User implements Serializable {
+public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name="u_id")
+	
 	private int uId;
 
 	private String email;
@@ -28,7 +19,19 @@ public class User implements Serializable {
 
 	private String vorname;
 
-	public User() {	}
+	public UserDTO() {
+	}
+	
+	public UserDTO(User userEntity) {
+		
+		this.uId = userEntity.getUId();
+		this.email = userEntity.getEmail();
+		this.name = userEntity.getName();
+		this.passwort = userEntity.getPasswort();
+		this.privilegien = userEntity.getPrivilegien();
+		this.vorname = userEntity.getVorname();
+		
+	}
 
 	public int getUId() {
 		return this.uId;

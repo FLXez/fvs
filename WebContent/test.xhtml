@@ -13,15 +13,41 @@
       <h:form>
       	<h:commandButton value="Add user" action="#{userBean.add()}"></h:commandButton>
       </h:form>
-      <h:dataTable id="userTable" value="#{userBean.allUsers}" var="user">
+      
+      <h:dataTable id="userTable" value="#{userBean.allUsers}" var="userDTO">
       	<h:column>
       		<f:facet name="header">Index</f:facet>
-      		<h:outputText value="#{user.UId}" />
+      		<h:outputText value="#{userDTO.UId}" />
       	</h:column>
       	<h:column>
       		<f:facet name="header">E-Mail</f:facet>
-      		<h:outputText value="#{user.email}" />
+      		<h:outputText value="#{userDTO.email}" />
       	</h:column>
-      </h:dataTable>   
+      </h:dataTable>
+         
+      <h:dataTable id="verbindungTable" value="#{verbindungBean.allVerbindungs}" var="verbindungDTO">
+      	<h:column>
+      		<f:facet name="header">Von -///- Bis</f:facet>
+      		<h:outputText value="#{verbindungDTO.haltestelle_startDTO.bezeichnung}" />
+      		<h:outputText value=" -///- " />        
+      		<h:outputText value="#{verbindungDTO.haltestelle_endeDTO.bezeichnung}" />          		
+      	</h:column>
+      	<h:column>
+      		<f:facet name="header">verbindung Dauer</f:facet>
+      		<h:outputText value="#{verbindungDTO.dauer}" />      		
+      	</h:column>      	
+      </h:dataTable>
+      <h:dataTable id="verbindungByID" value="#{verbindungBean.getVerbindungByID(1)}" var="verbindungDTO">
+      	<h:column>
+      		<f:facet name="header">Test getById (1): </f:facet>
+      		<h:outputText value="#{verbindungDTO.haltestelle_startDTO.bezeichnung}" />          		
+      	</h:column>
+      </h:dataTable>      	                            
+      <h:dataTable id="ablaufTable" value="#{ablaufBean.allAblaufs}" var="ablaufDTO">
+      	<h:column>
+      		<f:facet name="header">Test: Ablauf.Verbindung.haltestelle_startDTO</f:facet>
+      		<h:outputText value="#{ablaufDTO.verbindungDTO.haltestelle_startDTO.bezeichnung}" />          		
+      	</h:column>
+      </h:dataTable>      	                              
    </body>
 </html>

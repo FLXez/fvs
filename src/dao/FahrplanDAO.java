@@ -1,20 +1,55 @@
-package ejb;
+package dao;
+
+import java.util.List;
+import java.util.Optional;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
-/**
- * Session Bean implementation class FahrplanEJB
- */
+import dto.FahrplanDTO;
+import entity.Fahrplan;
+
 @Stateless
 @LocalBean
-public class FahrplanEJB implements FahrplanEJBLocal {
+public class FahrplanDAO implements DAO<Fahrplan, FahrplanDTO> {
 
-    /**
-     * Default constructor. 
-     */
-    public FahrplanEJB() {
-        // TODO Auto-generated constructor stub
-    }
+	@PersistenceContext
+	EntityManager em;
+	 // in Service oder Bean
+	AblaufDAO ablaufDAO;
+	BuslinieDAO buslinieDAO;
+	
+	@Override
+	public Optional<Fahrplan> get(int id) {
+		return Optional.ofNullable(em.find(Fahrplan.class, id));
+	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Fahrplan> getAll() {
+		Query q = em.createQuery("SELECT f FROM Fahrplan f");
+		return q.getResultList();
+	}
+
+	@Override
+	public void save(Fahrplan fahrplan) {
+		em.persist(fahrplan);
+		
+	}
+
+	@Override
+	public void update(Fahrplan fahrplan, String[] parms) {
+		//TODO Parms parsen (siehe UserDAO)		
+		em.merge(fahrplan);
+		
+	}
+
+	@Override
+	public void delete(Fahrplan fahrplan) {
+		em.remove(fahrplan);
+		
+	}
 }

@@ -43,20 +43,20 @@ INSERT INTO `ablauf` (`a_id`, `f_id`, `v_id`, `position`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `buslinien`
+-- Tabellenstruktur für Tabelle `buslinie`
 --
 
-CREATE TABLE `buslinien` (
+CREATE TABLE `buslinie` (
   `b_id` int(11) NOT NULL,
   `nummer` int(11) NOT NULL,
   `richtung` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `buslinien`
+-- Daten für Tabelle `buslinie`
 --
 
-INSERT INTO `buslinien` (`b_id`, `nummer`, `richtung`) VALUES
+INSERT INTO `buslinie` (`b_id`, `nummer`, `richtung`) VALUES
 (1, 42, 'Hannover Hauptbahnhof');
 
 -- --------------------------------------------------------
@@ -82,10 +82,10 @@ INSERT INTO `fahrplan` (`f_id`, `b_id`, `wochentag`, `uhrzeit`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `haltestellen`
+-- Tabellenstruktur für Tabelle `haltestelle`
 --
 
-CREATE TABLE `haltestellen` (
+CREATE TABLE `haltestelle` (
   `h_id` int(11) NOT NULL,
   `bezeichnung` varchar(255) NOT NULL,
   `latitude` double NOT NULL,
@@ -93,10 +93,10 @@ CREATE TABLE `haltestellen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `haltestellen`
+-- Daten für Tabelle `haltestelle`
 --
 
-INSERT INTO `haltestellen` (`h_id`, `bezeichnung`, `latitude`, `longitude`) VALUES
+INSERT INTO `haltestelle` (`h_id`, `bezeichnung`, `latitude`, `longitude`) VALUES
 (1, 'Hannover, Kröpcke Uhr', 52.374427, 9.738857),
 (2, 'Hannover, Hauptbahnhof', 52.375688, 9.74116);
 
@@ -125,10 +125,10 @@ INSERT INTO `user` (`u_id`, `vorname`, `name`, `email`, `passwort`, `privilegien
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `verbindungen`
+-- Tabellenstruktur für Tabelle `verbindung`
 --
 
-CREATE TABLE `verbindungen` (
+CREATE TABLE `verbindung` (
   `v_id` int(11) NOT NULL,
   `h_id_start` int(11) NOT NULL,
   `h_id_ende` int(11) NOT NULL,
@@ -136,10 +136,10 @@ CREATE TABLE `verbindungen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `verbindungen`
+-- Daten für Tabelle `verbindung`
 --
 
-INSERT INTO `verbindungen` (`v_id`, `h_id_start`, `h_id_ende`, `dauer`) VALUES
+INSERT INTO `verbindung` (`v_id`, `h_id_start`, `h_id_ende`, `dauer`) VALUES
 (1, 1, 2, 10);
 
 --
@@ -155,9 +155,9 @@ ALTER TABLE `ablauf`
   ADD KEY `fkey_vid` (`v_id`);
 
 --
--- Indizes für die Tabelle `buslinien`
+-- Indizes für die Tabelle `buslinie`
 --
-ALTER TABLE `buslinien`
+ALTER TABLE `buslinie`
   ADD PRIMARY KEY (`b_id`);
 
 --
@@ -168,9 +168,9 @@ ALTER TABLE `fahrplan`
   ADD KEY `fkey_bid` (`b_id`);
 
 --
--- Indizes für die Tabelle `haltestellen`
+-- Indizes für die Tabelle `haltestelle`
 --
-ALTER TABLE `haltestellen`
+ALTER TABLE `haltestelle`
   ADD PRIMARY KEY (`h_id`);
 
 --
@@ -181,9 +181,9 @@ ALTER TABLE `user`
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indizes für die Tabelle `verbindungen`
+-- Indizes für die Tabelle `verbindung`
 --
-ALTER TABLE `verbindungen`
+ALTER TABLE `verbindung`
   ADD PRIMARY KEY (`v_id`),
   ADD KEY `fkey_hid_start` (`h_id_start`),
   ADD KEY `fkey_hid_ende` (`h_id_ende`);
@@ -198,9 +198,9 @@ ALTER TABLE `verbindungen`
 ALTER TABLE `ablauf`
   MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT für Tabelle `buslinien`
+-- AUTO_INCREMENT für Tabelle `buslinie`
 --
-ALTER TABLE `buslinien`
+ALTER TABLE `buslinie`
   MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT für Tabelle `fahrplan`
@@ -208,9 +208,9 @@ ALTER TABLE `buslinien`
 ALTER TABLE `fahrplan`
   MODIFY `f_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT für Tabelle `haltestellen`
+-- AUTO_INCREMENT für Tabelle `haltestelle`
 --
-ALTER TABLE `haltestellen`
+ALTER TABLE `haltestelle`
   MODIFY `h_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `user`
@@ -218,9 +218,9 @@ ALTER TABLE `haltestellen`
 ALTER TABLE `user`
   MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT für Tabelle `verbindungen`
+-- AUTO_INCREMENT für Tabelle `verbindung`
 --
-ALTER TABLE `verbindungen`
+ALTER TABLE `verbindung`
   MODIFY `v_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- Constraints der exportierten Tabellen
@@ -231,20 +231,20 @@ ALTER TABLE `verbindungen`
 --
 ALTER TABLE `ablauf`
   ADD CONSTRAINT `fkey_fid` FOREIGN KEY (`f_id`) REFERENCES `fahrplan` (`f_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fkey_vid` FOREIGN KEY (`v_id`) REFERENCES `verbindungen` (`v_id`);
+  ADD CONSTRAINT `fkey_vid` FOREIGN KEY (`v_id`) REFERENCES `verbindung` (`v_id`);
 
 --
 -- Constraints der Tabelle `fahrplan`
 --
 ALTER TABLE `fahrplan`
-  ADD CONSTRAINT `fkey_bid` FOREIGN KEY (`b_id`) REFERENCES `buslinien` (`b_id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `fkey_bid` FOREIGN KEY (`b_id`) REFERENCES `buslinie` (`b_id`) ON DELETE SET NULL;
 
 --
--- Constraints der Tabelle `verbindungen`
+-- Constraints der Tabelle `verbindung`
 --
-ALTER TABLE `verbindungen`
-  ADD CONSTRAINT `fkey_hid_ende` FOREIGN KEY (`h_id_ende`) REFERENCES `haltestellen` (`h_id`),
-  ADD CONSTRAINT `fkey_hid_start` FOREIGN KEY (`h_id_start`) REFERENCES `haltestellen` (`h_id`);
+ALTER TABLE `verbindung`
+  ADD CONSTRAINT `fkey_hid_ende` FOREIGN KEY (`h_id_ende`) REFERENCES `haltestelle` (`h_id`),
+  ADD CONSTRAINT `fkey_hid_start` FOREIGN KEY (`h_id_start`) REFERENCES `haltestelle` (`h_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

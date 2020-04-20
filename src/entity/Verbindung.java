@@ -1,16 +1,16 @@
-package entities;
+package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
 
 
 /**
- * The persistent class for the verbindungen database table.
+ * The persistent class for the verbindung database table.
  * 
  */
 @Entity
-@NamedQuery(name="Verbindungen.findAll", query="SELECT v FROM Verbindungen v")
-public class Verbindungen implements Serializable {
+@NamedQuery(name="Verbindung.findAll", query="SELECT v FROM Verbindung v")
+public class Verbindung implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -19,17 +19,17 @@ public class Verbindungen implements Serializable {
 
 	private int dauer;
 
-	//uni-directional many-to-one association to Haltestellen
+	//uni-directional many-to-one association to Haltestelle
 	@ManyToOne
 	@JoinColumn(name="h_id_ende")
-	private Haltestellen haltestellen_ende;
+	private Haltestelle haltestelle_ende;
 
-	//uni-directional many-to-one association to Haltestellen
+	//uni-directional many-to-one association to Haltestelle
 	@ManyToOne
 	@JoinColumn(name="h_id_start")
-	private Haltestellen haltestellen_start;
+	private Haltestelle haltestelle_start;
 
-	public Verbindungen() {
+	public Verbindung() {
 	}
 
 	public int getVId() {
@@ -48,20 +48,20 @@ public class Verbindungen implements Serializable {
 		this.dauer = dauer;
 	}
 
-	public Haltestellen getHaltestellen_ende() {
-		return this.haltestellen_ende;
+	public Haltestelle getHaltestelle_ende() {
+		return this.haltestelle_ende;
 	}
 
-	public void setHaltestellen_ende(Haltestellen haltestellen_ende) {
-		this.haltestellen_ende = haltestellen_ende;
+	public void setHaltestelle_ende(Haltestelle haltestelle_ende) {
+		this.haltestelle_ende = haltestelle_ende;
 	}
 
-	public Haltestellen getHaltestellen_start() {
-		return this.haltestellen_start;
+	public Haltestelle getHaltestelle_start() {
+		return this.haltestelle_start;
 	}
 
-	public void setHaltestellen_start(Haltestellen haltestellen_start) {
-		this.haltestellen_start = haltestellen_start;
+	public void setHaltestelle_start(Haltestelle haltestelle_start) {
+		this.haltestelle_start = haltestelle_start;
 	}
 
 }

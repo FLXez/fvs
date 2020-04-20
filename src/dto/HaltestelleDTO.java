@@ -1,20 +1,12 @@
-package entity;
+package dto;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import entity.Haltestelle;
 
-/**
- * The persistent class for the haltestelle database table.
- * 
- */
-@Entity
-@NamedQuery(name="Haltestelle.findAll", query="SELECT h FROM Haltestelle h")
-public class Haltestelle implements Serializable {
+public class HaltestelleDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	@Id
-	@Column(name="h_id")
+	
 	private int hId;
 
 	private String bezeichnung;
@@ -23,9 +15,18 @@ public class Haltestelle implements Serializable {
 
 	private double longitude;
 
-	public Haltestelle() {
+	public HaltestelleDTO() {
 	}
-
+	
+	public HaltestelleDTO(Haltestelle haltestelleEntity) {
+		
+		this.hId = haltestelleEntity.getHId();
+		this.bezeichnung = haltestelleEntity.getBezeichnung();
+		this.latitude = haltestelleEntity.getLatitude();
+		this.longitude = haltestelleEntity.getLongitude();
+		
+	}
+	
 	public int getHId() {
 		return this.hId;
 	}
@@ -57,5 +58,6 @@ public class Haltestelle implements Serializable {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-
+	
+	
 }

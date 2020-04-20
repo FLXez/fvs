@@ -1,4 +1,4 @@
-package entities;
+package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -27,10 +27,10 @@ public class Fahrplan implements Serializable {
 	@OneToMany(mappedBy="fahrplan")
 	private List<Ablauf> ablaufs;
 
-	//bi-directional many-to-one association to Buslinien
+	//bi-directional many-to-one association to Buslinie
 	@ManyToOne
 	@JoinColumn(name="b_id")
-	private Buslinien buslinien;
+	private Buslinie buslinie;
 
 	public Fahrplan() {
 	}
@@ -81,12 +81,12 @@ public class Fahrplan implements Serializable {
 		return ablauf;
 	}
 
-	public Buslinien getBuslinien() {
-		return this.buslinien;
+	public Buslinie getBuslinie() {
+		return this.buslinie;
 	}
 
-	public void setBuslinien(Buslinien buslinien) {
-		this.buslinien = buslinien;
+	public void setBuslinie(Buslinie buslinie) {
+		this.buslinie = buslinie;
 	}
 
 }

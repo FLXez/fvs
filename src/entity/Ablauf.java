@@ -1,4 +1,4 @@
-package entities;
+package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -24,10 +24,10 @@ public class Ablauf implements Serializable {
 	@JoinColumn(name="f_id")
 	private Fahrplan fahrplan;
 
-	//uni-directional many-to-one association to Verbindungen
+	//uni-directional many-to-one association to Verbindung
 	@ManyToOne
 	@JoinColumn(name="v_id")
-	private Verbindungen verbindungen;
+	private Verbindung verbindung;
 
 	public Ablauf() {
 	}
@@ -56,12 +56,12 @@ public class Ablauf implements Serializable {
 		this.fahrplan = fahrplan;
 	}
 
-	public Verbindungen getVerbindungen() {
-		return this.verbindungen;
+	public Verbindung getVerbindung() {
+		return this.verbindung;
 	}
 
-	public void setVerbindungen(Verbindungen verbindungen) {
-		this.verbindungen = verbindungen;
+	public void setVerbindung(Verbindung verbindung) {
+		this.verbindung = verbindung;
 	}
 
 }
