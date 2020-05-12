@@ -3,7 +3,6 @@ package beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.ManagedBean;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,7 +13,6 @@ import entity.Buslinie;
 
 @Named("buslinieBean")
 @ApplicationScoped
-@ManagedBean
 public class BuslinieBean {
 
 	@Inject

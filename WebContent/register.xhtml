@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+   	  xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Registrierung</title>
+</head>
+<body>
+
+<h:form>
+  Email:
+  <h:inputText id="email" value="#{userBean.registerUser.email}"/>
+  Vorname:
+  <h:inputText id="vorname" value="#{userBean.registerUser.vorname}"/>
+  Name:
+  <h:inputText id="name" value="#{userBean.registerUser.name}"/>
+  Passwort:
+  <h:inputText id="passwort" value="#{userBean.registerUser.passwort}"/>
+  <h:commandButton action="#{userBean.add()}" value="Absenden" />
+</h:form>
+
+</body>
+</html>

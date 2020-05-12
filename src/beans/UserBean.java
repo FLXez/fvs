@@ -3,7 +3,8 @@ package beans;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,11 +15,26 @@ import entity.User;
 
 @Named("userBean")
 @ApplicationScoped
-@ManagedBean
 public class UserBean {
 
 	@Inject
 	UserDAO userDAO;
+	
+	UserDTO registerUser;
+	
+	@PostConstruct
+	public void init() {
+		registerUser = new UserDTO();
+	}
+	
+	public UserDTO getRegisterUser() {
+		return this.registerUser;
+	}
+	
+	public void setRegisterUser(UserDTO registerUser) {
+		this.registerUser = registerUser;
+	}
+	
 	
 	public List<UserDTO> getAllUsers() {
 		List<User> users = new ArrayList<User>();
@@ -31,19 +47,24 @@ public class UserBean {
 	
 	//Testweise, später werden die Werte anders überführt etc.
 	public void add() {
-		UserDTO userDTO = new UserDTO();
-		userDTO.setEmail("YoutubeTest");
-		userDTO.setPasswort("LEL");
-		userDTO.setVorname("vorname");
-		userDTO.setName("name");
-		userDTO.setPrivilegien("Mitarbeiter");
+		registerUser.setPrivilegien("Mitarbeiter");
+		//Provisorischer PAsswordhash
+		Integer passwordhash = registerUser.getPasswort().hashCode();
+		registerUser.setPasswort(passwordhash.toString());
+		System.out.println(registerUser.getPasswort());
 		User user = new User();
-		user.setEmail(userDTO.getEmail());
-		user.setPasswort(userDTO.getPasswort());
-		user.setVorname(userDTO.getVorname());
-		user.setName(userDTO.getName());
-		user.setPrivilegien(userDTO.getPrivilegien());
-		userDAO.save(user);
+		user.setEmail(registerUser.getEmail());
+		user.setPasswort(registerUser.getPasswort());
+		user.setVorname(registerUser.getVorname());
+		user.setName(registerUser.getName());
+		user.setPrivilegien(registerUser.getPrivilegien());
 		
+		try {
+			userDAO.save(user);
+			System.out.println("WORKS");
+		} catch (EJBException e) {
+			System.out.println("FEHLER");
+			e.printStackTrace();
+		}
 	}
 }

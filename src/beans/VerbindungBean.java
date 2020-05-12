@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.annotation.ManagedBean;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,7 +14,6 @@ import entity.Verbindung;
 
 @Named("verbindungBean")
 @ApplicationScoped
-@ManagedBean
 public class VerbindungBean {
 
 	@Inject
