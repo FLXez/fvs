@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -51,5 +52,18 @@ public class UserDAO implements DAO<User, UserDTO> {
 	@Override
 	public void delete(User user) {		
 		em.remove(user);		
+	}
+	
+	public boolean login(User user) {
+		
+		Query q = em.createQuery("SELECT u.email, u.passwort FROM User u WHERE u.email = '" + user.getEmail() + "' and u.passwort = '" + user.getPasswort() +"'");
+		try {
+			q.getFirstResult();
+			return true;
+		} catch (NoResultException e) {
+			e.printStackTrace();
+			return false;
+		}
+		
 	}
 }

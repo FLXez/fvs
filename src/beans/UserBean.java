@@ -22,9 +22,12 @@ public class UserBean {
 	
 	UserDTO registerUser;
 	
+	UserDTO loginUser;
+	
 	@PostConstruct
 	public void init() {
 		registerUser = new UserDTO();
+		loginUser = new UserDTO();
 	}
 	
 	public UserDTO getRegisterUser() {
@@ -33,6 +36,14 @@ public class UserBean {
 	
 	public void setRegisterUser(UserDTO registerUser) {
 		this.registerUser = registerUser;
+	}
+
+	public UserDTO getLoginUser() {
+		return this.loginUser;
+	}
+	
+	public void setLoginUser(UserDTO loginUser) {
+		this.loginUser = loginUser;
 	}
 	
 	
@@ -45,26 +56,34 @@ public class UserBean {
 		return userDTOs;
 	}
 	
-	//Testweise, später werden die Werte anders überführt etc.
 	public void add() {
-		registerUser.setPrivilegien("Mitarbeiter");
-		//Provisorischer PAsswordhash
-		Integer passwordhash = registerUser.getPasswort().hashCode();
-		registerUser.setPasswort(passwordhash.toString());
-		System.out.println(registerUser.getPasswort());
+		this.registerUser.setPrivilegien("Mitarbeiter");
 		User user = new User();
-		user.setEmail(registerUser.getEmail());
-		user.setPasswort(registerUser.getPasswort());
-		user.setVorname(registerUser.getVorname());
-		user.setName(registerUser.getName());
-		user.setPrivilegien(registerUser.getPrivilegien());
+		user.setEmail(this.registerUser.getEmail());
+		user.setPasswort(this.registerUser.getPasswort());
+		user.setVorname(this.registerUser.getVorname());
+		user.setName(this.registerUser.getName());
+		user.setPrivilegien(this.registerUser.getPrivilegien());
 		
 		try {
 			userDAO.save(user);
-			System.out.println("WORKS");
+			System.out.println("User mit ID:" + user.getUId());
 		} catch (EJBException e) {
-			System.out.println("FEHLER");
+			System.out.println("User konnte nicht hinzugefuegt werden.");
 			e.printStackTrace();
 		}
+	}
+	
+	public void login() {
+		User user = new User();
+		user.setEmail(this.loginUser.getEmail());
+		user.setPasswort(this.loginUser.getPasswort());
+		
+		if(userDAO.login(user)) {
+			System.out.println("Anmeldung erfolgreich.");
+		} else {
+			System.out.println("Anmeldung fehlgeschlagen.");
+		}
+		
 	}
 }
