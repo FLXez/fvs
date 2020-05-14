@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import dto.UserDTO;
@@ -36,22 +37,30 @@ public class UserDAO implements DAO<User, UserDTO> {
 	}
 
 	@Override
-	public void save(User user) {
-		em.persist(user);
+	public boolean save(User user) {
+		try {
+			em.persist(user);
+			return true;
+		} catch (PersistenceException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}			
 	}
 	
 	@Override
-	public void update(User user, String[] parms) {
+	public boolean update(User user, String[] parms) {
 		user.setEmail(Objects.requireNonNull(parms[0], "E-Mail muss angegeben sein!"));
 		user.setName(Objects.requireNonNull(parms[1], "Name muss angegeben sein!"));
 		user.setPasswort(Objects.requireNonNull(parms[2], "Passwort muss angegeben sein!"));
 		
-		em.merge(user);	
+		em.merge(user);
+		return true;
 	} 
 	
 	@Override
-	public void delete(User user) {		
-		em.remove(user);		
+	public boolean delete(User user) {		
+		em.remove(user);	
+		return true;
 	}
 	
 	public boolean login(User user) {
@@ -61,6 +70,7 @@ public class UserDAO implements DAO<User, UserDTO> {
 			q.getSingleResult();
 			return true;
 		} catch (NoResultException e) {
+			System.out.println(e.getMessage());
 			return false;
 		}
 		

@@ -9,10 +9,10 @@ public interface DAO<Entity, DTO> {
 	
 	List<Entity> getAll();
 	
-	void save(Entity entity);
+	boolean save(Entity entity);
 	
-	void update(Entity entity, String[] parms);
+	boolean update(Entity entity, String[] parms);
 	
-	void delete(Entity entity);
+	boolean delete(Entity entity);
 
 }

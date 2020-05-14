@@ -33,20 +33,23 @@ public class AblaufDAO implements DAO<Ablauf, AblaufDTO> {
 	}
 
 	@Override
-	public void save(Ablauf ablauf) {
+	public boolean save(Ablauf ablauf) {
 		em.persist(ablauf);
+		return true;
 	}
 
 	@Override
-	public void update(Ablauf ablauf, String[] parms) {
+	public boolean update(Ablauf ablauf, String[] parms) {
 		//TODO Parms parsen (siehe UserDAO)
 		em.merge(ablauf);
+		return true;
 		
 	}
 
 	@Override
-	public void delete(Ablauf ablauf) {
+	public boolean delete(Ablauf ablauf) {
 		em.remove(ablauf);
+		return true;
 		
 	}
 }

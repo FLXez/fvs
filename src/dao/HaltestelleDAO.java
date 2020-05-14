@@ -33,21 +33,24 @@ public class HaltestelleDAO implements DAO<Haltestelle, HaltestelleDTO> {
 	}
 
 	@Override
-	public void save(Haltestelle haltestelle) {
+	public boolean save(Haltestelle haltestelle) {
 		em.persist(haltestelle);
+		return true;
 		
 	}
 
 	@Override
-	public void update(Haltestelle haltestelle, String[] parms) {
+	public boolean update(Haltestelle haltestelle, String[] parms) {
 		//TODO Parms parsen (siehe UserDAO)
 		em.merge(haltestelle);
+		return true;
 		
 	}
 
 	@Override
-	public void delete(Haltestelle haltestelle) {
+	public boolean delete(Haltestelle haltestelle) {
 		em.remove(haltestelle);
+		return true;
 		
 	}
 }

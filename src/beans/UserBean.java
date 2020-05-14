@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.EJBException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -61,20 +60,31 @@ public class UserBean {
 	}
 	
 	public void add() {
-		this.registerUser.setPrivilegien("Mitarbeiter");
+		//Privilegien auf Mitarbeiter setzen, wenn nicht gefüllt.
+		this.registerUser.setPrivilegien("Mitarbeiter");			
 		User user = new User();
 		user.setEmail(this.registerUser.getEmail());
 		user.setPasswort(this.registerUser.getPasswort());
 		user.setVorname(this.registerUser.getVorname());
 		user.setName(this.registerUser.getName());
 		user.setPrivilegien(this.registerUser.getPrivilegien());
-		
-		try {
-			userDAO.save(user);
-			System.out.println("User mit ID:" + user.getUId());
-		} catch (EJBException e) {
-			System.out.println("User konnte nicht hinzugefuegt werden.");
-			e.printStackTrace();
+			
+		if(userDAO.save(user)) {
+			System.out.println("Registrierung erfolgreich!");
+			registerUser = new UserDTO();
+			FacesContext.getCurrentInstance().addMessage(
+					"register:register",
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Nutzer erfolgreich registriert",
+							"Nutzer wurde erfolgreich registriert."));
+			System.out.println("Registrierung erfolgreich.");
+		} else {
+			FacesContext.getCurrentInstance().addMessage(
+					"register:register",
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"E-Mail in Verwendung",
+							"Ein Nutzer mit der E-Mail ist bereits registriert."));
+			System.out.println("Fehler ist aufgetreten.");
 		}
 	}
 	

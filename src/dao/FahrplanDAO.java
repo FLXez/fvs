@@ -35,21 +35,24 @@ public class FahrplanDAO implements DAO<Fahrplan, FahrplanDTO> {
 	}
 
 	@Override
-	public void save(Fahrplan fahrplan) {
+	public boolean save(Fahrplan fahrplan) {
 		em.persist(fahrplan);
+		return true;
 		
 	}
 
 	@Override
-	public void update(Fahrplan fahrplan, String[] parms) {
+	public boolean update(Fahrplan fahrplan, String[] parms) {
 		//TODO Parms parsen (siehe UserDAO)		
 		em.merge(fahrplan);
+		return true;
 		
 	}
 
 	@Override
-	public void delete(Fahrplan fahrplan) {
+	public boolean delete(Fahrplan fahrplan) {
 		em.remove(fahrplan);
+		return true;
 		
 	}
 }
