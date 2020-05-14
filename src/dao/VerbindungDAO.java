@@ -34,24 +34,18 @@ public class VerbindungDAO implements DAO<Verbindung, VerbindungDTO> {
 	}
 
 	@Override
-	public boolean save(Verbindung verbindung) {
+	public void save(Verbindung verbindung) {
 		em.persist(verbindung);
-		return true;
-		
 	}
 
 	@Override
-	public boolean update(Verbindung verbindung, String[] parms) {
+	public void update(Verbindung verbindung, String[] parms) {
 		//TODO Parms parsen (siehe UserDAO)		
 		em.merge(verbindung);
-		return true;
-		
 	}
 
 	@Override
-	public boolean delete(Verbindung verbindung) {
+	public void delete(Verbindung verbindung) {
 		em.remove(verbindung);
-		return true;
-		
 	}
 }

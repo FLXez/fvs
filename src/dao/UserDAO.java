@@ -9,7 +9,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 
 import dto.UserDTO;
@@ -27,6 +26,10 @@ public class UserDAO implements DAO<User, UserDTO> {
 		return Optional.ofNullable(em.find(User.class, id));		
 	}
 
+	public Optional<User> findByEmail(String email) {		
+		return Optional.ofNullable(em.find(User.class, email));		
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getAll() {
@@ -37,30 +40,22 @@ public class UserDAO implements DAO<User, UserDTO> {
 	}
 
 	@Override
-	public boolean save(User user) {
-		try {
+	public void save(User user) {
 			em.persist(user);
-			return true;
-		} catch (PersistenceException e) {
-			System.out.println(e.getMessage());
-			return false;
-		}			
 	}
 	
 	@Override
-	public boolean update(User user, String[] parms) {
+	public void update(User user, String[] parms) {
 		user.setEmail(Objects.requireNonNull(parms[0], "E-Mail muss angegeben sein!"));
 		user.setName(Objects.requireNonNull(parms[1], "Name muss angegeben sein!"));
 		user.setPasswort(Objects.requireNonNull(parms[2], "Passwort muss angegeben sein!"));
 		
 		em.merge(user);
-		return true;
 	} 
 	
 	@Override
-	public boolean delete(User user) {		
+	public void delete(User user) {		
 		em.remove(user);	
-		return true;
 	}
 	
 	public boolean login(User user) {

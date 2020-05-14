@@ -34,23 +34,18 @@ public class BuslinieDAO implements DAO<Buslinie, BuslinieDTO> {
 	}
 
 	@Override
-	public boolean save(Buslinie buslinie) {
+	public void save(Buslinie buslinie) {
 		em.persist(buslinie);
-		return true;
-		
 	}
 
 	@Override
-	public boolean update(Buslinie buslinie, String[] parms) {
+	public void update(Buslinie buslinie, String[] parms) {
 		//TODO Parms parsen (siehe UserDAO)
 		em.merge(buslinie);
-		return true;
-		
 	}
 
 	@Override
-	public boolean delete(Buslinie buslinie) {
+	public void delete(Buslinie buslinie) {
 		em.remove(buslinie);
-		return true;
 	}
 }
