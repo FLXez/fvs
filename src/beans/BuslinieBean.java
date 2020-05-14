@@ -19,19 +19,19 @@ public class BuslinieBean {
 	@Inject
 	BuslinieDAO buslinieDAO;
 	
-	BuslinieDTO neuBuslinieDTO;
+	BuslinieDTO newBuslinieDTO;
 	
 	@PostConstruct
 	public void init() {
-		this.neuBuslinieDTO = new BuslinieDTO();
+		this.newBuslinieDTO = new BuslinieDTO();
 	}
 
-	public void setBuslinieDTO(BuslinieDTO buslinieDTO) {
-		this.neuBuslinieDTO = buslinieDTO;
+	public void setNewBuslinieDTO(BuslinieDTO buslinieDTO) {
+		this.newBuslinieDTO = buslinieDTO;
 	}
 	
-	public BuslinieDTO getBuslinieDTO() {
-		return neuBuslinieDTO;
+	public BuslinieDTO getNewBuslinieDTO() {
+		return newBuslinieDTO;
 	}
 
 	public List<BuslinieDTO> getAll() {
@@ -44,7 +44,7 @@ public class BuslinieBean {
 	
 	public void add() {
 		Buslinie buslinie = new Buslinie();
-		buslinie.setNummer(this.neuBuslinieDTO.getNummer());
-		buslinie.setRichtung(this.neuBuslinieDTO.getRichtung());
+		buslinie.setNummer(this.newBuslinieDTO.getNummer());
+		buslinie.setRichtung(this.newBuslinieDTO.getRichtung());
 	} 
 }
