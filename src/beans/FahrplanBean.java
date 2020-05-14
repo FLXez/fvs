@@ -11,7 +11,6 @@ import javax.inject.Named;
 import dao.FahrplanDAO;
 import dto.BuslinieDTO;
 import dto.FahrplanDTO;
-import entity.Buslinie;
 import entity.Fahrplan;
 
 @Named("fahrplanBean")
@@ -55,7 +54,6 @@ public class FahrplanBean {
 	}
 	
 	public void add() {
-		Fahrplan fahrplan = new Fahrplan();	
 		
 	}
 	
