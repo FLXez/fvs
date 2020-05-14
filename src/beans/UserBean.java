@@ -84,13 +84,21 @@ public class UserBean {
 		if(userDAO.login(user)) {
 			System.out.println("Anmeldung erfolgreich.");
 			HttpSession session = SessionUtils.getSession();
-			session.setAttribute("email", user);
-			return user.getPrivilegien();
+			session.setAttribute("email", user.getEmail());
+			session.setAttribute("privilegien", user.getPrivilegien());
+			return "logout";
 		} else {
 			//TODO
 			System.out.println("Anmeldung fehlgeschlagen.");
 			return "";
 		}
 		
+	}
+	
+	// Logout event, Weiterleitung auf "login.xhtml"
+	public String logout() {
+		HttpSession session = SessionUtils.getSession();
+		session.invalidate();
+		return "login";
 	}
 }
