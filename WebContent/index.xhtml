@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
    	  xmlns:f="http://java.sun.com/jsf/core"
@@ -22,7 +22,7 @@
 	<div id="div-body">
 		<h3>Wilkommen #{userBean.loginUser.vorname} #{userBean.loginUser.name}</h3>
 	<br/>
-	<form id="newPassword">
+	<h:form id="newPassword">
 		<table>
 			<tr>
 				<td>Ihre Email:</td>
@@ -40,8 +40,8 @@
 				<td><h:message class="info" for="passwordC" id="newPasswordInfo"/></td>
 			</tr>
 		</table>
-		<h:commandButton action="#{userBean.changePassword}" value="Passwort ändern"/>
-	</form>
+		<h:commandButton action="#{userBean.changePassword}" value="Passwort Ã¤ndern"/>
+	</h:form>
 	</div>
 </h:body>
 </html>
