@@ -7,16 +7,17 @@
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <link rel="stylesheet" type="text/css" href="styles.css"></link>
-<title>Login</title>
+<title>Index</title>
 </h:head>
 <h:body>
+	<div id="div-container">
 	<div id="div-nav">
 		<ul id="list-nav">
 			<li><a href="./index.xhtml">Profil</a></li>
 			<li><a href="./fahrplan.xhtml">Fahrplan</a></li>
 			<li><a href="./linien.xhtml">Buslinien</a></li>
 			<li><a href="./haltestellen.xhtml">Haltestellen</a></li>
-			<li><h:commandButton action="#{userBean.logout}" value="Logout"></h:commandButton></li>
+			<li><h:commandButton action="#{userBean.logout}" value="Ausloggen"></h:commandButton></li>
 		</ul>
 	</div>
 	<div id="div-body">
@@ -42,6 +43,7 @@
 		</table>
 		<h:commandButton action="#{userBean.changePassword}" value="Passwort Ã¤ndern"/>
 	</h:form>
+	</div>
 	</div>
 </h:body>
 </html>
