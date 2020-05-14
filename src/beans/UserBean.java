@@ -91,10 +91,10 @@ public class UserBean {
 			return "logout";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(
-					null,
+					"login:password",
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Incorrect Username and Passowrd",
-							"Please enter correct username and Password"));
+							"Falsche Email / Passwort",
+							"Email / Passwort falsch."));
 			System.out.println("Anmeldung fehlgeschlagen.");
 			return "login";
 		}

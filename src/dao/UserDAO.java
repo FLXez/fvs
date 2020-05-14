@@ -61,7 +61,6 @@ public class UserDAO implements DAO<User, UserDTO> {
 			q.getSingleResult();
 			return true;
 		} catch (NoResultException e) {
-			e.printStackTrace();
 			return false;
 		}
 		
