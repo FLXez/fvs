@@ -61,10 +61,10 @@ public class HaltestelleBean {
 					try {
 						haltestelleDAO.save(haltestelle);
 						newHaltestelleDTO = new HaltestelleDTO();
-						NotificationUtils.showMessage(false, 0, "stop:description", "Haltestelle hinzugefügt", "Die Haltestelle wurde erfolgreich hinzugefügt.");				
-					} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "stop:description", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
-				} else { NotificationUtils.showMessage(false, 1, "stop:description", "Haltestellenort bereits vergeben", "An diesem Ort existiert bereits eine Haltestelle."); }			
-			} else { NotificationUtils.showMessage(false, 1, "stop:description", "Haltestellenbezeichnung bereits vergeben", "Eine Haltestelle mit dieser Bezeichnung existiert bereits."); }
-		} else { NotificationUtils.showMessage(false, 1, "stop:description", "Felder leer", "Bitte füllen Sie alle Felder."); }
+						NotificationUtils.showMessage(false, 0, "addStop:description", "Haltestelle hinzugefügt", "Die Haltestelle wurde erfolgreich hinzugefügt.");				
+					} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "addStop:description", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
+				} else { NotificationUtils.showMessage(false, 1, "addStop:description", "Haltestellenort bereits vergeben", "An diesem Ort existiert bereits eine Haltestelle."); }			
+			} else { NotificationUtils.showMessage(false, 1, "addStop:description", "Haltestellenbezeichnung bereits vergeben", "Eine Haltestelle mit dieser Bezeichnung existiert bereits."); }
+		} else { NotificationUtils.showMessage(false, 1, "addStop:description", "Felder leer", "Bitte füllen Sie alle Felder."); }
 	}
 }
