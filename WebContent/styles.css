@@ -1,4 +1,4 @@
-.div-nav {
+#div-nav {
 	width: 173px;
 	height: 550px;
 	margin-top: 0px;
@@ -9,7 +9,7 @@
 	background-color: red;
 }
 
-.div-body {
+#div-body {
 	width: 874px;
 	height: 550px;
 	margin-top: 0px;
