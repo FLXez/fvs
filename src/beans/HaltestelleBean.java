@@ -47,11 +47,11 @@ public class HaltestelleBean {
 	
 	public void add() {
 		
-		if(!newHaltestelleDTO.getBezeichnung().isEmpty() | newHaltestelleDTO.getLatitude() != 0 | newHaltestelleDTO.getLongitude() != 0) {
+		if(!newHaltestelleDTO.getBezeichnung().isEmpty() && newHaltestelleDTO.getLatitude() != 0 && newHaltestelleDTO.getLongitude() != 0) {
 			
 			if(!haltestelleDAO.findByBezeichnung(newHaltestelleDTO.getBezeichnung())) {
 				
-				if( !haltestelleDAO.findByLatLong(newHaltestelleDTO.getLatitude(), newHaltestelleDTO.getLongitude())) {
+				if(!haltestelleDAO.findByLatLong(newHaltestelleDTO.getLatitude(), newHaltestelleDTO.getLongitude())) {
 					
 					Haltestelle haltestelle = new Haltestelle();
 					haltestelle.setBezeichnung(this.newHaltestelleDTO.getBezeichnung());
