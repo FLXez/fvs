@@ -46,22 +46,25 @@ public class HaltestelleBean {
 	}
 	
 	public void add() {
-		if(!haltestelleDAO.findByBezeichnung(newHaltestelleDTO.getBezeichnung())) {
-
-			if( !haltestelleDAO.findByLatLong(newHaltestelleDTO.getLatitude(), newHaltestelleDTO.getLongitude())) {
+		
+		if(!newHaltestelleDTO.getBezeichnung().isEmpty() | newHaltestelleDTO.getLatitude() != 0 | newHaltestelleDTO.getLongitude() != 0) {
+			
+			if(!haltestelleDAO.findByBezeichnung(newHaltestelleDTO.getBezeichnung())) {
 				
-				Haltestelle haltestelle = new Haltestelle();
-				haltestelle.setBezeichnung(this.newHaltestelleDTO.getBezeichnung());
-				haltestelle.setLatitude(this.newHaltestelleDTO.getLatitude());
-				haltestelle.setLongitude(this.newHaltestelleDTO.getLongitude());
-				
-				try {
-					haltestelleDAO.save(haltestelle);
-					newHaltestelleDTO = new HaltestelleDTO();
-					NotificationUtils.showMessage(false, 0, "XX:XX", "Haltestelle hinzugefügt", "Die Haltestelle wurde erfolgreich hinzugefügt.");				
-				} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "XX:XX", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
-			} else { NotificationUtils.showMessage(false, 1, "XX:XX", "Haltestellenort bereits vergeben", "An diesem Ort existiert bereits eine Haltestelle."); }			
-		} else { NotificationUtils.showMessage(false, 1, "XX:XX", "Haltestellenbezeichnung bereits vergeben", "Eine Haltestelle mit dieser Bezeichnung existiert bereits."); }
-		//TODO Inhalte empty?
+				if( !haltestelleDAO.findByLatLong(newHaltestelleDTO.getLatitude(), newHaltestelleDTO.getLongitude())) {
+					
+					Haltestelle haltestelle = new Haltestelle();
+					haltestelle.setBezeichnung(this.newHaltestelleDTO.getBezeichnung());
+					haltestelle.setLatitude(this.newHaltestelleDTO.getLatitude());
+					haltestelle.setLongitude(this.newHaltestelleDTO.getLongitude());
+					
+					try {
+						haltestelleDAO.save(haltestelle);
+						newHaltestelleDTO = new HaltestelleDTO();
+						NotificationUtils.showMessage(false, 0, "stop:description", "Haltestelle hinzugefügt", "Die Haltestelle wurde erfolgreich hinzugefügt.");				
+					} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "stop:description", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
+				} else { NotificationUtils.showMessage(false, 1, "stop:description", "Haltestellenort bereits vergeben", "An diesem Ort existiert bereits eine Haltestelle."); }			
+			} else { NotificationUtils.showMessage(false, 1, "stop:description", "Haltestellenbezeichnung bereits vergeben", "Eine Haltestelle mit dieser Bezeichnung existiert bereits."); }
+		} else { NotificationUtils.showMessage(false, 1, "stop:description", "Felder leer", "Bitte füllen Sie alle Felder."); }
 	}
 }

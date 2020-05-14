@@ -45,7 +45,7 @@ public class HaltestelleDAO implements DAO<Haltestelle, HaltestelleDTO> {
 	}
 	
 	public boolean findByBezeichnung(String bezeichnung) {
-		Query q = em.createQuery("SELECT bezeichnung FROM Haltestelle h WHERE h.latitude = '" + bezeichnung + "'");
+		Query q = em.createQuery("SELECT h.bezeichnung FROM Haltestelle h WHERE h.bezeichnung = '" + bezeichnung + "'");
 		try {
 			q.getSingleResult();
 			return true;
