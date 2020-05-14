@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -33,6 +34,18 @@ public class BuslinieDAO implements DAO<Buslinie, BuslinieDTO> {
 		return q.getResultList();
 	}
 
+
+	public boolean findByNummerAndRichtung(int nummer, String richtung) {
+		Query q = em.createQuery("SELECT b.nummer, b.richtung FROM Buslinie b WHERE b.nummer= '" + nummer + "' AND b.richtung= '" + richtung + "'");
+		try {
+			q.getSingleResult();
+			return true;
+		} catch (NoResultException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+	
 	@Override
 	public void save(Buslinie buslinie) {
 		em.persist(buslinie);

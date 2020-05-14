@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,6 +12,7 @@ import javax.inject.Named;
 import dao.BuslinieDAO;
 import dto.BuslinieDTO;
 import entity.Buslinie;
+import util.NotificationUtils;
 
 @Named("buslinieBean")
 @ApplicationScoped
@@ -43,8 +45,25 @@ public class BuslinieBean {
 	}
 	
 	public void add() {
-		Buslinie buslinie = new Buslinie();
-		buslinie.setNummer(this.newBuslinieDTO.getNummer());
-		buslinie.setRichtung(this.newBuslinieDTO.getRichtung());
+		
+		if(newBuslinieDTO.getNummer() == 0) {
+			return;
+		}
+		if(newBuslinieDTO.getRichtung().isEmpty()) {
+			return;
+		}
+		
+		if(!buslinieDAO.findByNummerAndRichtung(newBuslinieDTO.getNummer(), newBuslinieDTO.getRichtung())) {
+			
+			Buslinie buslinie = new Buslinie();
+			buslinie.setNummer(this.newBuslinieDTO.getNummer());
+			buslinie.setRichtung(this.newBuslinieDTO.getRichtung());
+			
+			try {
+				buslinieDAO.save(buslinie);
+				newBuslinieDTO = new BuslinieDTO();
+				NotificationUtils.showMessage(false, 1, "addLine:direction", "Buslinie hinzugefügt", "Die Buslinie wurde erfolgreich hinzugefügt.");
+			} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "addLine:direction", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
+		} else { NotificationUtils.showMessage(false, 1, "addLine:direction", "Buslinie bereits vorhanden", "Diese Buslinie ist bereits vorhanden."); }
 	} 
 }
