@@ -28,11 +28,11 @@ public class HaltestelleBean {
 		this.newHaltestelleDTO = new HaltestelleDTO();
 	}
 	
-	public void setnewHaltestelleDTO(HaltestelleDTO newHaltestelleDTO) {
+	public void setNewHaltestelleDTO(HaltestelleDTO newHaltestelleDTO) {
 		this.newHaltestelleDTO = newHaltestelleDTO;
 	}
 	
-	public HaltestelleDTO getNeueHaltestelleDTO() {
+	public HaltestelleDTO getNewHaltestelleDTO() {
 		return this.newHaltestelleDTO;
 	}
 	
