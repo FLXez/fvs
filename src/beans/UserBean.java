@@ -7,8 +7,6 @@ import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.enterprise.context.ApplicationScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
@@ -16,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import dao.UserDAO;
 import dto.UserDTO;
 import entity.User;
+import util.NotificationUtils;
 import util.SessionUtils;
 
 @Named("userBean")
@@ -31,6 +30,8 @@ public class UserBean {
 	
 	String newPassword;
 	String newPasswordC;
+	
+	NotificationUtils notifier;
 	
 	@PostConstruct
 	public void init() {
@@ -93,28 +94,13 @@ public class UserBean {
 			try {
 				userDAO.save(user);
 				registerUser = new UserDTO();
-				FacesContext.getCurrentInstance().addMessage(
-						"register:email",
-						new FacesMessage(FacesMessage.SEVERITY_INFO,
-								"Nutzer erfolgreich registriert",
-								"Nutzer wurde erfolgreich registriert."));
-				System.out.println("Registrierung erfolgreich.");				
+				notifier.showMessage(false, 0, "register:email", "Registrierung erfolreich", "Der Nutzer wurde erfolgreich registriert.");				
 				
 			} catch (EJBException e) {
-				System.out.println("Es ist ein unerwarteter Fehler aufgetreten.");
-				FacesContext.getCurrentInstance().addMessage(
-						"register:email",
-						new FacesMessage(FacesMessage.SEVERITY_ERROR,
-								"ERROR",
-								"Es ist ein unerwarteter Fehler aufgetreten."));
+				notifier.showMessage(false, 2, "register:email", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten.");
 			}
-			
 		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					"register:email",
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"E-Mail in Verwendung",
-							"Ein Nutzer mit der E-Mail ist bereits registriert."));
+			notifier.showMessage(false, 1, "register:email", "E-Mail in Verwendung", "Ein Nutzer mit der E-Mail ist bereits registriert.");
 		}
 			
 	}
@@ -130,34 +116,12 @@ public class UserBean {
 				Optional<User> oUser = userDAO.get((int) session.getAttribute("uid"));
 				
 				if(oUser.isPresent()) {
-					userDAO.update(oUser.get(), parms);
-					
-					FacesContext.getCurrentInstance().addMessage(
-							"newPassword:passwordC",
-							new FacesMessage(FacesMessage.SEVERITY_INFO,
-									"Passwort geändert",
-									"Passwort erfolgreich geändert."));
+					userDAO.update(oUser.get(), parms);					
+					notifier.showMessage(false, 0, "newPassword:passwordC", "Passwort geändert", "Das Passwort wurde erfolgreich geändert.");
 					}
 				
-			} else {
-				FacesContext.getCurrentInstance().addMessage(
-						"newPassword:passwordC",
-						new FacesMessage(FacesMessage.SEVERITY_WARN,
-								"Passwörter stimmen nicht überein",
-								"Passwörter bitte überprüfen."));
-				System.out.println("Änderung des Passworts fehlgeschlagen.");			
-			}				
-						
-		} else {
-			
-			FacesContext.getCurrentInstance().addMessage(
-					"newPassword:passwordC",
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Bitte beide Felder ausfüllen",
-							"Bitte beide Felder ausfüllen."));
-			System.out.println("Bitte beide Felder ausfüllen.");
-		
-		}
+			} else { notifier.showMessage(false, 1, "newPassword:passwordC", "Ungleiche Passwörter", "Die Passwörter stimmen nicht überein."); }						
+		} else { notifier.showMessage(false, 1, "newPassword:passwordC", "Feld leer", "Bitte füllen Sie beide Felder aus."); }
 	}
 	
 	public String login() {
@@ -166,22 +130,18 @@ public class UserBean {
 		user.setPasswort(this.loginUser.getPasswort());
 		
 		if(userDAO.login(user)) {
-			System.out.println("Anmeldung erfolgreich.");
-			HttpSession session = SessionUtils.getSession();
-			
+			HttpSession session = SessionUtils.getSession();			
 			user = userDAO.getByEmail(this.loginUser.getEmail());
 			
 			session.setAttribute("uid", user.getUId());
 			session.setAttribute("email", user.getEmail());
 			session.setAttribute("privilegien", user.getPrivilegien());
+			
+			notifier.showMessage(true, 0, "", session.getAttribute("email") + " hat sich angemeldet.", "");
+			this.loginUser = new UserDTO();
 			return "index";
 		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					"login:password",
-					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Falsche Email / Passwort",
-							"Email / Passwort falsch."));
-			System.out.println("Anmeldung fehlgeschlagen.");
+			notifier.showMessage(false, 1, "login:password", "E-Mail / Passwort falsch", "Die E-Mail oder das Passwort ist falsch."); 
 			return "login";
 		}
 		
@@ -190,9 +150,8 @@ public class UserBean {
 	// Logout event, Weiterleitung auf "login.xhtml"
 	public String logout() {
 		HttpSession session = SessionUtils.getSession();
+		notifier.showMessage(true, 0, "", session.getAttribute("email") + " hat sich abgemeldet.", "");
 		session.invalidate();
-		loginUser = new UserDTO();
-		System.out.println("Abmeldung erfolgreich.");
 		return "login";
 	}
 }
