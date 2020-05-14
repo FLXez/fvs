@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+   	  xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Login</title>
+</h:head>
+<h:body>
+	<div id="div-nav">
+		<ul id="list-nav">
+			<a href="/index.xhtml">Profil</a>
+			<li><a href="/fahrplan.xhtml">Fahrplan</a></li>
+			<li><a href="/linien.xhtml">Buslinien</a></li>
+			<li><a href="/haltestellen.xhtml">Haltestellen</a></li>
+			<li><h:commandLink action="#{login.logout}" value="Logout"></h:commandLink></li>
+		</ul>
+	</div>
+	<div id="div-body">
+		<h3>Wilkommen #{userBean.loginUser.vorname} #{userBean.loginUser.name}</h3>
+	<br/>
+	<form id="newPassword">
+		<table>
+			<tr>
+				<td>Ihre Email:</td>
+				<td>#{userBean.loginUser.email}</td>
+			</tr>
+			<tr>
+				<td>Neues Passwort:</td>
+				<td><h:inputText id="password" value="#{userBean.newPassword}"/></td>
+			</tr>
+			<tr>
+				<td>Neues Passwort wiederholen:</td>
+				<td><h:inputText id="passwordC" value="#{userBean.newPasswordC}"/></td>
+			</tr>
+			<tr>
+				<td><h:message class="info" for="passwordC" id="newPasswordInfo"/></td>
+			</tr>
+		</table>
+		<h:commandButton action="#{userBean.changePassword}" value="Passwort ändern"/>
+	</form>
+	</div>
+</h:body>
+</html>
