@@ -6,6 +6,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.enterprise.context.ApplicationScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
@@ -88,9 +90,13 @@ public class UserBean {
 			session.setAttribute("privilegien", user.getPrivilegien());
 			return "logout";
 		} else {
-			//TODO
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Incorrect Username and Passowrd",
+							"Please enter correct username and Password"));
 			System.out.println("Anmeldung fehlgeschlagen.");
-			return "";
+			return "login";
 		}
 		
 	}
@@ -99,6 +105,8 @@ public class UserBean {
 	public String logout() {
 		HttpSession session = SessionUtils.getSession();
 		session.invalidate();
+		loginUser = new UserDTO();
+		System.out.println("Abmeldung erfolgreich.");
 		return "login";
 	}
 }
