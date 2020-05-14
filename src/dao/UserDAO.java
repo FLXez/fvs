@@ -53,9 +53,7 @@ public class UserDAO implements DAO<User, UserDTO> {
 	
 	@Override
 	public void update(User user, String[] parms) {
-		user.setEmail(Objects.requireNonNull(parms[0], "E-Mail muss angegeben sein!"));
-		user.setName(Objects.requireNonNull(parms[1], "Name muss angegeben sein!"));
-		user.setPasswort(Objects.requireNonNull(parms[2], "Passwort muss angegeben sein!"));
+		user.setPasswort(Objects.requireNonNull(parms[0], "Passwort muss angegeben sein!"));
 		
 		em.merge(user);
 	} 
