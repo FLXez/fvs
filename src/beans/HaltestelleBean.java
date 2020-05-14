@@ -15,7 +15,7 @@ import entity.Haltestelle;
 
 @Named("haltestellenBean")
 @ApplicationScoped
-public class HaltestellenBean {
+public class HaltestelleBean {
 
 	@Inject
 	HaltestelleDAO haltestelleDAO;
