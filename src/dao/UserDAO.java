@@ -58,7 +58,7 @@ public class UserDAO implements DAO<User, UserDTO> {
 		
 		Query q = em.createQuery("SELECT u.email, u.passwort FROM User u WHERE u.email = '" + user.getEmail() + "' and u.passwort = '" + user.getPasswort() +"'");
 		try {
-			q.getFirstResult();
+			q.getSingleResult();
 			return true;
 		} catch (NoResultException e) {
 			e.printStackTrace();

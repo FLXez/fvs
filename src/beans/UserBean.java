@@ -8,10 +8,12 @@ import javax.ejb.EJBException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import dao.UserDAO;
 import dto.UserDTO;
 import entity.User;
+import util.SessionUtils;
 
 @Named("userBean")
 @ApplicationScoped
@@ -74,15 +76,20 @@ public class UserBean {
 		}
 	}
 	
-	public void login() {
+	public String login() {
 		User user = new User();
 		user.setEmail(this.loginUser.getEmail());
 		user.setPasswort(this.loginUser.getPasswort());
 		
 		if(userDAO.login(user)) {
 			System.out.println("Anmeldung erfolgreich.");
+			HttpSession session = SessionUtils.getSession();
+			session.setAttribute("email", user);
+			return user.getPrivilegien();
 		} else {
+			//TODO
 			System.out.println("Anmeldung fehlgeschlagen.");
+			return "";
 		}
 		
 	}
