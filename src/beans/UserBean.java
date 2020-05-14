@@ -107,7 +107,9 @@ public class UserBean {
 				Optional<User> oUser = userDAO.get(SessionUtils.getUid());
 				
 				if(oUser.isPresent()) {
-					userDAO.update(oUser.get(), parms);					
+					userDAO.update(oUser.get(), parms);
+					this.newPassword = "";
+					this.newPasswordC = "";
 					NotificationUtils.showMessage(false, 0, "newPassword:passwordC", "Passwort geändert", "Das Passwort wurde erfolgreich geändert.");
 					}
 				
