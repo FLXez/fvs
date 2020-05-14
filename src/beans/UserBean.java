@@ -13,8 +13,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 
-import org.glassfish.jersey.gf.ejb.internal.EjbExceptionMapper;
-
 import dao.UserDAO;
 import dto.UserDTO;
 import entity.User;
@@ -30,6 +28,9 @@ public class UserBean {
 	UserDTO registerUser;
 	
 	UserDTO loginUser;
+	
+	String newPassword;
+	String newPasswordC;
 	
 	@PostConstruct
 	public void init() {
@@ -54,6 +55,22 @@ public class UserBean {
 	}
 	
 	
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+
+	public String getNewPasswordC() {
+		return newPasswordC;
+	}
+
+	public void setNewPasswordC(String newPasswordC) {
+		this.newPasswordC = newPasswordC;
+	}
+
 	public List<UserDTO> getAllUsers() {
 		List<User> users = new ArrayList<User>();
 		List<UserDTO> userDTOs = new ArrayList<UserDTO>();
@@ -102,6 +119,29 @@ public class UserBean {
 			
 	}
 	
+	public void changePassword() {
+		HttpSession session = SessionUtils.getSession();
+		Optional<User> user = userDAO.get((int) session.getAttribute("uid"));
+		
+		if(this.newPassword.equals(this.newPasswordC)) {
+			String[] parms = {this.newPassword};
+			userDAO.update(user.get(), parms);
+			
+			FacesContext.getCurrentInstance().addMessage(
+					"index:passwordC",
+					new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Passwort geändert",
+							"Passwort erfolgreich geändert."));
+		} else {
+			FacesContext.getCurrentInstance().addMessage(
+					"index:passwordC",
+					new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Passwörter stimmen nicht überein",
+							"Passwörter bitte überprüfen."));
+			System.out.println("Änderung des Passworts fehlgeschlagen.");			
+		}				
+	}
+	
 	public String login() {
 		User user = new User();
 		user.setEmail(this.loginUser.getEmail());
@@ -110,6 +150,7 @@ public class UserBean {
 		if(userDAO.login(user)) {
 			System.out.println("Anmeldung erfolgreich.");
 			HttpSession session = SessionUtils.getSession();
+			session.setAttribute("uid", user.getUId());
 			session.setAttribute("email", user.getEmail());
 			session.setAttribute("privilegien", user.getPrivilegien());
 			return "logout";

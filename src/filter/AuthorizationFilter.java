@@ -20,26 +20,27 @@ public class AuthorizationFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-
+        // If you have any <init-param> in web.xml, then you could get them
+        // here by config.getInitParameter("name") and assign it as field.
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
+	public void doFilter(ServletRequest req, ServletResponse res,
 			FilterChain chain) throws IOException, ServletException {
 		try {
 
-			HttpServletRequest reqt = (HttpServletRequest) request;
-			HttpServletResponse resp = (HttpServletResponse) response;
-			HttpSession ses = reqt.getSession(false);
+			HttpServletRequest request = (HttpServletRequest) req;
+			HttpServletResponse response = (HttpServletResponse) res;
+			HttpSession session = request.getSession(false);
 
-			String reqURI = reqt.getRequestURI();
+			String reqURI = request.getRequestURI();
 			if (reqURI.indexOf("/login.xhtml") >= 0
-					|| (ses != null && ses.getAttribute("email") != null)
+					|| (session != null && session.getAttribute("email") != null)
 					|| reqURI.indexOf("/public/") >= 0
 					|| reqURI.contains("javax.faces.resource"))
 				chain.doFilter(request, response);
 			else
-				resp.sendRedirect(reqt.getContextPath() + "/login.xhtml");
+				response.sendRedirect(request.getContextPath() + "/login.xhtml");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
