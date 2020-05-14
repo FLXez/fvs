@@ -122,6 +122,7 @@ public class UserBean {
 	public void changePassword() {
 		HttpSession session = SessionUtils.getSession();
 		Optional<User> user = userDAO.get((int) session.getAttribute("uid"));
+		System.out.println(this.newPassword);
 		
 		if(this.newPassword.equals(this.newPasswordC)) {
 			String[] parms = {this.newPassword};
@@ -153,7 +154,7 @@ public class UserBean {
 			session.setAttribute("uid", user.getUId());
 			session.setAttribute("email", user.getEmail());
 			session.setAttribute("privilegien", user.getPrivilegien());
-			return "logout";
+			return "index";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(
 					"login:password",
