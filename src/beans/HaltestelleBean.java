@@ -14,7 +14,7 @@ import dto.HaltestelleDTO;
 import entity.Haltestelle;
 import util.NotificationUtils;
 
-@Named("haltestellenBean")
+@Named("haltestelleBean")
 @ApplicationScoped
 public class HaltestelleBean {
 
