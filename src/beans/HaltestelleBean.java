@@ -12,6 +12,7 @@ import javax.inject.Named;
 import dao.HaltestelleDAO;
 import dto.HaltestelleDTO;
 import entity.Haltestelle;
+import util.NotificationUtils;
 
 @Named("haltestellenBean")
 @ApplicationScoped
@@ -21,7 +22,6 @@ public class HaltestelleBean {
 	HaltestelleDAO haltestelleDAO;
 	
 	HaltestelleDTO newHaltestelleDTO;
-	
 	
 	@PostConstruct
 	public void init() {
@@ -36,7 +36,7 @@ public class HaltestelleBean {
 		return this.newHaltestelleDTO;
 	}
 	
-	public List<HaltestelleDTO> getAllFahrplans() {
+	public List<HaltestelleDTO> getAllHaltestellen() {
 		List<Haltestelle> haltestelles = new ArrayList<Haltestelle>();
 		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();
 		haltestelles = haltestelleDAO.getAll();
@@ -46,17 +46,27 @@ public class HaltestelleBean {
 	}
 	
 	public void add() {
-		Haltestelle haltestelle = new Haltestelle();
-		haltestelle.setBezeichnung(this.newHaltestelleDTO.getBezeichnung());
-		haltestelle.setLatitude(this.newHaltestelleDTO.getLatitude());
-		haltestelle.setLongitude(this.newHaltestelleDTO.getLongitude());
-		
-		try {
-			haltestelleDAO.save(haltestelle);
-			System.out.println("Haltestelle mit ID:" + haltestelle.getHId());
-		} catch (EJBException e) {
-			System.out.println("Haltestelle konnte nicht hinzugefügt werden.");
-			e.printStackTrace();
+		if(!haltestelleDAO.findByBezeichnung(newHaltestelleDTO.getBezeichnung())) {
+
+			if( !haltestelleDAO.findByLatLong(newHaltestelleDTO.getLatitude(), newHaltestelleDTO.getLongitude())) {
+				
+				Haltestelle haltestelle = new Haltestelle();
+				haltestelle.setBezeichnung(this.newHaltestelleDTO.getBezeichnung());
+				haltestelle.setLatitude(this.newHaltestelleDTO.getLatitude());
+				haltestelle.setLongitude(this.newHaltestelleDTO.getLongitude());
+				
+				try {
+					haltestelleDAO.save(haltestelle);
+					newHaltestelleDTO = new HaltestelleDTO();
+					NotificationUtils.showMessage(false, 0, "XX:XX", "Haltestelle hinzugefügt", "Die Haltestelle wurde erfolgreich hinzugefügt.");				
+				} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "XX:XX", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
+			} else { NotificationUtils.showMessage(false, 1, "XX:XX", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten.");
+				
+			}
+			
+		} else {
+			
 		}
+		
 	}
 }
