@@ -36,6 +36,6 @@
 	background-color: white; 
 }
 
-#div-body table, td, th {
+table#stopTable.table, table#stopTable.th, table#stopTable.td {
 	border: 1px solid black;
 }

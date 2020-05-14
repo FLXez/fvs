@@ -25,11 +25,25 @@
 		
 	</div>
 	<div id="div-body">
-		<h2>Liste alle Haltestellen</h2>
+		<h2>Liste aller Haltestellen</h2>
+		<h:form id="addStop">
+		<table>
+		<tr>
+			<td><h:outputText value="Haltestelle hinzuf&#252;gen" /></td>
+			<td><h:inputText id="description" value="#{haltestelleBean.newHaltestelleDTO.bezeichnung}" placeholder="Bezeichnung"/></td>
+			<td><h:inputText id="latitude" value="#{haltestelleBean.newHaltestelleDTO.latitude}" placeholder="Breitengrad"/> </td>
+			<td><h:inputText id="longitutde" value="#{haltestelleBean.newHaltestelleDTO.longitutde}" placeholder="L&#228;ngengrad"/></td>
+		</tr>
+		<tr>
+			<td colspan="4"><h:commandButton action="#{haltestelleBean.add}" value="Hinzuf&#252;gen"/></td>
+		</tr>	
+		</table>
+		</h:form>
+		
 		<h:dataTable id="stopTable" value="#{haltestelleBean.allHaltestellen}" var="haltestelleDTO">
       	<h:column>
       		<f:facet name="header">Haltestellen-ID</f:facet>
-      		<h:outputText value="#{haltestelleDTO.hId}" />          		
+      		<h:outputText value="#{haltestelleDTO.HId}" />          		
       	</h:column>
       	<h:column>
       		<f:facet name="header">Haltestellen-Name</f:facet>
