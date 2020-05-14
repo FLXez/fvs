@@ -12,13 +12,17 @@
 <h:body>
 	<div id="div-container">
 	<div id="div-nav">
-		<ul id="list-nav">
-			<li><a href="./index.xhtml">Profil</a></li>
-			<li><a href="./fahrplan.xhtml">Fahrplan</a></li>
-			<li><a href="./linien.xhtml">Buslinien</a></li>
-			<li><a href="./haltestellen.xhtml">Haltestellen</a></li>
-			<li><h:commandButton action="#{userBean.logout}" value="Ausloggen"></h:commandButton></li>
-		</ul>
+			<p><a href="./index.xhtml">Profil</a></p>
+			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
+			<p><a href="./fahrplan.xhtml">Fahrplan</a></p>
+			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
+			<p><a href="./linien.xhtml">Buslinien</a></p>
+			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
+			<p><a href="./haltestellen.xhtml">Haltestellen</a></p>
+			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
+			<p><h:form><h:commandLink action="#{userBean.logout}" value="Ausloggen"/></h:form></p>
+			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
+		
 	</div>
 	<div id="div-body">
 		<h3>Wilkommen #{userBean.loginUser.vorname} #{userBean.loginUser.name}</h3>
