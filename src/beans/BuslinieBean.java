@@ -47,9 +47,11 @@ public class BuslinieBean {
 	public void add() {
 		
 		if(newBuslinieDTO.getNummer() == 0) {
+			NotificationUtils.showMessage(false, 1, "addLine:direction", "Nummer leer", "Bitte vergeben Sie eine Nummer.");
 			return;
 		}
 		if(newBuslinieDTO.getRichtung().isEmpty()) {
+			NotificationUtils.showMessage(false, 1, "addLine:direction", "Richtung leer", "Bitte vergeben Sie eine Richtung.");
 			return;
 		}
 		
