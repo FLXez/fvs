@@ -8,19 +8,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Registrierung</title>
 </head>
-<body>
-
-<h:form>
-  Email:
-  <h:inputText id="email" value="#{userBean.registerUser.email}"/>
-  Vorname:
-  <h:inputText id="vorname" value="#{userBean.registerUser.vorname}"/>
-  Name:
-  <h:inputText id="name" value="#{userBean.registerUser.name}"/>
-  Passwort:
-  <h:inputText id="passwort" value="#{userBean.registerUser.passwort}"/>
-  <h:commandButton action="#{userBean.add()}" value="Absenden" />
-</h:form>
-
-</body>
+<h:body>
+<h:form id="register">
+		<h3>fvs Registrierung</h3>
+		<table>
+		<tr>
+			<td><h:outputText value="Email" /></td>
+			<td><h:inputText id="email" value="#{userBean.registerUser.email}"/></td>
+		</tr>	
+		<tr>
+			<td><h:outputText value="Vorname"></h:outputText></td>
+			<td><h:inputText id="vorname" value="#{userBean.registerUser.vorname}"/></td>
+		</tr>
+		<tr>
+			<td><h:outputText value="Nachname"></h:outputText></td>
+			<td><h:inputText id="name" value="#{userBean.registerUser.name}"/></td>
+		</tr>
+		<tr>
+			<td><h:outputText value="Passwort"></h:outputText></td>
+			<td><h:inputText id="passwort" value="#{userBean.registerUser.passwort}"/></td>
+		</tr>
+		<tr>
+			<td><h:message class="error" for="register" id="registerError"/></td>
+		</tr>		
+		</table>
+		<br></br><br></br>
+		<h:commandButton action="#{userBean.add}" value="Registrieren"/>
+	</h:form>
+</h:body>
 </html>
