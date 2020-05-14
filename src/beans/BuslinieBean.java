@@ -34,7 +34,7 @@ public class BuslinieBean {
 		return newBuslinieDTO;
 	}
 
-	public List<BuslinieDTO> getAll() {
+	public List<BuslinieDTO> getAllBuslinien() {
 		List<Buslinie> busliniens = new ArrayList<Buslinie>();
 		List<BuslinieDTO> buslinieDTOs = new ArrayList<BuslinieDTO>();
 		busliniens = buslinieDAO.getAll();
