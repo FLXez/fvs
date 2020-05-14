@@ -9,7 +9,6 @@ import javax.ejb.EJBException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
 
 import dao.UserDAO;
 import dto.UserDTO;
@@ -31,13 +30,10 @@ public class UserBean {
 	String newPassword;
 	String newPasswordC;
 	
-	NotificationUtils notifier;
-	
 	@PostConstruct
 	public void init() {
 		registerUser = new UserDTO();
 		loginUser = new UserDTO();
-		notifier = new NotificationUtils();
 	}
 	
 	public UserDTO getRegisterUser() {
@@ -95,15 +91,10 @@ public class UserBean {
 			try {
 				userDAO.save(user);
 				registerUser = new UserDTO();
-				notifier.showMessage(false, 0, "register:email", "Registrierung erfolreich", "Der Nutzer wurde erfolgreich registriert.");				
+				NotificationUtils.showMessage(false, 0, "register:email", "Registrierung erfolreich", "Der Nutzer wurde erfolgreich registriert.");				
 				
-			} catch (EJBException e) {
-				notifier.showMessage(false, 2, "register:email", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten.");
-			}
-		} else {
-			notifier.showMessage(false, 1, "register:email", "E-Mail in Verwendung", "Ein Nutzer mit der E-Mail ist bereits registriert.");
-		}
-			
+			} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "register:email", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
+		} else { NotificationUtils.showMessage(false, 1, "register:email", "E-Mail in Verwendung", "Ein Nutzer mit der E-Mail ist bereits registriert."); }			
 	}
 	
 	public void changePassword() {
@@ -112,17 +103,16 @@ public class UserBean {
 
 			if(this.newPassword.equals(this.newPasswordC)) {
 				String[] parms = {this.newPassword};
-				HttpSession session = SessionUtils.getSession();
 				
-				Optional<User> oUser = userDAO.get((int) session.getAttribute("uid"));
+				Optional<User> oUser = userDAO.get(SessionUtils.getUid());
 				
 				if(oUser.isPresent()) {
 					userDAO.update(oUser.get(), parms);					
-					notifier.showMessage(false, 0, "newPassword:passwordC", "Passwort geändert", "Das Passwort wurde erfolgreich geändert.");
+					NotificationUtils.showMessage(false, 0, "newPassword:passwordC", "Passwort geändert", "Das Passwort wurde erfolgreich geändert.");
 					}
 				
-			} else { notifier.showMessage(false, 1, "newPassword:passwordC", "Ungleiche Passwörter", "Die Passwörter stimmen nicht überein."); }						
-		} else { notifier.showMessage(false, 1, "newPassword:passwordC", "Feld leer", "Bitte füllen Sie beide Felder aus."); }
+			} else { NotificationUtils.showMessage(false, 1, "newPassword:passwordC", "Ungleiche Passwörter", "Die Passwörter stimmen nicht überein."); }						
+		} else { NotificationUtils.showMessage(false, 1, "newPassword:passwordC", "Feld leer", "Bitte füllen Sie beide Felder aus."); }
 	}
 	
 	public String login() {
@@ -130,29 +120,26 @@ public class UserBean {
 		user.setEmail(this.loginUser.getEmail());
 		user.setPasswort(this.loginUser.getPasswort());
 		
-		if(userDAO.login(user)) {
-			HttpSession session = SessionUtils.getSession();			
+		if(userDAO.login(user)) {			
 			user = userDAO.getByEmail(this.loginUser.getEmail());
 			
-			session.setAttribute("uid", user.getUId());
-			session.setAttribute("email", user.getEmail());
-			session.setAttribute("privilegien", user.getPrivilegien());
+			SessionUtils.setUid(user.getUId());
+			SessionUtils.setEmail(user.getEmail());
+			SessionUtils.setPrivilegien(user.getPrivilegien());
 			
-			notifier.showMessage(true, 0, "", session.getAttribute("email") + " hat sich angemeldet", "");
+			NotificationUtils.showMessage(true, 0, "", SessionUtils.getEmail() + " hat sich angemeldet", "");
 
 			return "index";
 		} else {
-			notifier.showMessage(false, 1, "login:password", "E-Mail / Passwort falsch", "Die E-Mail oder das Passwort ist falsch."); 
+			NotificationUtils.showMessage(false, 1, "login:password", "E-Mail / Passwort falsch", "Die E-Mail oder das Passwort ist falsch."); 
 			return "login";
 		}
 		
 	}
 	
-	// Logout event, Weiterleitung auf "login.xhtml"
 	public String logout() {
-		HttpSession session = SessionUtils.getSession();
-		notifier.showMessage(true, 0, "", session.getAttribute("email") + " hat sich abgemeldet.", "");
-		session.invalidate();
+		NotificationUtils.showMessage(true, 0, "", SessionUtils.getEmail() + " hat sich abgemeldet.", "");
+		SessionUtils.invalidate();
 		this.loginUser = new UserDTO();
 		return "login";
 	}

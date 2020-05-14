@@ -4,10 +4,12 @@ import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
 
+
+
 public class NotificationUtils {
 
 	
-	public void showMessage(boolean logOnly, int severity, String field, String summary, String details){
+	public static void showMessage(boolean logOnly, int severity, String field, String summary, String details){
 
 		Severity ser;
 		
