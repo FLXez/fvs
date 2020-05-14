@@ -37,6 +37,7 @@ public class UserBean {
 	public void init() {
 		registerUser = new UserDTO();
 		loginUser = new UserDTO();
+		notifier = new NotificationUtils();
 	}
 	
 	public UserDTO getRegisterUser() {
@@ -137,7 +138,8 @@ public class UserBean {
 			session.setAttribute("email", user.getEmail());
 			session.setAttribute("privilegien", user.getPrivilegien());
 			
-			notifier.showMessage(true, 0, "", session.getAttribute("email") + " hat sich angemeldet.", "");
+			notifier.showMessage(true, 0, "", session.getAttribute("email") + " hat sich angemeldet", "");
+			
 			this.loginUser = new UserDTO();
 			return "index";
 		} else {
