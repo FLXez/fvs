@@ -14,14 +14,16 @@
 		<table>
 		<tr>
 		<td><h:outputText value="Email" /></td>
-		<td><h:inputText id ="email" value="#{userBean.loginUser.email}"></h:inputText></td>
-		<td><h:message for="email" display="Validation Error: Value is required!"></h:message></td>
+		<td><h:inputText id ="email" value="#{userBean.loginUser.email}">
+		</h:inputText></td>
 		</tr>
 		
 		<tr>
 		<td><h:outputText value="Passwort"></h:outputText></td>
 		<td><h:inputText id ="password" value="#{userBean.loginUser.passwort}"></h:inputText></td>
-		<td><h:message for="password" display="Validation Error: Value is required!"></h:message></td>
+		</tr>
+		<tr>
+		<td><h:message class="error" for="password" id="passwordError"/></td>
 		</tr>
 		
 		</table>
