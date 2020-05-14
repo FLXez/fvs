@@ -79,8 +79,34 @@ public class UserBean {
 	}
 	
 	public void add() {
-		if(!userDAO.findByEmail(this.registerUser.getEmail())) {
-			this.registerUser.setPrivilegien("Mitarbeiter");			
+
+		if(this.registerUser.getEmail().isEmpty()) {
+			NotificationUtils.showMessage(false, 1, "register:email", "E-Mail leer", "Bitte tragen Sie Ihre E-Mail Adresse ein.");
+			return;
+		}
+		
+		if(this.registerUser.getPasswort().isEmpty()) {
+			NotificationUtils.showMessage(false, 1, "register:email", "Passwort leer", "Bitte vergeben Sie ein Passwort.");
+			return;
+		}
+
+		if(this.registerUser.getName().isEmpty()) {
+			NotificationUtils.showMessage(false, 1, "register:email", "Name leer", "Bitte tragen Sie Ihren Namen ein.");
+			return;
+		}
+		
+		if(this.registerUser.getVorname().isEmpty()) {
+			NotificationUtils.showMessage(false, 1, "register:email", "Vorname leer", "Bitte tragen Sie Ihren Vornamen ein.");
+			return;
+		}
+		
+		if(this.registerUser.getPrivilegien().isEmpty()) {
+			NotificationUtils.showMessage(false, 1, "register:email", "Privilegien leer", "Bitte vergeben Sie die Privilegien.");
+			this.registerUser.setPrivilegien("Mitarbeiter");
+			//TODO return;
+		}
+		
+		if(!userDAO.findByEmail(this.registerUser.getEmail())) {			
 			User user = new User();
 			user.setEmail(this.registerUser.getEmail());
 			user.setPasswort(this.registerUser.getPasswort());
@@ -91,11 +117,9 @@ public class UserBean {
 			try {
 				userDAO.save(user);
 				registerUser = new UserDTO();
-				NotificationUtils.showMessage(false, 0, "register:email", "Registrierung erfolreich", "Der Nutzer wurde erfolgreich registriert.");				
-				
+				NotificationUtils.showMessage(false, 0, "register:email", "Registrierung erfolreich", "Der Nutzer wurde erfolgreich registriert.");								
 			} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "register:email", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
 		} else { NotificationUtils.showMessage(false, 1, "register:email", "E-Mail in Verwendung", "Ein Nutzer mit der E-Mail ist bereits registriert."); }
-		//TODO Inhalte empty?
 	}
 	
 	public void changePassword() {
