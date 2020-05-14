@@ -2,6 +2,7 @@ package beans;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
@@ -63,7 +64,7 @@ public class UserBean {
 	}
 	
 	public void add() {
-		if(!userDAO.findByEmail(this.registerUser.getEmail()).isPresent()) {
+		if(!userDAO.findByEmail(this.registerUser.getEmail())) {
 			this.registerUser.setPrivilegien("Mitarbeiter");			
 			User user = new User();
 			user.setEmail(this.registerUser.getEmail());
