@@ -32,7 +32,7 @@ public class SessionUtils {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		if (session != null)
-			return session.getAttribute("email").toString();
+			return (String) session.getAttribute("email");
 		else
 			return null;
 	}
