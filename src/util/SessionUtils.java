@@ -25,7 +25,7 @@ public class SessionUtils {
 	public static String getUid() {
 		HttpSession session = getSession();
 		if (session != null)
-			return (String) session.getAttribute("u_id");
+			return (String) session.getAttribute("uid");
 		else
 			return null;
 	}

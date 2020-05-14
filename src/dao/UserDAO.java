@@ -26,8 +26,14 @@ public class UserDAO implements DAO<User, UserDTO> {
 		return Optional.ofNullable(em.find(User.class, id));		
 	}
 
+	public User getByEmail(String email) {		
+		Query q = em.createNativeQuery("SELECT u.email, u.u_id, u.privilegien FROM User u WHERE u.email = '" + email + "'", User.class);
+		
+		return (User) q.getSingleResult();
+	}
+	
 	public boolean findByEmail(String email) {
-		Query q = em.createQuery("SELECT u.email, u.passwort FROM User u WHERE u.email = '" + email + "'");
+		Query q = em.createQuery("SELECT u.email FROM User u WHERE u.email = '" + email + "'");
 		try {
 			q.getSingleResult();
 			return true;

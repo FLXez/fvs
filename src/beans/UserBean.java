@@ -120,27 +120,44 @@ public class UserBean {
 	}
 	
 	public void changePassword() {
-		HttpSession session = SessionUtils.getSession();
-		Optional<User> user = userDAO.get((int) session.getAttribute("uid"));
-		System.out.println(this.newPassword);
 		
-		if(this.newPassword.equals(this.newPasswordC)) {
-			String[] parms = {this.newPassword};
-			userDAO.update(user.get(), parms);
+		if(!this.newPassword.isEmpty() || !this.newPasswordC.isEmpty()) {
+
+			if(this.newPassword.equals(this.newPasswordC)) {
+				String[] parms = {this.newPassword};
+				HttpSession session = SessionUtils.getSession();
+				
+				Optional<User> oUser = userDAO.get((int) session.getAttribute("uid"));
+				
+				if(oUser.isPresent()) {
+					userDAO.update(oUser.get(), parms);
+					
+					FacesContext.getCurrentInstance().addMessage(
+							"newPassword:passwordC",
+							new FacesMessage(FacesMessage.SEVERITY_INFO,
+									"Passwort geändert",
+									"Passwort erfolgreich geändert."));
+					}
+				
+			} else {
+				FacesContext.getCurrentInstance().addMessage(
+						"newPassword:passwordC",
+						new FacesMessage(FacesMessage.SEVERITY_WARN,
+								"Passwörter stimmen nicht überein",
+								"Passwörter bitte überprüfen."));
+				System.out.println("Änderung des Passworts fehlgeschlagen.");			
+			}				
+						
+		} else {
 			
 			FacesContext.getCurrentInstance().addMessage(
 					"newPassword:passwordC",
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Passwort geändert",
-							"Passwort erfolgreich geändert."));
-		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					"newPassword:passwordC",
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
-							"Passwörter stimmen nicht überein",
-							"Passwörter bitte überprüfen."));
-			System.out.println("Änderung des Passworts fehlgeschlagen.");			
-		}				
+							"Bitte beide Felder ausfüllen",
+							"Bitte beide Felder ausfüllen."));
+			System.out.println("Bitte beide Felder ausfüllen.");
+		
+		}
 	}
 	
 	public String login() {
@@ -151,6 +168,9 @@ public class UserBean {
 		if(userDAO.login(user)) {
 			System.out.println("Anmeldung erfolgreich.");
 			HttpSession session = SessionUtils.getSession();
+			
+			user = userDAO.getByEmail(this.loginUser.getEmail());
+			
 			session.setAttribute("uid", user.getUId());
 			session.setAttribute("email", user.getEmail());
 			session.setAttribute("privilegien", user.getPrivilegien());
