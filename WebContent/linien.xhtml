@@ -25,39 +25,30 @@
 		
 	</div>
 	<div id="div-body">
-		<h2>Liste aller Haltestellen</h2>
-		<h:form id="addStop">
+		<h2>Liste aller Buslinien</h2>
+		<h:form id="addLine">
 		<table>
 		<tr>
-			<td><h:outputText value="Haltestelle hinzuf&#252;gen:" /></td>
-			<td><h:inputText id="description" value="#{haltestelleBean.newHaltestelleDTO.bezeichnung}" /></td>
-			<td><h:inputText id="latitude" value="#{haltestelleBean.newHaltestelleDTO.latitude}" /> </td>
-			<td><h:inputText id="longitutde" value="#{haltestelleBean.newHaltestelleDTO.longitude}" /></td>
+			<td><h:outputText value="Buslinie hinzuf&#252;gen:" /></td>
+			<td><h:inputText id="number" value="#{buslinieBean.newBuslinieDTO.nummer}" /></td>
+			<td><h:inputText id="direction" value="#{buslinieBean.newBuslinieDTO.richtung}" /> </td>
 		</tr>
 		<tr>
-			<td colspan="1"><h:commandButton action="#{haltestelleBean.add}" value="Hinzuf&#252;gen"/></td>
-			<td colspan="3"><h:message class="info" for="description" id="addStopInfo"/></td>
+			<td colspan="1"><h:commandButton action="#{buslinieBean.add}" value="Hinzuf&#252;gen"/></td>
+			<td colspan="2"><h:message class="info" for="direction" id="addLineInfo"/></td>
 		</tr>	
 		</table>
 		</h:form>
 		
-		<h:dataTable id="stopTable" value="#{haltestelleBean.allHaltestellen}" var="haltestelleDTO">
+		<h:dataTable id="lineTable" value="#{buslinieBean.allBuslinien}" var="buslinieDTO">
       	<h:column>
-      		<f:facet name="header">Haltestellen-ID</f:facet>
-      		<h:outputText value="#{haltestelleDTO.HId}" />          		
+      		<f:facet name="header">Linien-Nummer</f:facet>
+      		<h:outputText value="#{buslinieDTO.nummer}" />          		
       	</h:column>
       	<h:column>
-      		<f:facet name="header">Haltestellen-Name</f:facet>
-      		<h:outputText value="#{haltestelleDTO.bezeichnung}" />      		
-      	</h:column>     
-      	<h:column>
-      		<f:facet name="header">Latitude</f:facet>
-      		<h:outputText value="#{haltestelleDTO.latitude}" />      		
-      	</h:column>
-      	<h:column>
-      		<f:facet name="header">Longitude</f:facet>
-      		<h:outputText value="#{haltestelleDTO.longitude}" />      		
-      	</h:column> 	
+      		<f:facet name="header">Richtung</f:facet>
+      		<h:outputText value="#{buslinieDTO.richtung}" />      		
+      	</h:column>      	
       </h:dataTable>
 	</div>
 	</div>
