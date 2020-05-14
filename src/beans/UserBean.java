@@ -94,7 +94,8 @@ public class UserBean {
 				NotificationUtils.showMessage(false, 0, "register:email", "Registrierung erfolreich", "Der Nutzer wurde erfolgreich registriert.");				
 				
 			} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "register:email", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
-		} else { NotificationUtils.showMessage(false, 1, "register:email", "E-Mail in Verwendung", "Ein Nutzer mit der E-Mail ist bereits registriert."); }			
+		} else { NotificationUtils.showMessage(false, 1, "register:email", "E-Mail in Verwendung", "Ein Nutzer mit der E-Mail ist bereits registriert."); }
+		//TODO Inhalte empty?
 	}
 	
 	public void changePassword() {

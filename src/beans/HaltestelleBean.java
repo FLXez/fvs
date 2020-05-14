@@ -60,13 +60,8 @@ public class HaltestelleBean {
 					newHaltestelleDTO = new HaltestelleDTO();
 					NotificationUtils.showMessage(false, 0, "XX:XX", "Haltestelle hinzugefügt", "Die Haltestelle wurde erfolgreich hinzugefügt.");				
 				} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "XX:XX", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
-			} else { NotificationUtils.showMessage(false, 1, "XX:XX", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten.");
-				
-			}
-			
-		} else {
-			
-		}
-		
+			} else { NotificationUtils.showMessage(false, 1, "XX:XX", "Haltestellenort bereits vergeben", "An diesem Ort existiert bereits eine Haltestelle."); }			
+		} else { NotificationUtils.showMessage(false, 1, "XX:XX", "Haltestellenbezeichnung bereits vergeben", "Eine Haltestelle mit dieser Bezeichnung existiert bereits."); }
+		//TODO Inhalte empty?
 	}
 }
