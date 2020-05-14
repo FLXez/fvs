@@ -139,8 +139,7 @@ public class UserBean {
 			session.setAttribute("privilegien", user.getPrivilegien());
 			
 			notifier.showMessage(true, 0, "", session.getAttribute("email") + " hat sich angemeldet", "");
-			
-			this.loginUser = new UserDTO();
+
 			return "index";
 		} else {
 			notifier.showMessage(false, 1, "login:password", "E-Mail / Passwort falsch", "Die E-Mail oder das Passwort ist falsch."); 
@@ -154,6 +153,7 @@ public class UserBean {
 		HttpSession session = SessionUtils.getSession();
 		notifier.showMessage(true, 0, "", session.getAttribute("email") + " hat sich abgemeldet.", "");
 		session.invalidate();
+		this.loginUser = new UserDTO();
 		return "login";
 	}
 }
