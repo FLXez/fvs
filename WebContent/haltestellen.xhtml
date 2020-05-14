@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+   	  xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<link rel="stylesheet" type="text/css" href="styles.css"></link>
+<title>Index</title>
+</h:head>
+<h:body>
+	<div id="div-container">
+	<div id="div-nav">
+			<p><a href="./index.xhtml">Profil</a></p>
+			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
+			<p><a href="./fahrplan.xhtml">Fahrplan</a></p>
+			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
+			<p><a href="./linien.xhtml">Buslinien</a></p>
+			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
+			<p><a href="./haltestellen.xhtml">Haltestellen</a></p>
+			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
+			<p><h:form><h:commandLink action="#{userBean.logout}" value="Ausloggen"/></h:form></p>
+			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
+		
+	</div>
+	<div id="div-body">
+		<h2>Liste alle Haltestellen</h2>
+		<h:dataTable id="stopTable" value="#{haltestelleBean.allHaltestellen}" var="haltestelleDTO">
+      	<h:column>
+      		<f:facet name="header">Haltestellen-ID</f:facet>
+      		<h:outputText value="#{haltestelleDTO.hId}" />          		
+      	</h:column>
+      	<h:column>
+      		<f:facet name="header">Haltestellen-Name</f:facet>
+      		<h:outputText value="#{haltestelleDTO.bezeichnung}" />      		
+      	</h:column>     
+      	<h:column>
+      		<f:facet name="header">Latitude</f:facet>
+      		<h:outputText value="#{haltestelleDTO.latitude}" />      		
+      	</h:column>
+      	<h:column>
+      		<f:facet name="header">Longitude</f:facet>
+      		<h:outputText value="#{haltestelleDTO.longitude}" />      		
+      	</h:column> 	
+      </h:dataTable>
+	</div>
+	</div>
+</h:body>
+</html>
