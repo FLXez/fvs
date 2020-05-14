@@ -6,20 +6,17 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<link rel="stylesheet" type="text/css" href="styles/styles.css" media="all" />
-<style type="text/css">
-	@import url(styles/styles.css);
-	</style>
+<link rel="stylesheet" type="text/css" href="./styles/styles.css" media="all" />
 <title>Login</title>
 </h:head>
 <h:body>
 	<div id="div-nav">
 		<ul id="list-nav">
-			<li><a href="/index.xhtml">Profil</a></li>
-			<li><a href="/fahrplan.xhtml">Fahrplan</a></li>
-			<li><a href="/linien.xhtml">Buslinien</a></li>
-			<li><a href="/haltestellen.xhtml">Haltestellen</a></li>
-			<li><h:commandLink action="#{userBean.logout}" value="Logout"></h:commandLink></li>
+			<li><a href="./index.xhtml">Profil</a></li>
+			<li><a href="./fahrplan.xhtml">Fahrplan</a></li>
+			<li><a href="./linien.xhtml">Buslinien</a></li>
+			<li><a href="./haltestellen.xhtml">Haltestellen</a></li>
+			<li><h:commandButton action="#{userBean.logout}" value="Logout"></h:commandButton></li>
 		</ul>
 	</div>
 	<div id="div-body">
