@@ -7,28 +7,67 @@
 <h:head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Login</title>
+<style type="text/css">
+<!--
+	#div-container {
+		width: 600px;
+		height: 300px;
+		margin: 0 auto;
+		float: center;
+		border: 1px solid black;
+		font-size: 22px;
+	}
+	#div-container table {
+		margin-left: auto; 
+    	margin-right: auto;
+    	width: 580px;
+	}
+	#div-container td {
+	width: 288px;
+	}
+
+	#div-table input {
+		width: 280px;
+		height: 20px;
+	}
+	h1 {
+		text-align: center;
+	}
+	#loginbutton {
+		text-align: center;
+		margin-left: auto; 
+    	margin-right: auto;
+	}
+-->
+</style>
 </h:head>
 <h:body>
+<div id="div-container">
+	
 	<h:form id="login">
-		<h3>fvs Einloggen</h3>
+		<h1>fvs Einloggen</h1>
+		<div id="div-table">
 		<table>
 		<tr>
-		<td><h:outputText value="Email" /></td>
+		<td><h:outputText value="Email:" /></td>
 		<td><h:inputText id ="email" value="#{userBean.loginUser.email}">
 		</h:inputText></td>
 		</tr>
 		
 		<tr>
-		<td><h:outputText value="Passwort"></h:outputText></td>
-		<td><h:inputSecret id="password" value="#{userBean.loginUser.passwort}" /></td>
+		<td><h:outputText value="Passwort:"></h:outputText></td>
+		<td><h:inputSecret id="password" value="#{userBean.loginUser.passwort}"/></td>
 		</tr>
 		<tr>
-		<td><h:message class="error" for="password" id="passwordError"/></td>
+		<td style="text-align:center;" colspan="2"><h:message class="error" for="password" id="passwordError"/></td>
 		</tr>
-		
 		</table>
+		</div>
 		<br></br><br></br>
-		<h:commandButton action="#{userBean.login}" value="Login"></h:commandButton>
+		<div id="loginbutton">
+		<h:commandButton id="einloggen" action="#{userBean.login}" value="Einloggen" style="height: 34px;font-size: 22px;"></h:commandButton>
+		</div>
 	</h:form>
+</div>
 </h:body>
 </html>
