@@ -20,20 +20,20 @@ public class HaltestellenBean {
 	@Inject
 	HaltestelleDAO haltestelleDAO;
 	
-	HaltestelleDTO neuHaltestelleDTO;
+	HaltestelleDTO newHaltestelleDTO;
 	
 	
 	@PostConstruct
 	public void init() {
-		this.neuHaltestelleDTO = new HaltestelleDTO();
+		this.newHaltestelleDTO = new HaltestelleDTO();
 	}
 	
-	public void setNeuHaltestelleDTO(HaltestelleDTO neuHaltestelleDTO) {
-		this.neuHaltestelleDTO = neuHaltestelleDTO;
+	public void setnewHaltestelleDTO(HaltestelleDTO newHaltestelleDTO) {
+		this.newHaltestelleDTO = newHaltestelleDTO;
 	}
 	
 	public HaltestelleDTO getNeueHaltestelleDTO() {
-		return this.neuHaltestelleDTO;
+		return this.newHaltestelleDTO;
 	}
 	
 	public List<HaltestelleDTO> getAllFahrplans() {
@@ -47,9 +47,9 @@ public class HaltestellenBean {
 	
 	public void add() {
 		Haltestelle haltestelle = new Haltestelle();
-		haltestelle.setBezeichnung(this.neuHaltestelleDTO.getBezeichnung());
-		haltestelle.setLatitude(this.neuHaltestelleDTO.getLatitude());
-		haltestelle.setLongitude(this.neuHaltestelleDTO.getLongitude());
+		haltestelle.setBezeichnung(this.newHaltestelleDTO.getBezeichnung());
+		haltestelle.setLatitude(this.newHaltestelleDTO.getLatitude());
+		haltestelle.setLongitude(this.newHaltestelleDTO.getLongitude());
 		
 		try {
 			haltestelleDAO.save(haltestelle);
