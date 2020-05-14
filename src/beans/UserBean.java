@@ -129,13 +129,13 @@ public class UserBean {
 			userDAO.update(user.get(), parms);
 			
 			FacesContext.getCurrentInstance().addMessage(
-					"index:passwordC",
+					"newPassword:passwordC",
 					new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Passwort geändert",
 							"Passwort erfolgreich geändert."));
 		} else {
 			FacesContext.getCurrentInstance().addMessage(
-					"index:passwordC",
+					"newPassword:passwordC",
 					new FacesMessage(FacesMessage.SEVERITY_WARN,
 							"Passwörter stimmen nicht überein",
 							"Passwörter bitte überprüfen."));
