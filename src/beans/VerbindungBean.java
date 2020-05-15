@@ -10,9 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import dao.HaltestelleDAO;
 import dao.VerbindungDAO;
-import dto.HaltestelleDTO;
 import dto.VerbindungDTO;
 import entity.Haltestelle;
 import entity.Verbindung;
@@ -96,11 +94,11 @@ public class VerbindungBean {
 		haltestelleEnde.setLatitude(newVerbindungDTO.getHaltestelle_endeDTO().getLatitude());
 		haltestelleEnde.setLongitude(newVerbindungDTO.getHaltestelle_endeDTO().getLongitude());
 		
-		if(!verbindungDAO.findByHaltestellen(haltestelleStart, haltestelleEnde)) {
+		if(!verbindungDAO.findByHaltestellen(haltestelleStart.getHId(), haltestelleEnde.getHId())) {
 						
 			Verbindung verbindung = new Verbindung();		
 			verbindung.setHaltestelle_start(haltestelleStart);
-			verbindung.setHaltestelle_start(haltestelleEnde);
+			verbindung.setHaltestelle_ende(haltestelleEnde);
 			verbindung.setDauer(newVerbindungDTO.getDauer());
 			
 			try {
