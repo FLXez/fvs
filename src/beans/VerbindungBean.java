@@ -30,6 +30,14 @@ public class VerbindungBean {
 		newVerbindungDTO = new VerbindungDTO();
 	}
 	
+	public VerbindungDTO getNewVerbindungDTO() {
+		return newVerbindungDTO;
+	}
+
+	public void setNewVerbindungDTO(VerbindungDTO newVerbindungDTO) {
+		this.newVerbindungDTO = newVerbindungDTO;
+	}
+
 	public List<VerbindungDTO> getAllVerbindungs() {
 		// Listen aufbauen, um diese durchgehen zu können
 		List<Verbindung> verbindungs = new ArrayList<Verbindung>();
