@@ -65,12 +65,12 @@ public class VerbindungBean {
 	public void add() {
 		
 		if(newVerbindungDTO.getHaltestelle_endeDTO() == null || newVerbindungDTO.getHaltestelle_startDTO() == null ) {
-			NotificationUtils.showMessage(false, 1, "XX:XX", "Haltestelle leer", "Bitte geben Sie beide Haltestellen an.");
+			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestelle leer", "Bitte geben Sie beide Haltestellen an.");
 			return;
 		}
 		
 		if(newVerbindungDTO.getDauer() == 0) {
-			NotificationUtils.showMessage(false, 1, "XX:XX", "Dauer 0", "Bitte geben Sie eine Dauer an.");			
+			NotificationUtils.showMessage(false, 1, "linien:dauer", "Dauer 0", "Bitte geben Sie eine Dauer an.");			
 			return;
 		}
 		
@@ -97,8 +97,8 @@ public class VerbindungBean {
 			try {
 				verbindungDAO.save(verbindung);
 				newVerbindungDTO = new VerbindungDTO();
-				NotificationUtils.showMessage(false, 1, "XX:XX", "Verbindung hinzugefügt", "Die Verbindung wurde erfolgreich hinzugefügt.");
-			} catch(EJBException e) { NotificationUtils.showMessage(false, 2, "XX:XX", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
-		} else { NotificationUtils.showMessage(false, 1, "XX:XX", "Verbindung existiert bereits", "Diese Verbindung existiert bereits."); }
+				NotificationUtils.showMessage(false, 1, "linien:dauer", "Verbindung hinzugefügt", "Die Verbindung wurde erfolgreich hinzugefügt.");
+			} catch(EJBException e) { NotificationUtils.showMessage(false, 2, "linien:dauer", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
+		} else { NotificationUtils.showMessage(false, 1, "linien:dauer", "Verbindung existiert bereits", "Diese Verbindung existiert bereits."); }
 	}	
 }
