@@ -42,7 +42,7 @@
 
 		</div>
 		<div id="div-body">
-			<!-- <h:form id="linien"> -->
+			<h:form id="linien">
 				<table>
 					<tr>
 						<th>Start Haltestelle</th>
@@ -51,23 +51,21 @@
 						<th>Hinzufügen</th>
 					</tr>
 					<tr>
-						<td><h:selectOneMenu value="haltestelle1}">
+						<td><h:selectOneMenu value="verbindungBean.newVerbindungDTO.haltestelle_startDTO">
 								<f:selectItems value="#{haltestelleBean.allHaltestellen}"
 									var="haltestelleDTO" itemLabel="#{haltestelleDTO.bezeichnung}"
 									itemValue="#{haltestelleDTO.HId}" />
 							</h:selectOneMenu></td>
-						<td><h:selectOneMenu value="haltestelle2}">
+						<td><h:selectOneMenu value="verbindungBean.newVerbindungDTO.haltestelle_endeDTO">
 								<f:selectItems value="#{haltestelleBean.allHaltestellen}"
 									var="haltestelleDTO" itemLabel="#{haltestelleDTO.bezeichnung}"
 									itemValue="#{haltestelleDTO.HId}" />
 							</h:selectOneMenu></td>
-						<td><!-- <h:inputText id="dauer"
-								value="#{verbindungBean.add.dauer}" /> --></td>
-						<td><!--<h:commandButton action="#{verbindungBean.add}"
-								value="Registrieren" /> --></td>
+						<td><h:inputText id="dauer" value="#{haltestelleBean.newVerbindungDTO.dauer}"/></td>
+						<td><h:commandButton action="#{verbindungBean.add}" value="Hinzufügen"/></td>
 					</tr>
 				</table>
-			<!-- </h:form> -->
+			</h:form> 
 		</div>
 	</div>
 </h:body>
