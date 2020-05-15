@@ -18,9 +18,6 @@ public class FahrplanDAO implements DAO<Fahrplan, FahrplanDTO> {
 
 	@PersistenceContext
 	EntityManager em;
-	 // in Service oder Bean
-	AblaufDAO ablaufDAO;
-	BuslinieDAO buslinieDAO;
 	
 	@Override
 	public Optional<Fahrplan> get(int id) {

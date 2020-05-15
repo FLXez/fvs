@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -31,6 +32,17 @@ public class VerbindungDAO implements DAO<Verbindung, VerbindungDTO> {
 		Query q = em.createQuery("SELECT v FROM Verbindung v");
 		
 		return q.getResultList();	
+	}
+	
+	public boolean findByHaltestellen(int hidStart, int hidEnde) {
+		Query q = em.createQuery("SELECT v.h_id_start , v.h_id_ende FROM Verbindung v WHERE v.h_id_start = '" + hidStart + "' AND v.h_id_ende = '" + hidEnde + "'");
+		try {
+			q.getSingleResult();
+			return true;
+		} catch (NoResultException e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
 	}
 
 	@Override

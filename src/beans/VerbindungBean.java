@@ -4,13 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import dao.VerbindungDAO;
 import dto.VerbindungDTO;
+import entity.Haltestelle;
 import entity.Verbindung;
+import util.NotificationUtils;
 
 @Named("verbindungBean")
 @ApplicationScoped
@@ -18,6 +22,13 @@ public class VerbindungBean {
 
 	@Inject
 	VerbindungDAO verbindungDAO;
+	
+	VerbindungDTO newVerbindungDTO;
+	
+	@PostConstruct
+	public void init() {
+		newVerbindungDTO = new VerbindungDTO();
+	}
 	
 	public List<VerbindungDTO> getAllVerbindungs() {
 		// Listen aufbauen, um diese durchgehen zu können
@@ -43,4 +54,43 @@ public class VerbindungBean {
 		}
 	}
 	
+	public void add() {
+		
+		if(newVerbindungDTO.getHaltestelle_endeDTO() == null || newVerbindungDTO.getHaltestelle_startDTO() == null ) {
+			NotificationUtils.showMessage(false, 1, "XX:XX", "Haltestelle leer", "Bitte geben Sie beide Haltestellen an.");
+			return;
+		}
+		
+		if(newVerbindungDTO.getDauer() == 0) {
+			NotificationUtils.showMessage(false, 1, "XX:XX", "Dauer 0", "Bitte geben Sie eine Dauer an.");			
+			return;
+		}
+		
+		if(!verbindungDAO.findByHaltestellen(newVerbindungDTO.getHaltestelle_startDTO().getHId(), newVerbindungDTO.getHaltestelle_endeDTO().getHId())) {
+			
+			
+			Haltestelle haltestelleStart = new Haltestelle();
+			haltestelleStart.setHId(newVerbindungDTO.getHaltestelle_startDTO().getHId());
+			haltestelleStart.setBezeichnung(newVerbindungDTO.getHaltestelle_startDTO().getBezeichnung());
+			haltestelleStart.setLatitude(newVerbindungDTO.getHaltestelle_startDTO().getLatitude());
+			haltestelleStart.setLongitude(newVerbindungDTO.getHaltestelle_startDTO().getLongitude());
+	
+			Haltestelle haltestelleEnde = new Haltestelle();
+			haltestelleEnde.setHId(newVerbindungDTO.getHaltestelle_endeDTO().getHId());
+			haltestelleEnde.setBezeichnung(newVerbindungDTO.getHaltestelle_endeDTO().getBezeichnung());
+			haltestelleEnde.setLatitude(newVerbindungDTO.getHaltestelle_endeDTO().getLatitude());
+			haltestelleEnde.setLongitude(newVerbindungDTO.getHaltestelle_endeDTO().getLongitude());		
+			
+			Verbindung verbindung = new Verbindung();		
+			verbindung.setHaltestelle_start(haltestelleStart);
+			verbindung.setHaltestelle_start(haltestelleEnde);
+			verbindung.setDauer(newVerbindungDTO.getDauer());
+			
+			try {
+				verbindungDAO.save(verbindung);
+				newVerbindungDTO = new VerbindungDTO();
+				NotificationUtils.showMessage(false, 1, "XX:XX", "Verbindung hinzugefügt", "Die Verbindung wurde erfolgreich hinzugefügt.");
+			} catch(EJBException e) { NotificationUtils.showMessage(false, 2, "XX:XX", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
+		} else { NotificationUtils.showMessage(false, 1, "XX:XX", "Verbindung existiert bereits", "Diese Verbindung existiert bereits."); }
+	}	
 }
