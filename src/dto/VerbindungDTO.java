@@ -16,6 +16,8 @@ public class VerbindungDTO implements Serializable {
 	private HaltestelleDTO haltestelle_endeDTO;
 
 	public VerbindungDTO() {
+		this.haltestelle_startDTO = new HaltestelleDTO();
+		this.haltestelle_endeDTO = new HaltestelleDTO();
 	}
 
 	public VerbindungDTO(Verbindung verbindungEntity) {

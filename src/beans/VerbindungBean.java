@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import dao.VerbindungDAO;
+import dto.HaltestelleDTO;
 import dto.VerbindungDTO;
 import entity.Haltestelle;
 import entity.Verbindung;
@@ -29,7 +30,7 @@ public class VerbindungBean {
 	public void init() {
 		newVerbindungDTO = new VerbindungDTO();
 	}
-	
+
 	public VerbindungDTO getNewVerbindungDTO() {
 		return newVerbindungDTO;
 	}
@@ -64,7 +65,7 @@ public class VerbindungBean {
 	
 	public void add() {
 		
-		if(newVerbindungDTO.getHaltestelle_endeDTO() == null || newVerbindungDTO.getHaltestelle_startDTO() == null ) {
+		if(newVerbindungDTO.getHaltestelle_startDTO() == null || newVerbindungDTO.getHaltestelle_endeDTO() == null ) {
 			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestelle leer", "Bitte geben Sie beide Haltestellen an.");
 			return;
 		}

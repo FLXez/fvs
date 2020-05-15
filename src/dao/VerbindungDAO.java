@@ -35,7 +35,7 @@ public class VerbindungDAO implements DAO<Verbindung, VerbindungDTO> {
 	}
 	
 	public boolean findByHaltestellen(int hidStart, int hidEnde) {
-		Query q = em.createQuery("SELECT v.h_id_start , v.h_id_ende FROM Verbindung v WHERE v.h_id_start = '" + hidStart + "' AND v.h_id_ende = '" + hidEnde + "'");
+		Query q = em.createQuery("SELECT v.hIdStart , v.hIdEnde FROM Verbindung v WHERE v.hIdStart = '" + hidStart + "' AND v.hIdEnde = '" + hidEnde + "'");
 		try {
 			q.getSingleResult();
 			return true;
