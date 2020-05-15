@@ -35,15 +35,19 @@ public class AuthorizationFilter implements Filter {
 
 			String reqURI = request.getRequestURI();
 			if (reqURI.indexOf("/login.xhtml") >= 0
-					|| (session != null && session.getAttribute("email") != null)
-					|| reqURI.indexOf("/public/") >= 0
-					|| reqURI.contains("javax.faces.resource"))
-				chain.doFilter(request, response);
-			else
-				response.sendRedirect(request.getContextPath() + "/login.xhtml");
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+					|| (session != null && session.getAttribute("privilegien").equals("Manager") && reqURI.indexOf("/manager/") >= 0)
+					|| (session != null && session.getAttribute("privilegien").equals("Mitarbeiter") && reqURI.indexOf("/mitarbeiter/") >= 0)
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/index.xhtml") >= 0)					
+					)
+			{ chain.doFilter(request, response); }
+			else {
+				if((session != null && session.getAttribute("privilegien").equals("Manager") && reqURI.indexOf("/mitarbeiter/") >= 0) || (session != null && session.getAttribute("privilegien").equals("Mitarbeiter") && reqURI.indexOf("/manager/") >= 0))
+				{
+					response.sendRedirect(request.getContextPath() + "/index.xhtml"); 	
+				}
+				response.sendRedirect(request.getContextPath() + "/login.xhtml"); 
+				}
+		} catch (Exception e) { System.out.println(e.getMessage()); }
 	}
 
 	@Override
