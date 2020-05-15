@@ -37,7 +37,13 @@ public class AuthorizationFilter implements Filter {
 			if (reqURI.indexOf("/login.xhtml") >= 0
 					|| (session != null && session.getAttribute("privilegien").equals("Manager") && reqURI.indexOf("/manager/") >= 0)
 					|| (session != null && session.getAttribute("privilegien").equals("Mitarbeiter") && reqURI.indexOf("/mitarbeiter/") >= 0)
-					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/index.xhtml") >= 0)					
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/index.xhtml") >= 0)
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/haltestellen.xhtml") >= 0)	
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/linien.xhtml") >= 0)	
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/register.xhtml") >= 0)	
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/test.xhtml") >= 0)	
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/copyme.xhtml") >= 0)	
+					
 					)
 			{ chain.doFilter(request, response); }
 			else {
