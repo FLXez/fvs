@@ -51,12 +51,12 @@
 						<th>Hinzufügen</th>
 					</tr>
 					<tr>
-						<td><h:selectOneMenu value="verbindungBean.newVerbindungDTO.haltestelle_startDTO">
+						<td><h:selectOneMenu value="#{verbindungBean.newVerbindungDTO.haltestelle_startDTO}">
 								<f:selectItems value="#{haltestelleBean.allHaltestellen}"
 									var="haltestelleDTO" itemLabel="#{haltestelleDTO.bezeichnung}"
 									itemValue="#{haltestelleDTO.HId}" />
 							</h:selectOneMenu></td>
-						<td><h:selectOneMenu value="verbindungBean.newVerbindungDTO.haltestelle_endeDTO">
+						<td><h:selectOneMenu value="#{verbindungBean.newVerbindungDTO.haltestelle_endeDTO}">
 								<f:selectItems value="#{haltestelleBean.allHaltestellen}"
 									var="haltestelleDTO" itemLabel="#{haltestelleDTO.bezeichnung}"
 									itemValue="#{haltestelleDTO.HId}" />
@@ -66,7 +66,7 @@
 					</tr>
 					<tr>
 					<td colspan="4">
-						<h:message class="info" for="linie" id="linienInfo"/>
+						<h:message class="info" for="dauer" id="linienInfo"/>
 					</td>
 					</tr>
 				</table>
