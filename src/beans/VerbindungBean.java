@@ -70,6 +70,11 @@ public class VerbindungBean {
 			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestelle leer", "Bitte geben Sie beide Haltestellen an.");
 			return;
 		}
+
+		if(newVerbindungDTO.getHaltestelle_startDTO() == newVerbindungDTO.getHaltestelle_endeDTO()) {
+			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestellen identsich", "Bitte wählen Sie zwei verschiedene Haltestellen aus.");
+			return;
+		}
 		
 		if(newVerbindungDTO.getDauer() == 0) {
 			NotificationUtils.showMessage(false, 1, "linien:dauer", "Dauer 0", "Bitte geben Sie eine Dauer an.");			
