@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import dto.VerbindungDTO;
+import entity.Haltestelle;
 import entity.Verbindung;
 
 
@@ -34,8 +35,8 @@ public class VerbindungDAO implements DAO<Verbindung, VerbindungDTO> {
 		return q.getResultList();	
 	}
 	
-	public boolean findByHaltestellen(int hidStart, int hidEnde) {
-		Query q = em.createQuery("SELECT v.hIdStart , v.hIdEnde FROM Verbindung v WHERE v.hIdStart = '" + hidStart + "' AND v.hIdEnde = '" + hidEnde + "'");
+	public boolean findByHaltestellen(Haltestelle haltestelle_start, Haltestelle haltestelle_ende) {
+		Query q = em.createQuery("SELECT v.haltestelle_start , v.haltestelle_ende FROM Verbindung v WHERE v.haltestelle_start = '" + haltestelle_start + "' AND v.haltestelle_ende = '" + haltestelle_ende + "'");
 		try {
 			q.getSingleResult();
 			return true;

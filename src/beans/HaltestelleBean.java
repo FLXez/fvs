@@ -2,6 +2,7 @@ package beans;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
@@ -43,6 +44,20 @@ public class HaltestelleBean {
 		haltestelles.forEach((haltestelle) -> haltestelleDTOs.add(new HaltestelleDTO(haltestelle)));
 		
 		return haltestelleDTOs;
+	}
+	
+	public HaltestelleDTO getHaltestelleByID(int id) {
+		HaltestelleDTO haltestelleDTO;
+		Optional<Haltestelle> haltestelle = haltestelleDAO.get(id);
+		if(haltestelle.isPresent()) {
+			haltestelleDTO = new HaltestelleDTO(haltestelle.get());
+			
+			return haltestelleDTO;
+		} else {
+			System.out.println("Keine Haltestelle mit der ID " + id + " gefunden.");
+			return null;
+		}
+		
 	}
 	
 	public void add() { 
