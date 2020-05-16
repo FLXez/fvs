@@ -44,6 +44,10 @@ public class BuslinieBean {
 		return buslinieDTOs;
 	}
 	
+	public String forwardLinienabfolge() {
+		return "linienabfolge";
+	}
+	
 	public void add() {
 		
 		if(buslinieDTO.getNummer() == 0) {
