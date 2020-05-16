@@ -24,6 +24,12 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge> {
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<Linienabfolge> getByBuslinie(int bid) {
+		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.bid = '" + bid + "' ORDER BY l.position ASC");	
+		return q.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Linienabfolge> getAll() {
 		Query q = em.createQuery("SELECT l FROM Linienabfolge l");
@@ -31,18 +37,18 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge> {
 	}
 
 	@Override
-	public void save(Linienabfolge ablauf) {
-		em.persist(ablauf);
+	public void save(Linienabfolge linienabfolge) {
+		em.persist(linienabfolge);
 	}
 
 	@Override
-	public void update(Linienabfolge ablauf, String[] parms) {
+	public void update(Linienabfolge linienabfolge, String[] parms) {
 		//TODO Parms parsen (siehe UserDAO)
-		em.merge(ablauf);
+		em.merge(linienabfolge);
 	}
 
 	@Override
-	public void delete(Linienabfolge ablauf) {
-		em.remove(ablauf);		
+	public void delete(Linienabfolge linienabfolge) {
+		em.remove(linienabfolge);		
 	}
 }
