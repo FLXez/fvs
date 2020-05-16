@@ -50,13 +50,13 @@
 		<table>
 		<tr>
 		<td><h:outputText value="Email:" /></td>
-		<td><h:inputText id ="email" value="#{userBean.loginUser.email}">
+		<td><h:inputText id ="email" value="#{login.user.email}">
 		</h:inputText></td>
 		</tr>
 		
 		<tr>
 		<td><h:outputText value="Passwort:"></h:outputText></td>
-		<td><h:inputSecret id="password" value="#{userBean.loginUser.passwort}"/></td>
+		<td><h:inputSecret id="password" value="#{login.user.passwort}"/></td>
 		</tr>
 		<tr>
 		<td style="text-align:center;" colspan="2"><h:message class="error" for="password" id="passwordError"/></td>
@@ -65,7 +65,7 @@
 		</div>
 		<br></br><br></br>
 		<div id="loginbutton">
-		<h:commandButton id="einloggen" action="#{userBean.login}" value="Einloggen" style="height: 34px;font-size: 22px;"></h:commandButton>
+		<h:commandButton id="einloggen" action="#{login.validate}" value="Einloggen" style="height: 34px;font-size: 22px;"></h:commandButton>
 		</div>
 	</h:form>
 </div>

@@ -8,34 +8,34 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import dao.FahrplanDAO;
+import dao.FahrtDAO;
 import dto.BuslinieDTO;
-import dto.FahrplanDTO;
-import entity.Fahrplan;
+import dto.FahrtDTO;
+import entity.Fahrt;
 
 @Named("fahrplanBean")
 @ApplicationScoped
-public class FahrplanBean {
+public class FahrtBean {
 
 	@Inject
-	FahrplanDAO fahrplanDAO;
+	FahrtDAO fahrtDAO;
 
-	FahrplanDTO neuFahrplanDTO;
+	FahrtDTO neuFahrplanDTO;
 	BuslinieDTO zugeodneteBuslinieDTO;
 
 	@PostConstruct
 	public void init() {
-		this.neuFahrplanDTO = new FahrplanDTO();
+		this.neuFahrplanDTO = new FahrtDTO();
 		this.zugeodneteBuslinieDTO = new BuslinieDTO();
 	}
 
-	public void setNeuFahrplanDTO(FahrplanDTO neuFahrplanDTO) {
+	public void setNeuFahrplanDTO(FahrtDTO neuFahrplanDTO) {
 		this.neuFahrplanDTO = neuFahrplanDTO;
 	}
-	
-	public FahrplanDTO getNeuFahrplanDTO() {
+
+	public FahrtDTO getNeuFahrplanDTO() {
 		return neuFahrplanDTO;
-	}	
+	}
 
 	public void setZugeodneteBuslinieDTO(BuslinieDTO zugeodneteBuslinieDTO) {
 		this.zugeodneteBuslinieDTO = zugeodneteBuslinieDTO;
@@ -45,18 +45,16 @@ public class FahrplanBean {
 		return zugeodneteBuslinieDTO;
 	}
 
-	public List<FahrplanDTO> getAll() {
-		List<Fahrplan> fahrplans = new ArrayList<Fahrplan>();
-		List<FahrplanDTO> fahrplanDTOs = new ArrayList<FahrplanDTO>();
-		fahrplans = fahrplanDAO.getAll();
-		fahrplans.forEach((fahrplan) -> fahrplanDTOs.add(new FahrplanDTO(fahrplan)));
-		return fahrplanDTOs;
+	public List<FahrtDTO> getAll() {
+		List<Fahrt> fahrten = new ArrayList<Fahrt>();
+		List<FahrtDTO> fahrtDTOs = new ArrayList<FahrtDTO>();
+		fahrten = fahrtDAO.getAll();
+		fahrten.forEach((fahrt) -> fahrtDTOs.add(new FahrtDTO(fahrt)));
+		return fahrtDTOs;
 	}
-	
+
 	public void add() {
-		
-		
-		
+
 	}
-	
+
 }

@@ -35,7 +35,8 @@ public class AuthorizationFilter implements Filter {
 
 			String reqURI = request.getRequestURI();
 			if (reqURI.indexOf("/login.xhtml") >= 0
-					|| (session != null && session.getAttribute("privilegien").equals("Manager") && reqURI.indexOf("/manager/") >= 0)
+					|| (session != null && session.getAttribute("privilegien").equals("Admin"))
+					|| (session != null && session.getAttribute("privilegien").equals("Manager"))
 					|| (session != null && session.getAttribute("privilegien").equals("Mitarbeiter") && reqURI.indexOf("/mitarbeiter/") >= 0)
 					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/index.xhtml") >= 0)
 					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/haltestellen.xhtml") >= 0)	

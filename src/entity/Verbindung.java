@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.List;
 
 
 /**
@@ -14,30 +15,33 @@ public class Verbindung implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="v_id")
-	private int vId;
+	private int vid;
 
 	private int dauer;
 
-	//uni-directional many-to-one association to Haltestelle
-	@ManyToOne
-	@JoinColumn(name="h_id_ende")
-	private Haltestelle haltestelle_ende;
+	//bi-directional many-to-one association to Linienabfolge
+	@OneToMany(mappedBy="verbindung")
+	private List<Linienabfolge> linienabfolgen;
 
 	//uni-directional many-to-one association to Haltestelle
 	@ManyToOne
-	@JoinColumn(name="h_id_start")
-	private Haltestelle haltestelle_start;
+	@JoinColumn(name="hidE")
+	private Haltestelle haltestelleE;
+
+	//uni-directional many-to-one association to Haltestelle
+	@ManyToOne
+	@JoinColumn(name="hidS")
+	private Haltestelle haltestelleS;
 
 	public Verbindung() {
 	}
 
-	public int getVId() {
-		return this.vId;
+	public int getVid() {
+		return this.vid;
 	}
 
-	public void setVId(int vId) {
-		this.vId = vId;
+	public void setVid(int vid) {
+		this.vid = vid;
 	}
 
 	public int getDauer() {
@@ -48,20 +52,42 @@ public class Verbindung implements Serializable {
 		this.dauer = dauer;
 	}
 
-	public Haltestelle getHaltestelle_ende() {
-		return this.haltestelle_ende;
+	public List<Linienabfolge> getLinienabfolgen() {
+		return this.linienabfolgen;
 	}
 
-	public void setHaltestelle_ende(Haltestelle haltestelle_ende) {
-		this.haltestelle_ende = haltestelle_ende;
+	public void setLinienabfolgen(List<Linienabfolge> linienabfolgen) {
+		this.linienabfolgen = linienabfolgen;
 	}
 
-	public Haltestelle getHaltestelle_start() {
-		return this.haltestelle_start;
+	public Linienabfolge addLinienabfolgen(Linienabfolge linienabfolgen) {
+		getLinienabfolgen().add(linienabfolgen);
+		linienabfolgen.setVerbindung(this);
+
+		return linienabfolgen;
 	}
 
-	public void setHaltestelle_start(Haltestelle haltestelle_start) {
-		this.haltestelle_start = haltestelle_start;
+	public Linienabfolge removeLinienabfolgen(Linienabfolge linienabfolgen) {
+		getLinienabfolgen().remove(linienabfolgen);
+		linienabfolgen.setVerbindung(null);
+
+		return linienabfolgen;
+	}
+
+	public Haltestelle getHaltestelleE() {
+		return this.haltestelleE;
+	}
+
+	public void setHaltestelleE(Haltestelle haltestelleE) {
+		this.haltestelleE = haltestelleE;
+	}
+
+	public Haltestelle getHaltestelleS() {
+		return this.haltestelleS;
+	}
+
+	public void setHaltestelleS(Haltestelle haltestelleS) {
+		this.haltestelleS = haltestelleS;
 	}
 
 }

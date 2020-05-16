@@ -6,59 +6,59 @@ import entity.Verbindung;
 
 public class VerbindungDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
-	private int vId;
+
+	private int vid;
 
 	private int dauer;
 
-	private HaltestelleDTO haltestelle_startDTO;
-	
-	private HaltestelleDTO haltestelle_endeDTO;
+	private HaltestelleDTO haltestelleEDTO;
+
+	private HaltestelleDTO haltestelleSDTO;
 
 	public VerbindungDTO() {
-		this.haltestelle_startDTO = new HaltestelleDTO();
-		this.haltestelle_endeDTO = new HaltestelleDTO();
+		this.haltestelleEDTO = new HaltestelleDTO();
+		this.haltestelleSDTO = new HaltestelleDTO();
 	}
 
 	public VerbindungDTO(Verbindung verbindungEntity) {
-		
-		this.vId = verbindungEntity.getVId();
+
+		this.vid = verbindungEntity.getVid();
 		this.dauer = verbindungEntity.getDauer();
-		this.haltestelle_startDTO = new HaltestelleDTO(verbindungEntity.getHaltestelle_start());
-		this.haltestelle_endeDTO = new HaltestelleDTO(verbindungEntity.getHaltestelle_ende());
-		
-	}
-	
-	public int getVId() {
-		return this.vId;
+		this.haltestelleEDTO = new HaltestelleDTO(verbindungEntity.getHaltestelleE());
+		this.haltestelleSDTO = new HaltestelleDTO(verbindungEntity.getHaltestelleS());
+
 	}
 
-	public void setVId(int vId) {
-		this.vId = vId;
+	public int getVid() {
+		return vid;
+	}
+
+	public void setVid(int vid) {
+		this.vid = vid;
 	}
 
 	public int getDauer() {
-		return this.dauer;
+		return dauer;
 	}
 
 	public void setDauer(int dauer) {
 		this.dauer = dauer;
 	}
 
-	public HaltestelleDTO getHaltestelle_endeDTO() {
-		return this.haltestelle_endeDTO;
+	public HaltestelleDTO getHaltestelleEDTO() {
+		return haltestelleEDTO;
 	}
 
-	public void setHaltestelle_endeDTO(HaltestelleDTO haltestelle_endeDTO) {
-		this.haltestelle_endeDTO = haltestelle_endeDTO;
+	public void setHaltestelleEDTO(HaltestelleDTO haltestelleEDTO) {
+		this.haltestelleEDTO = haltestelleEDTO;
 	}
 
-	public HaltestelleDTO getHaltestelle_startDTO() {
-		return this.haltestelle_startDTO;
+	public HaltestelleDTO getHaltestelleSDTO() {
+		return haltestelleSDTO;
 	}
 
-	public void setHaltestelle_startDTO(HaltestelleDTO haltestelle_startDTO) {
-		this.haltestelle_startDTO = haltestelle_startDTO;
+	public void setHaltestelleSDTO(HaltestelleDTO haltestelleSDTO) {
+		this.haltestelleSDTO = haltestelleSDTO;
 	}
 
 }

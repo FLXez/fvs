@@ -20,7 +20,7 @@ public class SessionUtils {
 		return (HttpServletRequest) FacesContext.getCurrentInstance()
 				.getExternalContext().getRequest();
 	}
-
+	
 	
 	public static void setEmail(String email) {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()

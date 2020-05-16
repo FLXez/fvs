@@ -1,7 +1,6 @@
 package dao;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -10,19 +9,18 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import dto.HaltestelleDTO;
 import entity.Haltestelle;
 
 @Stateless
 @LocalBean
-public class HaltestelleDAO implements DAO<Haltestelle, HaltestelleDTO> {
+public class HaltestelleDAO implements DAO<Haltestelle> {
 
 	@PersistenceContext
 	EntityManager em;
 
 	@Override
-	public Optional<Haltestelle> get(int id) {
-		return Optional.ofNullable(em.find(Haltestelle.class, id));
+	public Haltestelle get(int id) {
+		return em.find(Haltestelle.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -31,17 +29,6 @@ public class HaltestelleDAO implements DAO<Haltestelle, HaltestelleDTO> {
 		Query q = em.createQuery("SELECT h FROM Haltestelle h");
 		
 		return q.getResultList();
-	}
-
-	public boolean findByLatLong(double latitude, double longitude) {
-		Query q = em.createQuery("SELECT h.latitude, h.longitude FROM Haltestelle h WHERE h.latitude = '" + latitude + "' AND h.longitude = '" + longitude + "'");
-		try {
-			q.getSingleResult();
-			return true;
-		} catch (NoResultException e) {
-			System.out.println(e.getMessage());
-			return false;
-		}
 	}
 	
 	public boolean findByBezeichnung(String bezeichnung) {

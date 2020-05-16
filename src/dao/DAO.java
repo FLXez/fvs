@@ -1,11 +1,10 @@
 package dao;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface DAO<Entity, DTO> {
+public interface DAO<Entity> {
 	
-	Optional<Entity> get(int id);
+	Entity get(int id);
 	
 	List<Entity> getAll();
 	

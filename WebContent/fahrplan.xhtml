@@ -23,7 +23,7 @@
 			<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
 			<p>
-				<a href="./linien.xhtml">Buslinien</a>
+				<a href="./buslinien.xhtml">Buslinien</a>
 			</p>
 			<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
@@ -34,7 +34,7 @@
 				style="width: 100%; text-align: center;" />
 			<p>
 				<h:form>
-					<h:commandLink action="#{userBean.logout}" value="Ausloggen" />
+					<h:commandLink action="#{login.invalidate}" value="Ausloggen" />
 				</h:form>
 			</p>
 			<hr noshade="noshade" size="5"
@@ -51,15 +51,15 @@
 						<th>Hinzufügen</th>
 					</tr>
 					<tr>
-						<td><h:selectOneMenu value="#{verbindungBean.newVerbindungDTO.haltestelle_startDTO.HId}">
+						<td><h:selectOneMenu value="#{verbindungBean.newVerbindungDTO.haltestelleSDTO.hid}">
 								<f:selectItems value="#{haltestelleBean.allHaltestellen}"
 									var="haltestelleDTO" itemLabel="#{haltestelleDTO.bezeichnung}"
-									itemValue="#{haltestelleDTO.HId}" />
+									itemValue="#{haltestelleDTO.hid}" />
 							</h:selectOneMenu></td>
-						<td><h:selectOneMenu value="#{verbindungBean.newVerbindungDTO.haltestelle_endeDTO.HId}">
+						<td><h:selectOneMenu value="#{verbindungBean.newVerbindungDTO.haltestelleEDTO.hid}">
 								<f:selectItems value="#{haltestelleBean.allHaltestellen}"
 									var="haltestelleDTO" itemLabel="#{haltestelleDTO.bezeichnung}"
-									itemValue="#{haltestelleDTO.HId}" />
+									itemValue="#{haltestelleDTO.hid}" />
 							</h:selectOneMenu></td>
 						<td><h:inputText id="dauer" value="#{verbindungBean.newVerbindungDTO.dauer}"/></td>
 						<td><h:commandButton action="#{verbindungBean.add}" value="Hinzufügen"/></td>

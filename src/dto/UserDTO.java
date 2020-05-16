@@ -7,7 +7,7 @@ import entity.User;
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private int uId;
+	private int uid;
 
 	private String email;
 
@@ -24,7 +24,7 @@ public class UserDTO implements Serializable {
 	
 	public UserDTO(User userEntity) {
 		
-		this.uId = userEntity.getUId();
+		this.uid = userEntity.getUid();
 		this.email = userEntity.getEmail();
 		this.name = userEntity.getName();
 		this.passwort = userEntity.getPasswort();
@@ -33,12 +33,12 @@ public class UserDTO implements Serializable {
 		
 	}
 
-	public int getUId() {
-		return this.uId;
+	public int getUid() {
+		return this.uid;
 	}
 
-	public void setUId(int uId) {
-		this.uId = uId;
+	public void setUid(int uid) {
+		this.uid = uid;
 	}
 
 	public String getEmail() {

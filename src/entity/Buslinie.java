@@ -15,26 +15,25 @@ public class Buslinie implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="b_id")
-	private int bId;
+	private int bid;
 
 	private int nummer;
-
+	
 	private String richtung;
 
-	//bi-directional many-to-one association to Fahrplan
+	//bi-directional many-to-one association to Linienabfolge
 	@OneToMany(mappedBy="buslinie")
-	private List<Fahrplan> fahrplans;
-
+	private List<Linienabfolge> linienabfolgen;
+	
 	public Buslinie() {
 	}
 
-	public int getBId() {
-		return this.bId;
+	public int getBid() {
+		return this.bid;
 	}
 
-	public void setBId(int bId) {
-		this.bId = bId;
+	public void setBid(int bid) {
+		this.bid = bid;
 	}
 
 	public int getNummer() {
@@ -48,31 +47,31 @@ public class Buslinie implements Serializable {
 	public String getRichtung() {
 		return this.richtung;
 	}
-
+	
 	public void setRichtung(String richtung) {
 		this.richtung = richtung;
 	}
-
-	public List<Fahrplan> getFahrplans() {
-		return this.fahrplans;
+	
+	public List<Linienabfolge> getLinienabfolgen() {
+		return this.linienabfolgen;
 	}
 
-	public void setFahrplans(List<Fahrplan> fahrplans) {
-		this.fahrplans = fahrplans;
+	public void setLinienabfolgen(List<Linienabfolge> linienabfolgen) {
+		this.linienabfolgen = linienabfolgen;
 	}
 
-	public Fahrplan addFahrplan(Fahrplan fahrplan) {
-		getFahrplans().add(fahrplan);
-		fahrplan.setBuslinie(this);
+	public Linienabfolge addLinienabfolgen(Linienabfolge linienabfolgen) {
+		getLinienabfolgen().add(linienabfolgen);
+		linienabfolgen.setBuslinie(this);
 
-		return fahrplan;
+		return linienabfolgen;
 	}
 
-	public Fahrplan removeFahrplan(Fahrplan fahrplan) {
-		getFahrplans().remove(fahrplan);
-		fahrplan.setBuslinie(null);
+	public Linienabfolge removeLinienabfolgen(Linienabfolge linienabfolgen) {
+		getLinienabfolgen().remove(linienabfolgen);
+		linienabfolgen.setBuslinie(null);
 
-		return fahrplan;
+		return linienabfolgen;
 	}
 
 }

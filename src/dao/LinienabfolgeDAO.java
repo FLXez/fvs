@@ -1,7 +1,6 @@
 package dao;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -9,42 +8,41 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import dto.AblaufDTO;
-import entity.Ablauf;
+import entity.Linienabfolge;
 
 @Stateless
 @LocalBean
-public class AblaufDAO implements DAO<Ablauf, AblaufDTO> {
+public class LinienabfolgeDAO implements DAO<Linienabfolge> {
 
 	@PersistenceContext
 	EntityManager em;
 	
 	@Override
-	public Optional<Ablauf> get(int id) {
+	public Linienabfolge get(int id) {
 		
-		return Optional.ofNullable(em.find(Ablauf.class, id));
+		return em.find(Linienabfolge.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Ablauf> getAll() {
-		Query q = em.createQuery("SELECT a FROM Ablauf a");
+	public List<Linienabfolge> getAll() {
+		Query q = em.createQuery("SELECT l FROM Linienabfolge l");
 		return q.getResultList();
 	}
 
 	@Override
-	public void save(Ablauf ablauf) {
+	public void save(Linienabfolge ablauf) {
 		em.persist(ablauf);
 	}
 
 	@Override
-	public void update(Ablauf ablauf, String[] parms) {
+	public void update(Linienabfolge ablauf, String[] parms) {
 		//TODO Parms parsen (siehe UserDAO)
 		em.merge(ablauf);
 	}
 
 	@Override
-	public void delete(Ablauf ablauf) {
+	public void delete(Linienabfolge ablauf) {
 		em.remove(ablauf);		
 	}
 }

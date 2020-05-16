@@ -16,11 +16,11 @@
 			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
 			<p><a href="./fahrplan.xhtml">Fahrplan</a></p>
 			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./linien.xhtml">Buslinien</a></p>
+			<p><a href="./buslinien.xhtml">Buslinien</a></p>
 			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
 			<p><a href="./haltestellen.xhtml">Haltestellen</a></p>
 			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><h:form><h:commandLink action="#{userBean.logout}" value="Ausloggen"/></h:form></p>
+			<p><h:form><h:commandLink action="#{login.invalidate}" value="Ausloggen"/></h:form></p>
 			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
 		
 	</div>
@@ -30,24 +30,27 @@
 		<table>
 		<tr>
 			<td><h:outputText value="Buslinie hinzuf&#252;gen:" /></td>
-			<td><h:inputText id="number" value="#{buslinieBean.newBuslinieDTO.nummer}" /></td>
-			<td><h:inputText id="direction" value="#{buslinieBean.newBuslinieDTO.richtung}" /> </td>
+			<td><h:inputText id="number" value="#{buslinieBean.buslinieDTO.nummer}" /></td>
 		</tr>
 		<tr>
 			<td colspan="1"><h:commandButton action="#{buslinieBean.add}" value="Hinzuf&#252;gen"/></td> 
-			<td colspan="2"><h:message class="info" for="direction" id="addLineInfo"/></td>
+			<td colspan="2"><h:message class="info" for="number" id="addLineInfo"/></td>
 		</tr>	
 		</table>
 		</h:form>
 		
-		<h:dataTable id="lineTable" value="#{buslinieBean.allBuslinien}" var="buslinieDTO">
+		<h:dataTable id="lineTable" value="#{buslinieBean.allBuslinien}" var="b">
       	<h:column>
-      		<f:facet name="header">Linien-Nummer</f:facet>
-      		<h:outputText value="#{buslinieDTO.nummer}" />          		
+      		<f:facet name="header">Buslinien-ID</f:facet>
+      		<h:outputText value="#{b.bid}" />          		
       	</h:column>
       	<h:column>
-      		<f:facet name="header">Richtung</f:facet>
-      		<h:outputText value="#{buslinieDTO.richtung}" />      		
+      		<f:facet name="header">Buslinien-Nummer</f:facet>
+      		<h:outputText value="#{b.nummer}" />          		
+      	</h:column>
+      	<h:column>
+      		<f:facet name="header">Buslinien-Richtung</f:facet>
+      		<h:outputText value="#{b.richtung}" />          		
       	</h:column>      	
       </h:dataTable>
 	</div>

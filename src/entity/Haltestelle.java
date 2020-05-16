@@ -14,24 +14,19 @@ public class Haltestelle implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="h_id")
-	private int hId;
+	private int hid;
 
 	private String bezeichnung;
-
-	private double latitude;
-
-	private double longitude;
 
 	public Haltestelle() {
 	}
 
-	public int getHId() {
-		return this.hId;
+	public int getHid() {
+		return this.hid;
 	}
 
-	public void setHId(int hId) {
-		this.hId = hId;
+	public void setHid(int hid) {
+		this.hid = hid;
 	}
 
 	public String getBezeichnung() {
@@ -40,22 +35,6 @@ public class Haltestelle implements Serializable {
 
 	public void setBezeichnung(String bezeichnung) {
 		this.bezeichnung = bezeichnung;
-	}
-
-	public double getLatitude() {
-		return this.latitude;
-	}
-
-	public void setLatitude(double latitude) {
-		this.latitude = latitude;
-	}
-
-	public double getLongitude() {
-		return this.longitude;
-	}
-
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
 	}
 
 }

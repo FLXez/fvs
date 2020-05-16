@@ -8,70 +8,54 @@ import entity.Buslinie;
 public class BuslinieDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private int bId;
+	private int bid;
 
 	private int nummer;
-
+	
 	private String richtung;
 
-	private List<FahrplanDTO> fahrplanDTOs;
+	private List<LinienabfolgeDTO> LinienabfolgeDTOs;
 
 	public BuslinieDTO() {
 	}
 	
-	public BuslinieDTO(Buslinie BuslinieEntity) {
-		this.bId = BuslinieEntity.getBId();
-		this.nummer = BuslinieEntity.getNummer();
-		this.richtung = BuslinieEntity.getRichtung();
-		// Bi-Direktionales Mapping ist real Struggle
-		// this.fahrplanDTOs = new ArrayList<FahrplanDTO>();
-		// BuslinieEntity.getFahrplans().forEach((fahrplan) -> fahrplanDTOs.add(new FahrplanDTO(fahrplan)));
+	public BuslinieDTO(Buslinie buslinie) {
+		this.bid = buslinie.getBid();
+		this.nummer = buslinie.getNummer();
+		this.richtung = buslinie.getRichtung();
 	}
 
-	public int getBId() {
-		return this.bId;
+	public int getBid() {
+		return bid;
 	}
 
-	public void setBId(int bId) {
-		this.bId = bId;
+	public void setBid(int bid) {
+		this.bid = bid;
 	}
 
 	public int getNummer() {
-		return this.nummer;
+		return nummer;
 	}
 
 	public void setNummer(int nummer) {
 		this.nummer = nummer;
 	}
-
+	
 	public String getRichtung() {
 		return this.richtung;
 	}
-
+	
 	public void setRichtung(String richtung) {
 		this.richtung = richtung;
 	}
 
-	public List<FahrplanDTO> getFahrplanDTOs() {
-		return this.fahrplanDTOs;
+	public List<LinienabfolgeDTO> getLinienabfolgeDTOs() {
+		return LinienabfolgeDTOs;
 	}
 
-	public void setFahrplans(List<FahrplanDTO> fahrplanDTOs) {
-		this.fahrplanDTOs = fahrplanDTOs;
+	public void setLinienabfolgeDTOs(List<LinienabfolgeDTO> linienabfolgeDTOs) {
+		LinienabfolgeDTOs = linienabfolgeDTOs;
 	}
 
-	public FahrplanDTO addFahrplanDTO(FahrplanDTO fahrplanDTO) {
-		getFahrplanDTOs().add(fahrplanDTO);
-		fahrplanDTO.setBuslinie(this);
-
-		return fahrplanDTO;
-	}
-
-	public FahrplanDTO removeFahrplan(FahrplanDTO fahrplanDTO) {
-		getFahrplanDTOs().remove(fahrplanDTO);
-		fahrplanDTO.setBuslinie(null);
-
-		return fahrplanDTO;
-	}
 
 }

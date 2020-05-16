@@ -16,11 +16,11 @@
 			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
 			<p><a href="./fahrplan.xhtml">Fahrplan</a></p>
 			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./linien.xhtml">Buslinien</a></p>
+			<p><a href="./buslinien.xhtml">Buslinien</a></p>
 			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
 			<p><a href="./haltestellen.xhtml">Haltestellen</a></p>
 			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><h:form><h:commandLink action="#{userBean.logout}" value="Ausloggen"/></h:form></p>
+			<p><h:form><h:commandLink action="#{login.invalidate}" value="Ausloggen"/></h:form></p>
 			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
 		
 	</div>
@@ -31,8 +31,6 @@
 		<tr>
 			<td><h:outputText value="Haltestelle hinzuf&#252;gen:" /></td>
 			<td><h:inputText id="description" value="#{haltestelleBean.newHaltestelleDTO.bezeichnung}" /></td>
-			<td><h:inputText id="latitude" value="#{haltestelleBean.newHaltestelleDTO.latitude}" /> </td>
-			<td><h:inputText id="longitutde" value="#{haltestelleBean.newHaltestelleDTO.longitude}" /></td>
 		</tr>
 		<tr>
 			<td colspan="1"><h:commandButton action="#{haltestelleBean.add}" value="Hinzuf&#252;gen"/></td>
@@ -44,20 +42,12 @@
 		<h:dataTable id="stopTable" value="#{haltestelleBean.allHaltestellen}" var="haltestelleDTO">
       	<h:column>
       		<f:facet name="header">Haltestellen-ID</f:facet>
-      		<h:outputText value="#{haltestelleDTO.HId}" />          		
+      		<h:outputText value="#{haltestelleDTO.hid}" />          		
       	</h:column>
       	<h:column>
       		<f:facet name="header">Haltestellen-Name</f:facet>
       		<h:outputText value="#{haltestelleDTO.bezeichnung}" />      		
-      	</h:column>     
-      	<h:column>
-      		<f:facet name="header">Latitude</f:facet>
-      		<h:outputText value="#{haltestelleDTO.latitude}" />      		
-      	</h:column>
-      	<h:column>
-      		<f:facet name="header">Longitude</f:facet>
-      		<h:outputText value="#{haltestelleDTO.longitude}" />      		
-      	</h:column> 	
+      	</h:column>      	
       </h:dataTable>
 	</div>
 	</div>

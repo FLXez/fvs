@@ -1,7 +1,6 @@
 package dao;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -10,20 +9,19 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import dto.VerbindungDTO;
 import entity.Verbindung;
 
 
 @Stateless
 @LocalBean
-public class VerbindungDAO implements DAO<Verbindung, VerbindungDTO> {
+public class VerbindungDAO implements DAO<Verbindung> {
 
 	@PersistenceContext
 	EntityManager em;
 	
 	@Override
-	public Optional<Verbindung> get(int id) {
-		return Optional.ofNullable(em.find(Verbindung.class, id));
+	public Verbindung get(int id) {
+		return em.find(Verbindung.class, id);
 	}
 	
 	@Override
@@ -34,8 +32,9 @@ public class VerbindungDAO implements DAO<Verbindung, VerbindungDTO> {
 		return q.getResultList();	
 	}
 	
-	public boolean findByHaltestellen(int hIds, int hIde) {
-		Query q = em.createQuery("SELECT v.haltestelle_start.hId , v.haltestelle_ende.hId FROM Verbindung v WHERE v.haltestelle_start.hId = '" + hIds + "' AND v.haltestelle_ende.hId = '" + hIde + "'");
+	//TODO Verbindung übergeben
+	public boolean findByHaltestellen(int hidS, int hidE) {
+		Query q = em.createQuery("SELECT v.haltestelleS.hid , v.haltestelleE.hid FROM Verbindung v WHERE v.haltestelleS.hid = '" + hidS + "' AND v.haltestelleE.hid = '" + hidE + "'");
 		try {
 			q.getSingleResult();
 			return true;

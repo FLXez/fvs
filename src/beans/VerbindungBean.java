@@ -2,7 +2,6 @@ package beans;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
@@ -53,25 +52,20 @@ public class VerbindungBean {
 	
 	public VerbindungDTO getVerbindungByID(int id) {
 		VerbindungDTO verbindungDTO;
-		Optional<Verbindung> verbindung = verbindungDAO.get(id);
-		if(verbindung.isPresent()) {
-			verbindungDTO = new VerbindungDTO(verbindung.get());
+		Verbindung verbindung = verbindungDAO.get(id);
+		verbindungDTO = new VerbindungDTO(verbindung);
 			
-			return verbindungDTO;
-		} else {
-			System.out.println("Keine Verbindung mit der ID " + id + " gefunden.");
-			return null;
-		}
+		return verbindungDTO;
 	}
 	
 	public void add() {
 		
-		if(newVerbindungDTO.getHaltestelle_startDTO() == null || newVerbindungDTO.getHaltestelle_endeDTO() == null ) {
+		if(newVerbindungDTO.getHaltestelleSDTO() == null || newVerbindungDTO.getHaltestelleEDTO() == null ) {
 			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestelle leer", "Bitte geben Sie beide Haltestellen an.");
 			return;
 		}
 
-		if(newVerbindungDTO.getHaltestelle_startDTO() == newVerbindungDTO.getHaltestelle_endeDTO()) {
+		if(newVerbindungDTO.getHaltestelleSDTO() == newVerbindungDTO.getHaltestelleEDTO()) {
 			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestellen identsich", "Bitte wählen Sie zwei verschiedene Haltestellen aus.");
 			return;
 		}
@@ -82,28 +76,24 @@ public class VerbindungBean {
 		}
 		
 		Haltestelle haltestelleStart = new Haltestelle();
-		int hids = newVerbindungDTO.getHaltestelle_startDTO().getHId();
-		newVerbindungDTO.setHaltestelle_startDTO(haltestelleBean.getHaltestelleByID(hids));
+		int hids = newVerbindungDTO.getHaltestelleSDTO().getHid();
+		newVerbindungDTO.setHaltestelleSDTO(haltestelleBean.getHaltestelleByID(hids));
 		
-		haltestelleStart.setHId(newVerbindungDTO.getHaltestelle_startDTO().getHId());
-		haltestelleStart.setBezeichnung(newVerbindungDTO.getHaltestelle_startDTO().getBezeichnung());
-		haltestelleStart.setLatitude(newVerbindungDTO.getHaltestelle_startDTO().getLatitude());
-		haltestelleStart.setLongitude(newVerbindungDTO.getHaltestelle_startDTO().getLongitude());
+		haltestelleStart.setHid(newVerbindungDTO.getHaltestelleSDTO().getHid());
+		haltestelleStart.setBezeichnung(newVerbindungDTO.getHaltestelleSDTO().getBezeichnung());
 		
 		Haltestelle haltestelleEnde = new Haltestelle();
-		int hide = newVerbindungDTO.getHaltestelle_endeDTO().getHId();
-		newVerbindungDTO.setHaltestelle_endeDTO(haltestelleBean.getHaltestelleByID(hide));
+		int hide = newVerbindungDTO.getHaltestelleEDTO().getHid();
+		newVerbindungDTO.setHaltestelleEDTO(haltestelleBean.getHaltestelleByID(hide));
 		
-		haltestelleEnde.setHId(newVerbindungDTO.getHaltestelle_endeDTO().getHId());
-		haltestelleEnde.setBezeichnung(newVerbindungDTO.getHaltestelle_endeDTO().getBezeichnung());
-		haltestelleEnde.setLatitude(newVerbindungDTO.getHaltestelle_endeDTO().getLatitude());
-		haltestelleEnde.setLongitude(newVerbindungDTO.getHaltestelle_endeDTO().getLongitude());
+		haltestelleEnde.setHid(newVerbindungDTO.getHaltestelleEDTO().getHid());
+		haltestelleEnde.setBezeichnung(newVerbindungDTO.getHaltestelleEDTO().getBezeichnung());
 		
-		if(!verbindungDAO.findByHaltestellen(haltestelleStart.getHId(), haltestelleEnde.getHId())) {
+		if(!verbindungDAO.findByHaltestellen(haltestelleStart.getHid(), haltestelleEnde.getHid())) {
 						
 			Verbindung verbindung = new Verbindung();		
-			verbindung.setHaltestelle_start(haltestelleStart);
-			verbindung.setHaltestelle_ende(haltestelleEnde);
+			verbindung.setHaltestelleS(haltestelleStart);
+			verbindung.setHaltestelleE(haltestelleEnde);
 			verbindung.setDauer(newVerbindungDTO.getDauer());
 			
 			try {

@@ -9,14 +9,12 @@ import javax.persistence.*;
  * 
  */
 @Entity
-@Table(name="user")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="u_id")
-	private int uId;
+	private int uid;
 
 	private String email;
 
@@ -28,14 +26,15 @@ public class User implements Serializable {
 
 	private String vorname;
 
-	public User() {	}
-
-	public int getUId() {
-		return this.uId;
+	public User() {
 	}
 
-	public void setUId(int uId) {
-		this.uId = uId;
+	public int getUid() {
+		return this.uid;
+	}
+
+	public void setUid(int uid) {
+		this.uid = uid;
 	}
 
 	public String getEmail() {

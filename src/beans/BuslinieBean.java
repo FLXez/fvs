@@ -21,19 +21,19 @@ public class BuslinieBean {
 	@Inject
 	BuslinieDAO buslinieDAO;
 	
-	BuslinieDTO newBuslinieDTO;
+	BuslinieDTO buslinieDTO;
 	
 	@PostConstruct
 	public void init() {
-		this.newBuslinieDTO = new BuslinieDTO();
+		this.buslinieDTO = new BuslinieDTO();
 	}
 
-	public void setNewBuslinieDTO(BuslinieDTO buslinieDTO) {
-		this.newBuslinieDTO = buslinieDTO;
+	public void setBuslinieDTO(BuslinieDTO buslinieDTO) {
+		this.buslinieDTO = buslinieDTO;
 	}
 	
-	public BuslinieDTO getNewBuslinieDTO() {
-		return newBuslinieDTO;
+	public BuslinieDTO getBuslinieDTO() {
+		return buslinieDTO;
 	}
 
 	public List<BuslinieDTO> getAllBuslinien() {
@@ -46,26 +46,31 @@ public class BuslinieBean {
 	
 	public void add() {
 		
-		if(newBuslinieDTO.getNummer() == 0) {
-			NotificationUtils.showMessage(false, 1, "addLine:direction", "Nummer leer", "Bitte vergeben Sie eine Nummer.");
-			return;
-		}
-		if(newBuslinieDTO.getRichtung().isEmpty()) {
-			NotificationUtils.showMessage(false, 1, "addLine:direction", "Richtung leer", "Bitte vergeben Sie eine Richtung.");
+		if(buslinieDTO.getNummer() == 0) {
+			NotificationUtils.showMessage(false, 1, "addLine:number", "Nummer leer", "Bitte vergeben Sie eine Nummer.");
 			return;
 		}
 		
-		if(!buslinieDAO.findByNummerAndRichtung(newBuslinieDTO.getNummer(), newBuslinieDTO.getRichtung())) {
-			
-			Buslinie buslinie = new Buslinie();
-			buslinie.setNummer(this.newBuslinieDTO.getNummer());
-			buslinie.setRichtung(this.newBuslinieDTO.getRichtung());
-			
-			try {
-				buslinieDAO.save(buslinie);
-				newBuslinieDTO = new BuslinieDTO();
-				NotificationUtils.showMessage(false, 1, "addLine:direction", "Buslinie hinzugefügt", "Die Buslinie wurde erfolgreich hinzugefügt.");
-			} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "addLine:direction", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
-		} else { NotificationUtils.showMessage(false, 1, "addLine:direction", "Buslinie bereits vorhanden", "Diese Buslinie ist bereits vorhanden."); }
+		if(!buslinieDAO.existsByNummer(buslinieDTO.getNummer()).isEmpty()) {
+			NotificationUtils.showMessage(false, 1, "addLine:number", "Buslinie bereits vorhanden", "Diese Buslinie ist bereits vorhanden."); 
+			return; 
+		}
+		
+		Buslinie buslinie = new Buslinie();
+		buslinie.setNummer(this.buslinieDTO.getNummer());
+		buslinie.setRichtung("H");
+		
+		try {
+			buslinieDAO.save(buslinie);
+			NotificationUtils.showMessage(false, 1, "addLine:number", "Buslinie H hinzugefügt", "Die Buslinie (Hinfahrt) wurde erfolgreich hinzugefügt.");
+		} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "addLine:number", "Unerwarteter Fehler (H)", "Es ist ein unerwarteter Fehler aufgetreten."); }
+
+		buslinie.setRichtung("R");
+		
+		try {
+			buslinieDAO.save(buslinie);
+			buslinieDTO = new BuslinieDTO();
+			NotificationUtils.showMessage(false, 1, "addLine:number", "Buslinie R hinzugefügt", "Die Buslinie (Hinfahrt und Rückfahrt) wurde erfolgreich hinzugefügt.");
+		} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "addLine:number", "Unerwarteter Fehler (R)", "Es ist ein unerwarteter Fehler aufgetreten."); } 
 	} 
 }
