@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 11. Mrz 2020 um 10:47
+-- Erstellungszeit: 16. Mai 2020 um 02:31
 -- Server-Version: 10.1.21-MariaDB
 -- PHP-Version: 7.1.1
 
@@ -23,228 +23,228 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur fÃ¼r Tabelle `ablauf`
---
-
-CREATE TABLE `ablauf` (
-  `a_id` int(11) NOT NULL,
-  `f_id` int(11) NOT NULL,
-  `v_id` int(11) NOT NULL,
-  `position` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Daten fÃ¼r Tabelle `ablauf`
---
-
-INSERT INTO `ablauf` (`a_id`, `f_id`, `v_id`, `position`) VALUES
-(1, 1, 1, 1);
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur fÃ¼r Tabelle `buslinie`
+-- Tabellenstruktur für Tabelle `buslinie`
 --
 
 CREATE TABLE `buslinie` (
-  `b_id` int(11) NOT NULL,
+  `bid` int(11) NOT NULL,
   `nummer` int(11) NOT NULL,
-  `richtung` varchar(255) NOT NULL
+  `Richtung` enum('H','R') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten fÃ¼r Tabelle `buslinie`
+-- Daten für Tabelle `buslinie`
 --
 
-INSERT INTO `buslinie` (`b_id`, `nummer`, `richtung`) VALUES
-(1, 42, 'Hannover Hauptbahnhof');
+INSERT INTO `buslinie` (`bid`, `nummer`, `Richtung`) VALUES
+(1, 12, 'H'),
+(2, 12, 'R'),
+(3, 14, 'H'),
+(4, 14, 'R'),
+(5, 41, 'H'),
+(6, 41, 'R');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur fÃ¼r Tabelle `fahrplan`
+-- Tabellenstruktur für Tabelle `fahrt`
 --
 
-CREATE TABLE `fahrplan` (
-  `f_id` int(11) NOT NULL,
-  `b_id` int(11) DEFAULT NULL,
-  `wochentag` varchar(20) NOT NULL,
+CREATE TABLE `fahrt` (
+  `fid` int(11) NOT NULL,
+  `bid` int(11) NOT NULL,
+  `hidS` int(11) NOT NULL,
+  `hidE` int(11) NOT NULL,
   `uhrzeit` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Daten fÃ¼r Tabelle `fahrplan`
---
-
-INSERT INTO `fahrplan` (`f_id`, `b_id`, `wochentag`, `uhrzeit`) VALUES
-(1, 1, 'mo,di,mi,do,fr', '10:30:00');
-
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur fÃ¼r Tabelle `haltestelle`
+-- Tabellenstruktur für Tabelle `haltestelle`
 --
 
 CREATE TABLE `haltestelle` (
-  `h_id` int(11) NOT NULL,
-  `bezeichnung` varchar(255) NOT NULL,
-  `latitude` double NOT NULL,
-  `longitude` double NOT NULL
+  `hid` int(11) NOT NULL,
+  `bezeichnung` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten fÃ¼r Tabelle `haltestelle`
+-- Daten für Tabelle `haltestelle`
 --
 
-INSERT INTO `haltestelle` (`h_id`, `bezeichnung`, `latitude`, `longitude`) VALUES
-(1, 'Hannover, KrÃ¶pcke Uhr', 52.374427, 9.738857),
-(2, 'Hannover, Hauptbahnhof', 52.375688, 9.74116);
+INSERT INTO `haltestelle` (`hid`, `bezeichnung`) VALUES
+(1, 'Hannover, KrÃ¶pcke Uhr'),
+(2, 'Hannover, Hauptbahnhof'),
+(3, 'Hannover, Silas Home'),
+(4, 'tbahnhof'),
+(5, 'test');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur fÃ¼r Tabelle `user`
+-- Tabellenstruktur für Tabelle `linienabfolge`
+--
+
+CREATE TABLE `linienabfolge` (
+  `lid` int(11) NOT NULL,
+  `bid` int(11) NOT NULL,
+  `vid` int(11) NOT NULL,
+  `position` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `user`
 --
 
 CREATE TABLE `user` (
-  `u_id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
   `vorname` varchar(25) NOT NULL,
   `name` varchar(25) NOT NULL,
   `email` varchar(320) NOT NULL,
   `passwort` varchar(255) NOT NULL,
-  `privilegien` enum('Mitarbeiter','Manager') NOT NULL DEFAULT 'Mitarbeiter'
+  `privilegien` enum('Mitarbeiter','Manager','Admin') NOT NULL DEFAULT 'Mitarbeiter'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten fÃ¼r Tabelle `user`
+-- Daten für Tabelle `user`
 --
 
-INSERT INTO `user` (`u_id`, `vorname`, `name`, `email`, `passwort`, `privilegien`) VALUES
-(1, 'Admin', 'Admin', 'admin@admin.it', '', 'Manager');
+INSERT INTO `user` (`uid`, `vorname`, `name`, `email`, `passwort`, `privilegien`) VALUES
+(1, 'Admin', 'Admin', 'admin@admin.it', '', 'Admin'),
+(2, 'Manager', 'Test', 'manager@test.fvs', 'manager', 'Manager'),
+(3, 'Mitarbeiter', 'Test', 'mitarbeiter@test.fvs', 'mitarbeiter', 'Mitarbeiter');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur fÃ¼r Tabelle `verbindung`
+-- Tabellenstruktur für Tabelle `verbindung`
 --
 
 CREATE TABLE `verbindung` (
-  `v_id` int(11) NOT NULL,
-  `h_id_start` int(11) NOT NULL,
-  `h_id_ende` int(11) NOT NULL,
+  `vid` int(11) NOT NULL,
+  `hidS` int(11) NOT NULL,
+  `hidE` int(11) NOT NULL,
   `dauer` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten fÃ¼r Tabelle `verbindung`
+-- Daten für Tabelle `verbindung`
 --
 
-INSERT INTO `verbindung` (`v_id`, `h_id_start`, `h_id_ende`, `dauer`) VALUES
-(1, 1, 2, 10);
+INSERT INTO `verbindung` (`vid`, `hidS`, `hidE`, `dauer`) VALUES
+(3, 1, 3, 54),
+(4, 3, 2, 2);
 
 --
 -- Indizes der exportierten Tabellen
 --
 
 --
--- Indizes fÃ¼r die Tabelle `ablauf`
---
-ALTER TABLE `ablauf`
-  ADD PRIMARY KEY (`a_id`),
-  ADD KEY `fkey_fid` (`f_id`),
-  ADD KEY `fkey_vid` (`v_id`);
-
---
--- Indizes fÃ¼r die Tabelle `buslinie`
+-- Indizes für die Tabelle `buslinie`
 --
 ALTER TABLE `buslinie`
-  ADD PRIMARY KEY (`b_id`);
+  ADD PRIMARY KEY (`bid`);
 
 --
--- Indizes fÃ¼r die Tabelle `fahrplan`
+-- Indizes für die Tabelle `fahrt`
 --
-ALTER TABLE `fahrplan`
-  ADD PRIMARY KEY (`f_id`),
-  ADD KEY `fkey_bid` (`b_id`);
+ALTER TABLE `fahrt`
+  ADD PRIMARY KEY (`fid`),
+  ADD KEY `fkey_f_hids` (`hidS`),
+  ADD KEY `fkey_f_bid` (`bid`),
+  ADD KEY `fkey_f_hide` (`hidE`);
 
 --
--- Indizes fÃ¼r die Tabelle `haltestelle`
+-- Indizes für die Tabelle `haltestelle`
 --
 ALTER TABLE `haltestelle`
-  ADD PRIMARY KEY (`h_id`);
+  ADD PRIMARY KEY (`hid`);
 
 --
--- Indizes fÃ¼r die Tabelle `user`
+-- Indizes für die Tabelle `linienabfolge`
+--
+ALTER TABLE `linienabfolge`
+  ADD PRIMARY KEY (`lid`),
+  ADD KEY `fkey_l_fid` (`bid`),
+  ADD KEY `fkey_l_vid` (`vid`);
+
+--
+-- Indizes für die Tabelle `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`u_id`),
+  ADD PRIMARY KEY (`uid`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indizes fÃ¼r die Tabelle `verbindung`
+-- Indizes für die Tabelle `verbindung`
 --
 ALTER TABLE `verbindung`
-  ADD PRIMARY KEY (`v_id`),
-  ADD KEY `fkey_hid_start` (`h_id_start`),
-  ADD KEY `fkey_hid_ende` (`h_id_ende`);
+  ADD PRIMARY KEY (`vid`),
+  ADD KEY `fkey_v_hids` (`hidS`),
+  ADD KEY `fkey_v_hide` (`hidE`);
 
 --
--- AUTO_INCREMENT fÃ¼r exportierte Tabellen
+-- AUTO_INCREMENT für exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT fÃ¼r Tabelle `ablauf`
---
-ALTER TABLE `ablauf`
-  MODIFY `a_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT fÃ¼r Tabelle `buslinie`
+-- AUTO_INCREMENT für Tabelle `buslinie`
 --
 ALTER TABLE `buslinie`
-  MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
--- AUTO_INCREMENT fÃ¼r Tabelle `fahrplan`
+-- AUTO_INCREMENT für Tabelle `fahrt`
 --
-ALTER TABLE `fahrplan`
-  MODIFY `f_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `fahrt`
+  MODIFY `fid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT fÃ¼r Tabelle `haltestelle`
+-- AUTO_INCREMENT für Tabelle `haltestelle`
 --
 ALTER TABLE `haltestelle`
-  MODIFY `h_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `hid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
--- AUTO_INCREMENT fÃ¼r Tabelle `user`
+-- AUTO_INCREMENT für Tabelle `linienabfolge`
+--
+ALTER TABLE `linienabfolge`
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `u_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
--- AUTO_INCREMENT fÃ¼r Tabelle `verbindung`
+-- AUTO_INCREMENT für Tabelle `verbindung`
 --
 ALTER TABLE `verbindung`
-  MODIFY `v_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `vid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- Constraints der exportierten Tabellen
 --
 
 --
--- Constraints der Tabelle `ablauf`
+-- Constraints der Tabelle `fahrt`
 --
-ALTER TABLE `ablauf`
-  ADD CONSTRAINT `fkey_fid` FOREIGN KEY (`f_id`) REFERENCES `fahrplan` (`f_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fkey_vid` FOREIGN KEY (`v_id`) REFERENCES `verbindung` (`v_id`);
+ALTER TABLE `fahrt`
+  ADD CONSTRAINT `fkey_f_bid` FOREIGN KEY (`bid`) REFERENCES `buslinie` (`bid`),
+  ADD CONSTRAINT `fkey_f_hide` FOREIGN KEY (`hidE`) REFERENCES `haltestelle` (`hid`),
+  ADD CONSTRAINT `fkey_f_hids` FOREIGN KEY (`hidS`) REFERENCES `haltestelle` (`hid`);
 
 --
--- Constraints der Tabelle `fahrplan`
+-- Constraints der Tabelle `linienabfolge`
 --
-ALTER TABLE `fahrplan`
-  ADD CONSTRAINT `fkey_bid` FOREIGN KEY (`b_id`) REFERENCES `buslinie` (`b_id`) ON DELETE SET NULL;
+ALTER TABLE `linienabfolge`
+  ADD CONSTRAINT `fkey_l_bid` FOREIGN KEY (`bid`) REFERENCES `buslinie` (`bid`),
+  ADD CONSTRAINT `fkey_l_vid` FOREIGN KEY (`vid`) REFERENCES `verbindung` (`vid`);
 
 --
 -- Constraints der Tabelle `verbindung`
 --
 ALTER TABLE `verbindung`
-  ADD CONSTRAINT `fkey_hid_ende` FOREIGN KEY (`h_id_ende`) REFERENCES `haltestelle` (`h_id`),
-  ADD CONSTRAINT `fkey_hid_start` FOREIGN KEY (`h_id_start`) REFERENCES `haltestelle` (`h_id`);
+  ADD CONSTRAINT `fkey_v_hide` FOREIGN KEY (`hidE`) REFERENCES `haltestelle` (`hid`),
+  ADD CONSTRAINT `fkey_v_hids` FOREIGN KEY (`hidS`) REFERENCES `haltestelle` (`hid`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
