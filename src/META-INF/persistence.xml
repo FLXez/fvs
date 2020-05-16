@@ -3,12 +3,6 @@
 	<persistence-unit name="fvs" transaction-type="JTA">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>fvs</jta-data-source>
-		<class>entityOld.Ablauf</class>
-		<class>entityOld.Buslinie</class>
-		<class>entityOld.Fahrplan</class>
-		<class>entityOld.Haltestelle</class>
-		<class>entityOld.User</class>
-		<class>entityOld.Verbindung</class>
 		<class>entity.Buslinie</class>
 		<class>entity.Fahrt</class>
 		<class>entity.Haltestelle</class>
