@@ -42,7 +42,7 @@
 		<h:dataTable id="lineTable" value="#{buslinieBean.allBuslinien}" var="b">
       	<h:column>
       		<f:facet name="header">Buslinien-ID</f:facet>
-      		<h:outputText value="#{b.bid}" />          		
+      		<h:outputText value="#{b.bid}"></h:outputText>     		
       	</h:column>
       	<h:column>
       		<f:facet name="header">Buslinien-Nummer</f:facet>
@@ -54,7 +54,10 @@
       	</h:column>
       	<h:column>
       		<f:facet name="header">Linienabfolge anpassen</f:facet>
-      		<h:outputLink id="#{buslinieBean.forwardLinienabfolge}" value="#{b.bid}"><h:outputText value="Diese Linie anpanassen"></h:outputText></h:outputLink>
+      		<h:outputLink value="linienabfolge.xhtml">
+      			Linie bearbeiten.
+      			<f:param name="bid" value="#{b.bid}"></f:param>
+      		</h:outputLink>
       	</h:column>      	
       </h:dataTable>
 	</div>
