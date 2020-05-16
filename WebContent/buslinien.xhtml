@@ -51,6 +51,10 @@
       	<h:column>
       		<f:facet name="header">Buslinien-Richtung</f:facet>
       		<h:outputText value="#{b.richtung}" />          		
+      	</h:column>
+      	<h:column>
+      		<f:facet name="header">Linienabfolge anpassen</f:facet>
+      		<h:outputLink id="#{buslinieBean.forwardLinienabfolge}" value="#{b.bid}"><h:outputText value="Diese Linie anpanassen"></h:outputText></h:outputLink>
       	</h:column>      	
       </h:dataTable>
 	</div>
