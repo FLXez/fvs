@@ -46,7 +46,7 @@ public class LinienabfolgeBean {
 	public void init( ) {
 		linienabfolge = new LinienabfolgeDTO();
 		//Das nochmal prüfen
-		bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
+		bid = Integer.parseInt(SessionUtils.getRequest().getParameter("bid"));
 	}
 	
 	
