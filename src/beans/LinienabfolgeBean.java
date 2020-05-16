@@ -46,7 +46,7 @@ public class LinienabfolgeBean {
 	public void init( ) {
 		linienabfolge = new LinienabfolgeDTO();
 		//Das nochmal prüfen
-		bid = Integer.parseInt(SessionUtils.getRequest().getParameter("bid"));
+		bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
 	}
 	
 	
@@ -102,6 +102,7 @@ public class LinienabfolgeBean {
 	}
 	
 	public void add() {		
+		//Was ist mit Rücklinien?
 		Linienabfolge linienabfolgeEntity = new Linienabfolge();
 		
 		List<Linienabfolge> linienabfolgen = new ArrayList<Linienabfolge>();
