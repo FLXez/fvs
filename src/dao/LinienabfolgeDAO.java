@@ -25,7 +25,7 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge> {
 
 	@SuppressWarnings("unchecked")
 	public List<Linienabfolge> getByBuslinie(int bid) {
-		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.bid = '" + bid + "' ORDER BY l.position ASC");	
+		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.buslinie.bid = '" + bid + "' ORDER BY l.position ASC");	
 		return q.getResultList();
 	}
 	
@@ -47,6 +47,11 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge> {
 		em.merge(linienabfolge);
 	}
 
+	public void update(Linienabfolge linienabfolge) {
+		//TODO Parms parsen (siehe UserDAO)
+		em.merge(linienabfolge);
+	}
+	
 	@Override
 	public void delete(Linienabfolge linienabfolge) {
 		em.remove(linienabfolge);		

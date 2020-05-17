@@ -32,6 +32,16 @@ public class VerbindungDAO implements DAO<Verbindung> {
 		return q.getResultList();	
 	}
 	
+	public Verbindung getByHaltestelleS(int hidS) {
+		Query q = em.createQuery("SELECT v FROM Verbindung v WHERE v.haltestelleS.hid = '" + hidS + "' AND v.haltestelleE.hid = NULL", Verbindung.class);
+		return (Verbindung) q.getSingleResult();
+	}
+
+	public Verbindung getByHaltestellen(int hidS, int hidE) {
+		Query q = em.createQuery("SELECT v FROM Verbindung v WHERE v.haltestelleS.hid = '" + hidS + "' AND v.haltestelleE.hid = '" + hidE + "'", Verbindung.class);
+		return (Verbindung) q.getSingleResult();
+	}
+	
 	//TODO Verbindung übergeben
 	public boolean findByHaltestellen(int hidS, int hidE) {
 		Query q = em.createQuery("SELECT v.haltestelleS.hid , v.haltestelleE.hid FROM Verbindung v WHERE v.haltestelleS.hid = '" + hidS + "' AND v.haltestelleE.hid = '" + hidE + "'");
@@ -52,6 +62,10 @@ public class VerbindungDAO implements DAO<Verbindung> {
 	@Override
 	public void update(Verbindung verbindung, String[] parms) {
 		//TODO Parms parsen (siehe UserDAO)		
+		em.merge(verbindung);
+	}
+	
+	public void update(Verbindung verbindung) {	
 		em.merge(verbindung);
 	}
 

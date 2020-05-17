@@ -13,6 +13,7 @@ import dao.BuslinieDAO;
 import dto.BuslinieDTO;
 import entity.Buslinie;
 import util.NotificationUtils;
+import util.SessionUtils;
 
 @Named("buslinieBean")
 @ApplicationScoped
@@ -44,7 +45,8 @@ public class BuslinieBean {
 		return buslinieDTOs;
 	}
 	
-	public String forwardLinienabfolge() {
+	public String forwardLinienabfolge(String bid) {
+		SessionUtils.getSession().setAttribute("bid", bid);
 		return "linienabfolge";
 	}
 	
