@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 16. Mai 2020 um 02:31
+-- Erstellungszeit: 17. Mai 2020 um 13:57
 -- Server-Version: 10.1.21-MariaDB
 -- PHP-Version: 7.1.1
 
@@ -42,7 +42,9 @@ INSERT INTO `buslinie` (`bid`, `nummer`, `Richtung`) VALUES
 (3, 14, 'H'),
 (4, 14, 'R'),
 (5, 41, 'H'),
-(6, 41, 'R');
+(6, 41, 'R'),
+(7, 55, 'H'),
+(8, 55, 'R');
 
 -- --------------------------------------------------------
 
@@ -78,7 +80,9 @@ INSERT INTO `haltestelle` (`hid`, `bezeichnung`) VALUES
 (2, 'Hannover, Hauptbahnhof'),
 (3, 'Hannover, Silas Home'),
 (4, 'tbahnhof'),
-(5, 'test');
+(5, 'test'),
+(6, 'Irgendwo'),
+(7, 'Ich brauch noch eine für fix');
 
 -- --------------------------------------------------------
 
@@ -88,10 +92,30 @@ INSERT INTO `haltestelle` (`hid`, `bezeichnung`) VALUES
 
 CREATE TABLE `linienabfolge` (
   `lid` int(11) NOT NULL,
-  `bid` int(11) NOT NULL,
+  `bidh` int(11) NOT NULL,
+  `bidr` int(11) NOT NULL,
   `vid` int(11) NOT NULL,
   `position` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Daten für Tabelle `linienabfolge`
+--
+
+INSERT INTO `linienabfolge` (`lid`, `bidh`, `bidr`, `vid`, `position`) VALUES
+(34, 1, 2, 74, 0),
+(35, 1, 2, 75, 1),
+(36, 1, 2, 76, -1),
+(37, 3, 4, 77, 0),
+(38, 3, 4, 78, 1),
+(39, 3, 4, 79, 2),
+(40, 3, 4, 80, 3),
+(41, 5, 6, 77, 0),
+(42, 5, 6, 81, -1),
+(43, 5, 6, 82, -2),
+(44, 5, 6, 83, -3),
+(45, 5, 6, 84, -4),
+(46, 5, 6, 85, -5);
 
 -- --------------------------------------------------------
 
@@ -126,7 +150,7 @@ INSERT INTO `user` (`uid`, `vorname`, `name`, `email`, `passwort`, `privilegien`
 CREATE TABLE `verbindung` (
   `vid` int(11) NOT NULL,
   `hidS` int(11) NOT NULL,
-  `hidE` int(11) NOT NULL,
+  `hidE` int(11) DEFAULT NULL,
   `dauer` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -135,8 +159,18 @@ CREATE TABLE `verbindung` (
 --
 
 INSERT INTO `verbindung` (`vid`, `hidS`, `hidE`, `dauer`) VALUES
-(3, 1, 3, 54),
-(4, 3, 2, 2);
+(74, 1, 5, 8),
+(75, 5, 7, 7),
+(76, 6, 1, 10),
+(77, 1, 4, 5),
+(78, 4, 2, 5),
+(79, 2, 7, 5),
+(80, 7, 6, 5),
+(81, 3, 1, 5),
+(82, 4, 3, 5),
+(83, 6, 4, 5),
+(84, 4, 6, 5),
+(85, 7, 4, 5);
 
 --
 -- Indizes der exportierten Tabellen
@@ -168,8 +202,9 @@ ALTER TABLE `haltestelle`
 --
 ALTER TABLE `linienabfolge`
   ADD PRIMARY KEY (`lid`),
-  ADD KEY `fkey_l_fid` (`bid`),
-  ADD KEY `fkey_l_vid` (`vid`);
+  ADD KEY `fkey_l_fid` (`bidh`),
+  ADD KEY `fkey_l_vid` (`vid`),
+  ADD KEY `fkey_l_bidr` (`bidr`);
 
 --
 -- Indizes für die Tabelle `user`
@@ -194,12 +229,12 @@ ALTER TABLE `verbindung`
 -- AUTO_INCREMENT für Tabelle `buslinie`
 --
 ALTER TABLE `buslinie`
-  MODIFY `bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT für Tabelle `fahrt`
 --
 ALTER TABLE `fahrt`
-  MODIFY `fid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `fid` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT für Tabelle `haltestelle`
 --
@@ -209,17 +244,17 @@ ALTER TABLE `haltestelle`
 -- AUTO_INCREMENT für Tabelle `linienabfolge`
 --
 ALTER TABLE `linienabfolge`
-  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT für Tabelle `verbindung`
 --
 ALTER TABLE `verbindung`
-  MODIFY `vid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `vid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 --
 -- Constraints der exportierten Tabellen
 --
@@ -236,7 +271,8 @@ ALTER TABLE `fahrt`
 -- Constraints der Tabelle `linienabfolge`
 --
 ALTER TABLE `linienabfolge`
-  ADD CONSTRAINT `fkey_l_bid` FOREIGN KEY (`bid`) REFERENCES `buslinie` (`bid`),
+  ADD CONSTRAINT `fkey_l_bidh` FOREIGN KEY (`bidh`) REFERENCES `buslinie` (`bid`),
+  ADD CONSTRAINT `fkey_l_bidr` FOREIGN KEY (`bidr`) REFERENCES `buslinie` (`bid`),
   ADD CONSTRAINT `fkey_l_vid` FOREIGN KEY (`vid`) REFERENCES `verbindung` (`vid`);
 
 --

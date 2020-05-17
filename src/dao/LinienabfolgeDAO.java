@@ -24,8 +24,8 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge> {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Linienabfolge> getByBuslinie(int bid) {
-		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.buslinie.bid = '" + bid + "' ORDER BY l.position ASC");	
+	public List<Linienabfolge> getByBuslinien(int bidh, int bidr, String sortierung) {
+		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.buslinieH.bid = '" + bidh + "' AND l.buslinieR.bid ='" + bidr + "' ORDER BY l.position " + sortierung + "");	
 		return q.getResultList();
 	}
 	

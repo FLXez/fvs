@@ -19,6 +19,11 @@ public class Fahrt implements Serializable {
 
 	private Time uhrzeit;
 
+	//bi-directional many-to-one association to Buslinie
+	@ManyToOne
+	@JoinColumn(name="bid")
+	private Buslinie buslinie;
+
 	//uni-directional many-to-one association to Haltestelle
 	@ManyToOne
 	@JoinColumn(name="hidE")
@@ -29,11 +34,6 @@ public class Fahrt implements Serializable {
 	@JoinColumn(name="hidS")
 	private Haltestelle haltestelleS;
 
-	//uni-directional many-to-one association to Buslinie
-	@ManyToOne
-	@JoinColumn(name="bid")
-	private Buslinie buslinie;
-	
 	public Fahrt() {
 	}
 
@@ -53,6 +53,14 @@ public class Fahrt implements Serializable {
 		this.uhrzeit = uhrzeit;
 	}
 
+	public Buslinie getBuslinie() {
+		return this.buslinie;
+	}
+
+	public void setBuslinie(Buslinie buslinie) {
+		this.buslinie = buslinie;
+	}
+
 	public Haltestelle getHaltestelleE() {
 		return this.haltestelleE;
 	}
@@ -67,14 +75,6 @@ public class Fahrt implements Serializable {
 
 	public void setHaltestelleS(Haltestelle haltestelleS) {
 		this.haltestelleS = haltestelleS;
-	}
-	
-	public Buslinie getBuslinie() {
-		return this.buslinie;
-	}
-
-	public void setBuslinie(Buslinie buslinie) {
-		this.buslinie = buslinie;
 	}
 
 }

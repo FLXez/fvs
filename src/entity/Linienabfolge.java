@@ -18,10 +18,15 @@ public class Linienabfolge implements Serializable {
 
 	private int position;
 
-	//bi-directional many-to-one association to Buslinie
+	//uni-directional many-to-one association to Buslinie
 	@ManyToOne
-	@JoinColumn(name="bid")
-	private Buslinie buslinie;
+	@JoinColumn(name="bidh")
+	private Buslinie buslinieH;
+
+	//uni-directional many-to-one association to Buslinie
+	@ManyToOne
+	@JoinColumn(name="bidr")
+	private Buslinie buslinieR;
 
 	//bi-directional many-to-one association to Verbindung
 	@ManyToOne
@@ -47,12 +52,20 @@ public class Linienabfolge implements Serializable {
 		this.position = position;
 	}
 
-	public Buslinie getBuslinie() {
-		return this.buslinie;
+	public Buslinie getBuslinieH() {
+		return this.buslinieH;
 	}
 
-	public void setBuslinie(Buslinie buslinie) {
-		this.buslinie = buslinie;
+	public void setBuslinieH(Buslinie buslinieH) {
+		this.buslinieH = buslinieH;
+	}
+
+	public Buslinie getBuslinieR() {
+		return this.buslinieR;
+	}
+
+	public void setBuslinieR(Buslinie buslinieR) {
+		this.buslinieR = buslinieR;
 	}
 
 	public Verbindung getVerbindung() {

@@ -18,13 +18,13 @@ public class Buslinie implements Serializable {
 	private int bid;
 
 	private int nummer;
-	
+
 	private String richtung;
 
-	//bi-directional many-to-one association to Linienabfolge
+	//bi-directional many-to-one association to Fahrt
 	@OneToMany(mappedBy="buslinie")
-	private List<Linienabfolge> linienabfolgen;
-	
+	private List<Fahrt> fahrten;
+
 	public Buslinie() {
 	}
 
@@ -47,31 +47,31 @@ public class Buslinie implements Serializable {
 	public String getRichtung() {
 		return this.richtung;
 	}
-	
+
 	public void setRichtung(String richtung) {
 		this.richtung = richtung;
 	}
-	
-	public List<Linienabfolge> getLinienabfolgen() {
-		return this.linienabfolgen;
+
+	public List<Fahrt> getFahrten() {
+		return this.fahrten;
 	}
 
-	public void setLinienabfolgen(List<Linienabfolge> linienabfolgen) {
-		this.linienabfolgen = linienabfolgen;
+	public void setFahrten(List<Fahrt> fahrten) {
+		this.fahrten = fahrten;
 	}
 
-	public Linienabfolge addLinienabfolgen(Linienabfolge linienabfolgen) {
-		getLinienabfolgen().add(linienabfolgen);
-		linienabfolgen.setBuslinie(this);
+	public Fahrt addFahrten(Fahrt fahrten) {
+		getFahrten().add(fahrten);
+		fahrten.setBuslinie(this);
 
-		return linienabfolgen;
+		return fahrten;
 	}
 
-	public Linienabfolge removeLinienabfolgen(Linienabfolge linienabfolgen) {
-		getLinienabfolgen().remove(linienabfolgen);
-		linienabfolgen.setBuslinie(null);
+	public Fahrt removeFahrten(Fahrt fahrten) {
+		getFahrten().remove(fahrten);
+		fahrten.setBuslinie(null);
 
-		return linienabfolgen;
+		return fahrten;
 	}
 
 }

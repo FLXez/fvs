@@ -81,14 +81,29 @@
 			<!-- hinzufügen -->
 
 			<!-- Tabelle mit bisherigen Haltestellen der Linie -->
-		    <h:dataTable id="linenabfolgeTable" value="#{linienabfolgeBean.allLinienabfolgenBid}" var="l">
+			
+		    <h:dataTable rendered="#{linienabfolgeBean.bid == linienabfolgeBean.buslinieHDTO.bid}" id="linenabfolgeTableH" value="#{linienabfolgeBean.allLinienabfolgenBid}" var="l">
       			<h:column>
-      				<f:facet name="header">Starthaltestelle</f:facet>
+      				<f:facet name="header">Von</f:facet>
       				<h:outputText value="#{l.verbindungDTO.haltestelleSDTO.bezeichnung}" />
       			</h:column>
       			<h:column>
-      				<f:facet name="header">Zielhaltestelle</f:facet>
+      				<f:facet name="header">Nach</f:facet>
       				<h:outputText value="#{l.verbindungDTO.haltestelleEDTO.bezeichnung}" />
+      			</h:column>
+    			<h:column>
+      				<f:facet name="header">Dauer</f:facet>
+      				<h:outputText value="#{l.verbindungDTO.dauer}" />
+      			</h:column>
+      		</h:dataTable>
+     		<h:dataTable rendered="#{linienabfolgeBean.bid == linienabfolgeBean.buslinieRDTO.bid}" id="linenabfolgeTableR" value="#{linienabfolgeBean.allLinienabfolgenBid}" var="l">
+      			<h:column>
+      				<f:facet name="header">Von</f:facet>
+      				<h:outputText value="#{l.verbindungDTO.haltestelleEDTO.bezeichnung}" />
+      			</h:column>
+      			<h:column>
+      				<f:facet name="header">Nach</f:facet>
+      				<h:outputText value="#{l.verbindungDTO.haltestelleSDTO.bezeichnung}" />
       			</h:column>
     			<h:column>
       				<f:facet name="header">Dauer</f:facet>

@@ -29,6 +29,16 @@ public class BuslinieDAO implements DAO<Buslinie> {
 		return q.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Buslinie> getByNummer(int nummer) {
+		Query q = em.createQuery("SELECT b FROM Buslinie b WHERE b.nummer='" + nummer + "' ORDER BY b.richtung ASC");
+		return q.getResultList();
+	}
+	
+	public Buslinie getByNummerRichtung(int nummer, String richtung) {
+		Query q = em.createQuery("SELECT b FROM Buslinie b WHERE b.nummer= '" + nummer + "' AND b.richtung='" + richtung + "'", Buslinie.class);
+		return (Buslinie) q.getSingleResult();
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Buslinie> existsByNummer(int nummer) {

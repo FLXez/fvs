@@ -11,7 +11,9 @@ public class LinienabfolgeDTO implements Serializable {
 
 	private int position;
 
-	private BuslinieDTO buslinieDTO;
+	private BuslinieDTO buslinieHDTO;
+	
+	private BuslinieDTO buslinieRDTO;
 
 	private VerbindungDTO verbindungDTO;
 
@@ -22,7 +24,8 @@ public class LinienabfolgeDTO implements Serializable {
 		
 		this.lid = linienabfolgeEntity.getLid();
 		this.position = linienabfolgeEntity.getPosition();
-		this.buslinieDTO = new BuslinieDTO(linienabfolgeEntity.getBuslinie());
+		this.buslinieHDTO = new BuslinieDTO(linienabfolgeEntity.getBuslinieH());
+		this.buslinieRDTO = new BuslinieDTO(linienabfolgeEntity.getBuslinieR());
 		this.verbindungDTO = new VerbindungDTO(linienabfolgeEntity.getVerbindung());
 	}
 
@@ -42,14 +45,22 @@ public class LinienabfolgeDTO implements Serializable {
 		this.position = position;
 	}
 
-	public BuslinieDTO getBuslinieDTO() {
-		return buslinieDTO;
+	public BuslinieDTO getBuslinieHDTO() {
+		return buslinieHDTO;
 	}
 
-	public void setBuslinieDTO(BuslinieDTO buslinieDTO) {
-		this.buslinieDTO = buslinieDTO;
+	public void setBuslinieHDTO(BuslinieDTO buslinieHDTO) {
+		this.buslinieHDTO = buslinieHDTO;
 	}
 
+	public BuslinieDTO getBuslinieRDTO() {
+		return buslinieRDTO;
+	}
+
+	public void setBuslinieRDTO(BuslinieDTO buslinieRDTO) {
+		this.buslinieRDTO = buslinieRDTO;
+	}
+	
 	public VerbindungDTO getVerbindungDTO() {
 		return verbindungDTO;
 	}
