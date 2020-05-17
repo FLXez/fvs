@@ -21,11 +21,19 @@
         </navigation-case>
     </navigation-rule> 
     
-        <navigation-rule>
+    <navigation-rule>
         <from-view-id>/buslinien.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>linienabfolge</from-outcome>
             <to-view-id>/linienabfolge.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+
+    <navigation-rule>
+        <from-view-id>/buslinien.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>fahrt</from-outcome>
+            <to-view-id>/fahrt.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule> 
 

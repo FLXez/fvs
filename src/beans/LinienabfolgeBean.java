@@ -59,12 +59,11 @@ public class LinienabfolgeBean {
 		verbindungDTO = new VerbindungDTO();
 	}
 	
-	public void refresh() {
+	public void onPageLoad() {
 		linienabfolge = new LinienabfolgeDTO();
 		bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
 		buslinie = new BuslinieDTO(buslinieDAO.get(bid));		
 		getAllLinienabfolgenBid();
-		System.out.println(bid);
 	}
 	
 	public BuslinieDTO getBuslinie() {
@@ -139,7 +138,6 @@ public class LinienabfolgeBean {
 	}
 	
 	public void add() {		
-		refresh();
 		//Was ist mit Rücklinien?
 		Linienabfolge linienabfolgeEntity = new Linienabfolge();
 		

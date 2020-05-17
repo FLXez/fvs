@@ -50,6 +50,11 @@ public class BuslinieBean {
 		return "linienabfolge";
 	}
 	
+	public String forwardFahrt(String bid) {
+		SessionUtils.getSession().setAttribute("bid", bid);
+		return "fahrt";
+	}
+	
 	public void add() {
 		
 		if(buslinieDTO.getNummer() == 0) {

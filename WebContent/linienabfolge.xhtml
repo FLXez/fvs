@@ -10,6 +10,9 @@
 	<title>Index</title>
 </h:head>
 <h:body>
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{linienabfolgeBean.onPageLoad}"/>
+	</f:metadata>
 	<div id="div-container">
 		<div id="div-nav">
 			<p>
@@ -50,14 +53,14 @@
 						<th>Hinzufügen</th>
 					</tr>
 					<tr>
-						<td><h:selectOneMenu value="#{linienAbfolgeBean.hid}">
+						<td><h:selectOneMenu value="#{linienabfolgeBean.hid}">
 								<f:selectItems value="#{haltestelleBean.allHaltestellen}"
 									var="haltestelleDTO" itemLabel="#{haltestelleDTO.bezeichnung}"
 									itemValue="#{haltestelleDTO.hid}" />
 							</h:selectOneMenu></td>
 						<td><h:inputText id="dauer"
-								value="#{linienAbfolgeBean.dauer}" /></td>
-						<td><h:commandButton action="#{linienAbfolgeBean.add}"
+								value="#{linienabfolgeBean.dauer}" /></td>
+						<td><h:commandButton action="#{linienabfolgeBean.add}"
 								value="Hinzufügen" /></td>
 					</tr>
 					<tr>
@@ -78,6 +81,20 @@
 			<!-- hinzufügen -->
 
 			<!-- Tabelle mit bisherigen Haltestellen der Linie -->
+		    <h:dataTable id="linenabfolgeTable" value="#{linienabfolgeBean.allLinienabfolgenBid}" var="l">
+      			<h:column>
+      				<f:facet name="header">Starthaltestelle</f:facet>
+      				<h:outputText value="#{l.verbindungDTO.haltestelleSDTO.bezeichnung}" />
+      			</h:column>
+      			<h:column>
+      				<f:facet name="header">Zielhaltestelle</f:facet>
+      				<h:outputText value="#{l.verbindungDTO.haltestelleEDTO.bezeichnung}" />
+      			</h:column>
+    			<h:column>
+      				<f:facet name="header">Dauer</f:facet>
+      				<h:outputText value="#{l.verbindungDTO.dauer}" />
+      			</h:column>
+      		</h:dataTable>
 		</div>
 	</div>
 </h:body>

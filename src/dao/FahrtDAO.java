@@ -23,6 +23,12 @@ public class FahrtDAO implements DAO<Fahrt> {
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<Fahrt> getByBuslinie(int bid) {
+		Query q =  em.createQuery("SELECT f FROM Fahrt f WHERE f.buslinie.bid ='" + bid +"'");
+		return q.getResultList();
+	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Fahrt> getAll() {
 		Query q = em.createQuery("SELECT f FROM Fahrt f");
