@@ -67,7 +67,7 @@
 									itemValue="#{haltestelleDTO.hid}" />
 							</h:selectOneMenu></td>
 						<td><h:inputText id="uhrzeit"
-								value="#{fahrtBean.uhrzeitStr}" /></td>
+								value="#{fahrtBean.uhrzeit}" /></td>
 						<td><h:commandButton action="#{fahrtBean.add}"
 								value="Hinzufügen" /></td>
 					</tr>
@@ -84,7 +84,7 @@
 				var="f">
 				<h:column>
 					<f:facet name="header">Buslinie</f:facet>
-					<h:outputText value="#{f.buslinieDTO.nummer}" />
+					<h:outputText value="#{f.buslinieDTO.nummer} (#{f.buslinieDTO.richtung})" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Starthaltestelle</f:facet>
@@ -92,11 +92,11 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">Endhaltestelle</f:facet>
-					<h:outputText value="#{l.haltestelleEDTO.bezeichnung}" />
+					<h:outputText value="#{f.haltestelleEDTO.bezeichnung}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Uhrzeit</f:facet>
-					<h:outputText value="#{l.uhrzeit}" />
+					<h:outputText value="#{f.uhrzeit}" />
 				</h:column>
 			</h:dataTable>
 		</div>

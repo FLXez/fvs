@@ -1,7 +1,6 @@
 package dto;
 
 import java.io.Serializable;
-import java.sql.Time;
 
 import entity.Fahrt;
 
@@ -10,7 +9,7 @@ public class FahrtDTO implements Serializable {
 	
 	private int fid;
 
-	private Time uhrzeit;
+	private String uhrzeit;
 
 	private HaltestelleDTO haltestelleEDTO;
 
@@ -37,11 +36,11 @@ public class FahrtDTO implements Serializable {
 		this.fid = fid;
 	}
 
-	public Time getUhrzeit() {
+	public String getUhrzeit() {
 		return uhrzeit;
 	}
 
-	public void setUhrzeit(Time uhrzeit) {
+	public void setUhrzeit(String uhrzeit) {
 		this.uhrzeit = uhrzeit;
 	}
 

@@ -165,9 +165,14 @@ public class LinienabfolgeBean {
 		return linienabfolgeDTOs;		
 	}
 	
-	public void add() {		
+	public void add() {						
 		List<Linienabfolge> linienabfolgen = new ArrayList<Linienabfolge>();
 		linienabfolgen = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC");
+		
+		if(haltestelleDAO.getAll().isEmpty()) {
+			NotificationUtils.showMessage(false, 2, "linien:dauer", "Keine Haltestelle", "Bitte legen Sie zuerst Haltestellen an.");
+			return;
+		}
 		
 		if(dauer == 0) {
 			NotificationUtils.showMessage(false, 2, "linien:dauer", "Dauer 0", "Bitte geben Sie eine Dauer an.");

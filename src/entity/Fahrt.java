@@ -1,8 +1,12 @@
 package entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.sql.Time;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 
 
 /**
@@ -17,7 +21,7 @@ public class Fahrt implements Serializable {
 	@Id
 	private int fid;
 
-	private Time uhrzeit;
+	private String uhrzeit;
 
 	//bi-directional many-to-one association to Buslinie
 	@ManyToOne
@@ -45,11 +49,11 @@ public class Fahrt implements Serializable {
 		this.fid = fid;
 	}
 
-	public Time getUhrzeit() {
+	public String getUhrzeit() {
 		return this.uhrzeit;
 	}
 
-	public void setUhrzeit(Time uhrzeit) {
+	public void setUhrzeit(String uhrzeit) {
 		this.uhrzeit = uhrzeit;
 	}
 

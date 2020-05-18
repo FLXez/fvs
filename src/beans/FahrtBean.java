@@ -1,16 +1,19 @@
 package beans;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBException;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import dao.BuslinieDAO;
 import dao.FahrtDAO;
+import dao.HaltestelleDAO;
 import dao.LinienabfolgeDAO;
 import dao.VerbindungDAO;
 import dto.BuslinieDTO;
@@ -20,6 +23,7 @@ import dto.LinienabfolgeDTO;
 import entity.Buslinie;
 import entity.Fahrt;
 import entity.Linienabfolge;
+import util.NotificationUtils;
 import util.SessionUtils;
 
 @Named("fahrtBean")
@@ -38,6 +42,9 @@ public class FahrtBean {
 	@Inject
 	VerbindungDAO verbindungDAO;
 	
+	@Inject
+	HaltestelleDAO haltestelleDAO;
+	
 	FahrtDTO fahrtDTO;
 	
 	BuslinieDTO buslinieHDTO;
@@ -47,16 +54,24 @@ public class FahrtBean {
 	
 	HaltestelleDTO haltestelleEDTO;
 	HaltestelleDTO haltestelleSDTO;
+
+	//Frontend listen
+	List<HaltestelleDTO> feHaltestelleSDTOs;
+	List<HaltestelleDTO> feHaltestelleEDTOs;
 	
 	int bid;
 	
 	int hids;
 	int hide;
 	
-	Time uhrzeit;
+	String uhrzeit;
+	Pattern uP;
+	Matcher m;
+	
 
 	@PostConstruct
 	public void init() {
+		uP = Pattern.compile("([0-1][0-9]|[2][0-3]):([0-5][0-9])");
 		bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
 		Buslinie buslinie = buslinieDAO.get(bid);
 		
@@ -64,11 +79,22 @@ public class FahrtBean {
 		buslinien = buslinieDAO.getByNummer(buslinie.getNummer());
 		//ORDER BY richtung - somit erst H, dann R
 		buslinieHDTO = new BuslinieDTO(buslinien.get(0));
-		buslinieRDTO = new BuslinieDTO(buslinien.get(1));	
+		buslinieRDTO = new BuslinieDTO(buslinien.get(1));
+		
+		feHaltestelleEDTOs = new ArrayList<HaltestelleDTO>();
+		feHaltestelleSDTOs = new ArrayList<HaltestelleDTO>();
 	}
 	
 	public void onPageLoad() {
-		bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
+		bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));		
+		Buslinie buslinie = buslinieDAO.get(bid);
+		
+		List<Buslinie> buslinien = new ArrayList<Buslinie>();		
+		buslinien = buslinieDAO.getByNummer(buslinie.getNummer());
+		//ORDER BY richtung - somit erst H, dann R
+		buslinieHDTO = new BuslinieDTO(buslinien.get(0));
+		buslinieRDTO = new BuslinieDTO(buslinien.get(1));	
+		
 		getAllFahrtenBid();
 	}
 
@@ -112,27 +138,11 @@ public class FahrtBean {
 		this.linienabfolgeDTO = linienabfolgeDTO;
 	}
 
-	public HaltestelleDTO getHaltestelleEDTO() {
-		return haltestelleEDTO;
-	}
-
-	public void setHaltestelleEDTO(HaltestelleDTO haltestelleEDTO) {
-		this.haltestelleEDTO = haltestelleEDTO;
-	}
-
-	public HaltestelleDTO getHaltestelleSDTO() {
-		return haltestelleSDTO;
-	}
-
-	public void setHaltestelleSDTO(HaltestelleDTO haltestelleSDTO) {
-		this.haltestelleSDTO = haltestelleSDTO;
-	}
-
-	public Time getUhrzeit() {
+	public String getUhrzeit() {
 		return uhrzeit;
 	}
 
-	public void setUhrzeit(Time uhrzeit) {
+	public void setUhrzeit(String uhrzeit) {
 		this.uhrzeit = uhrzeit;
 	}
 
@@ -182,6 +192,8 @@ public class FahrtBean {
 			linienabfolgen.forEach((linienabfolge) -> haltestelleDTOs.add(new HaltestelleDTO(linienabfolge.getVerbindung().getHaltestelleE())));
 		}
 		
+		feHaltestelleSDTOs = haltestelleDTOs;
+		
 		return haltestelleDTOs;
 	}
 	
@@ -198,13 +210,64 @@ public class FahrtBean {
 			linienabfolgen.forEach((linienabfolge) -> haltestelleDTOs.add(new HaltestelleDTO(linienabfolge.getVerbindung().getHaltestelleS())));
 		}
 		
+		feHaltestelleEDTOs = haltestelleDTOs;
+
 		return haltestelleDTOs;
 	}
 	
 	
 	public void add() {
+		if(linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC").isEmpty()) {
+			NotificationUtils.showMessage(false, 2, "fahrt:uhrzeit", "Keine Linienabfolge", "Bitte erstellen Sie zuerst eine Linienabfolge.");
+			return;
+		}
 		
+		m = uP.matcher(uhrzeit);
+		if(!m.matches()) {
+			NotificationUtils.showMessage(false, 2, "fahrt:uhrzeit", "Uhrzeit ungültig", "Bitte geben Sie eine gültige Uhrzeit an.");
+			return;
+		}
+		
+		List<Fahrt> fahrten = new ArrayList<Fahrt>();
+		fahrten = fahrtDAO.getByBuslinie(bid);
 
+		//haltestelle aus Liste ziehen, damit via indexOf findbar
+		for(HaltestelleDTO haltestelle : feHaltestelleSDTOs) {
+			if(haltestelle.getHid() == hids) {
+				haltestelleSDTO = haltestelle;
+			}
+		}
+
+		//haltestelle aus Liste ziehen, damit via indexOf findbar
+		for(HaltestelleDTO haltestelle : feHaltestelleEDTOs) {
+			if(haltestelle.getHid() == hide) {
+				haltestelleEDTO = haltestelle;
+			}
+		}
+		
+		if(feHaltestelleSDTOs.indexOf(haltestelleSDTO) > feHaltestelleEDTOs.indexOf(haltestelleEDTO)) {
+			NotificationUtils.showMessage(false, 2, "fahrt:uhrzeit", "Starthaltestelle nach Zielhaltestelle", "Die Starthaltestelle darf sich nicht nach der Zielhaltestelle befinden.");
+			return;							
+		}
+		
+		
+		for(Fahrt fahrt : fahrten) {
+			if(fahrt.getHaltestelleE().getHid() == haltestelleEDTO.getHid() && fahrt.getHaltestelleS().getHid() == haltestelleSDTO.getHid() && fahrt.getUhrzeit().equals(uhrzeit)) {
+				NotificationUtils.showMessage(false, 2, "fahrt:uhrzeit", "Fahrt bereits vorhanden", "Diese Fahrt ist bereits vorhanden.");
+				return;				
+			}
+		}
+		
+		Fahrt fahrt = new Fahrt();
+		fahrt.setBuslinie(buslinieDAO.get(bid));
+		fahrt.setUhrzeit(uhrzeit);
+		fahrt.setHaltestelleS(haltestelleDAO.get(hids));
+		fahrt.setHaltestelleE(haltestelleDAO.get(hide));
+		
+		try {
+			fahrtDAO.save(fahrt);
+			NotificationUtils.showMessage(false, 1, "fahrt:uhrzeit", "Fahrt hinzugefügt", "Die Fahrt wurde erfolgreich hinzugefügt.");
+		} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "fahrt:uhrzeit", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
 	}
 
 }
