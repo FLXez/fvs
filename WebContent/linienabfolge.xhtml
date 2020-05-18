@@ -48,7 +48,7 @@
 		</div>
 		<div id="div-body">
 			<h:form id="linien">
-				<table>
+				<table id="noid">
 					<tr>
 						<th>Haltestelle</th>
 						<th>Dauer</th>
@@ -84,7 +84,7 @@
 
 			<!-- Tabelle mit bisherigen Haltestellen der Linie -->
 			
-		    <h:dataTable rendered="#{linienabfolgeBean.bid == linienabfolgeBean.buslinieHDTO.bid}" id="linenabfolgeTableH" value="#{linienabfolgeBean.allLinienabfolgenBid}" var="l">
+		    <h:dataTable rendered="#{linienabfolgeBean.bid == linienabfolgeBean.buslinieHDTO.bid}" id="dislay" value="#{linienabfolgeBean.allLinienabfolgenBid}" var="l">
       			<h:column>
       				<f:facet name="header">Von</f:facet>
       				<h:outputText value="#{l.verbindungDTO.haltestelleSDTO.bezeichnung}" />

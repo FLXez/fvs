@@ -40,8 +40,8 @@
 		</tr>	
 		</table>
 		</h:form>
-		
-		<h:dataTable id="stopTable" value="#{haltestelleBean.allHaltestellen}" var="haltestelleDTO">
+		<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
+		<h:dataTable id="no-display" value="#{haltestelleBean.allHaltestellen}" var="haltestelleDTO">
       	<h:column>
       		<f:facet name="header">Haltestellen-ID</f:facet>
       		<h:outputText value="#{haltestelleDTO.hid}" />          		

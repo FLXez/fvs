@@ -27,21 +27,21 @@
 		
 	</div>
 	<div id="div-body">
-		<h2>Liste aller Buslinien</h2>
+		<h2 id="linieH" >Liste aller Buslinien</h2>
 		<h:form id="addLine">
-		<table>
+		<table id="linieT">
 		<tr>
-			<td><h:outputText value="Buslinie hinzuf&#252;gen:" /></td>
-			<td><h:inputText id="number" value="#{buslinieBean.buslinieDTO.nummer}" /></td>
+			<td><h:outputText style="font-weight: bold;" value="Buslinie hinzuf&#252;gen:" /></td>
+			<td><h:inputText id="number" value="#{buslinieBean.buslinieDTO.nummer}" maxlength="3" styleClass="lttext" /></td>
 		</tr>
 		<tr>
-			<td colspan="1"><h:commandButton action="#{buslinieBean.add}" value="Hinzuf&#252;gen"/></td> 
+			<td colspan="1"><h:commandButton action="#{buslinieBean.add}" value="Hinzuf&#252;gen" styleClass="ltabutton" /></td> 
 			<td colspan="2"><h:message class="info" for="number" id="addLineInfo"/></td>
 		</tr>	
 		</table>
 		</h:form>
-		
-		<h:dataTable id="lineTable" value="#{buslinieBean.allBuslinien}" var="b">
+		<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
+		<h:dataTable id="linienT" value="#{buslinieBean.allBuslinien}" var="b">
       	<h:column>
       		<f:facet name="header">Buslinien-ID</f:facet>
       		<h:outputText value="#{b.bid}"></h:outputText>     		
@@ -56,11 +56,11 @@
       	</h:column>
     	<h:column>
       		<f:facet name="header">Linienabfolge anpassen</f:facet>
-			<h:form><h:commandButton action="#{buslinieBean.forwardLinienabfolge(b.bid)}" value="Bearbeiten" /></h:form>
+			<h:form><h:commandButton action="#{buslinieBean.forwardLinienabfolge(b.bid)}" value="Bearbeiten" styleClass="ltbutton" /></h:form>
       	</h:column>
     	<h:column>
       		<f:facet name="header">Fahrt hinzuf&#252;gen</f:facet>
-			<h:form><h:commandButton action="#{buslinieBean.forwardFahrt(b.bid)}" value="Hinzuf&#252;gen" /></h:form>
+			<h:form><h:commandButton action="#{buslinieBean.forwardFahrt(b.bid)}" value="Hinzuf&#252;gen" styleClass="ltbutton" /></h:form>
       	</h:column>      	   	      	    	
       </h:dataTable>
 	</div>
