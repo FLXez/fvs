@@ -171,13 +171,14 @@ public class FahrtBean {
 	
 	public List<HaltestelleDTO> getAllHaltestellenS() {		
 		List<Linienabfolge> linienabfolgen = new ArrayList<Linienabfolge>();
-		linienabfolgen = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC");
+		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();
 		
-		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();	
 		//Hinlinie wird bearbeitet
 		if(bid == buslinieHDTO.getBid()) {			
+			linienabfolgen = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC");
 			linienabfolgen.forEach((linienabfolge) -> haltestelleDTOs.add(new HaltestelleDTO(linienabfolge.getVerbindung().getHaltestelleS())));			
 		} else {
+			linienabfolgen = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "DESC");
 			linienabfolgen.forEach((linienabfolge) -> haltestelleDTOs.add(new HaltestelleDTO(linienabfolge.getVerbindung().getHaltestelleE())));
 		}
 		
@@ -185,14 +186,15 @@ public class FahrtBean {
 	}
 	
 	public List<HaltestelleDTO> getAllHaltestellenE() {		
-		List<Linienabfolge> linienabfolgen = new ArrayList<Linienabfolge>();
-		linienabfolgen = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC");
+		List<Linienabfolge> linienabfolgen = new ArrayList<Linienabfolge>();		
+		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();
 		
-		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();	
 		//Hinlinie wird bearbeitet
-		if(bid == buslinieHDTO.getBid()) {			
+		if(bid == buslinieHDTO.getBid()) {
+			linienabfolgen = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC");
 			linienabfolgen.forEach((linienabfolge) -> haltestelleDTOs.add(new HaltestelleDTO(linienabfolge.getVerbindung().getHaltestelleE())));			
 		} else {
+			linienabfolgen = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "DESC");
 			linienabfolgen.forEach((linienabfolge) -> haltestelleDTOs.add(new HaltestelleDTO(linienabfolge.getVerbindung().getHaltestelleS())));
 		}
 		
