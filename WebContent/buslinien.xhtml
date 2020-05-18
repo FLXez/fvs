@@ -53,20 +53,13 @@
       		<h:outputText value="#{b.richtung}" />          		
       	</h:column>
     	<h:column>
-      		<f:facet name="header">Linienabfolge anpassen_new</f:facet>
+      		<f:facet name="header">Linienabfolge anpassen</f:facet>
 			<h:form><h:commandButton action="#{buslinieBean.forwardLinienabfolge(b.bid)}" value="Bearbeiten" /></h:form>
       	</h:column>
     	<h:column>
       		<f:facet name="header">Fahrt hinzuf&#252;gen</f:facet>
 			<h:form><h:commandButton action="#{buslinieBean.forwardFahrt(b.bid)}" value="Hinzuf&#252;gen" /></h:form>
-      	</h:column>      	   	      	   
-      	<h:column>
-      		<f:facet name="header">Linienabfolge anpassen</f:facet>
-      		<h:outputLink value="linienabfolge.xhtml">
-      			Linie bearbeiten.
-      			<f:param name="bid" value="#{b.bid}"></f:param>
-      		</h:outputLink>
-      	</h:column>      	
+      	</h:column>      	   	      	    	
       </h:dataTable>
 	</div>
 	</div>

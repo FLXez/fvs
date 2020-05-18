@@ -42,36 +42,9 @@
 
 		</div>
 		<div id="div-body">
-			<h:form id="linien">
-				<table>
-					<tr>
-						<th>Start Haltestelle</th>
-						<th>Ziel Haltestelle</th>
-						<th>Verbindungsdauer</th>
-						<th>Hinzufügen</th>
-					</tr>
-					<tr>
-						<td><h:selectOneMenu value="#{verbindungBean.newVerbindungDTO.haltestelleSDTO.hid}">
-								<f:selectItems value="#{haltestelleBean.allHaltestellen}"
-									var="haltestelleDTO" itemLabel="#{haltestelleDTO.bezeichnung}"
-									itemValue="#{haltestelleDTO.hid}" />
-							</h:selectOneMenu></td>
-						<td><h:selectOneMenu value="#{verbindungBean.newVerbindungDTO.haltestelleEDTO.hid}">
-								<f:selectItems value="#{haltestelleBean.allHaltestellen}"
-									var="haltestelleDTO" itemLabel="#{haltestelleDTO.bezeichnung}"
-									itemValue="#{haltestelleDTO.hid}" />
-							</h:selectOneMenu></td>
-						<td><h:inputText id="dauer" value="#{verbindungBean.newVerbindungDTO.dauer}"/></td>
-						<td><h:commandButton action="#{verbindungBean.add}" value="Hinzufügen"/></td>
-					</tr>
-					<tr>
-					<td colspan="4">
-						<h:message class="info" for="dauer" id="linienInfo"/>
-					</td>
-					</tr>
-				</table>
-			</h:form>
-			<hr noshade="noshade" size="5" style="width: 100%; text-align: center;" /> 
+
+
+
 		</div>
 	</div>
 </h:body>
