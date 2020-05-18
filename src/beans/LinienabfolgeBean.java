@@ -175,9 +175,11 @@ public class LinienabfolgeBean {
 		}
 		
 		if(bid == buslinieHDTO.getBid()) {
-			hAdd(linienabfolgen);			
+			hAdd(linienabfolgen);		
+			dauer = 0;
 		} else {
 			rAdd(linienabfolgen);
+			dauer = 0;
 		}
 		
 	}
@@ -231,6 +233,18 @@ public class LinienabfolgeBean {
 			if(haltestelleS.getHid() == haltestelleE.getHid()) {
 				NotificationUtils.showMessage(false, 2, "linien:dauer", "Identische Haltestellen", "Bitte wählen Sie eine andere Haltestelle aus.");
 				return;
+			}
+			
+			if(linienabfolgen.get(0).getVerbindung().getHaltestelleS().getHid() == haltestelleE.getHid()) {
+				NotificationUtils.showMessage(false, 2, "linien:dauer", "Haltestelle bereits angefahren", "Die Haltestelle ist in der Abfolge bereits enthalten.");
+				return;
+			}
+			
+			for (Linienabfolge linienabfolge : linienabfolgen) {
+				if(linienabfolge.getVerbindung().getHaltestelleE().getHid() == haltestelleE.getHid()) {
+					NotificationUtils.showMessage(false, 2, "linien:dauer", "Haltestelle bereits angefahren", "Die Haltestelle ist in der Abfolge bereits enthalten.");
+					return;
+				}
 			}
 			
 			checkVerbindung(haltestelleS, haltestelleE);
@@ -297,6 +311,18 @@ public class LinienabfolgeBean {
 			if(haltestelleS.getHid() == haltestelleE.getHid()) {
 				NotificationUtils.showMessage(false, 2, "linien:dauer", "Identische Haltestellen", "Bitte wählen Sie eine andere Haltestelle aus.");
 				return;
+			}
+			
+			if(linienabfolgen.get(linienabfolgen.size()-1).getVerbindung().getHaltestelleE().getHid() == haltestelleS.getHid()) {
+				NotificationUtils.showMessage(false, 2, "linien:dauer", "Haltestelle bereits angefahren", "Die Haltestelle ist in der Abfolge bereits enthalten.");
+				return;
+			}
+			
+			for (Linienabfolge linienabfolge : linienabfolgen) {
+				if(linienabfolge.getVerbindung().getHaltestelleS().getHid() == haltestelleS.getHid()) {
+					NotificationUtils.showMessage(false, 2, "linien:dauer", "Haltestelle bereits angefahren", "Die Haltestelle ist in der Abfolge bereits enthalten.");
+					return;
+				}
 			}
 
 			checkVerbindung(haltestelleS, haltestelleE);
