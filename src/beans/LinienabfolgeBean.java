@@ -165,7 +165,7 @@ public class LinienabfolgeBean {
 		return linienabfolgeDTOs;		
 	}
 	
-	public void add() {				
+	public void add() {		
 		List<Linienabfolge> linienabfolgen = new ArrayList<Linienabfolge>();
 		linienabfolgen = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC");
 		
