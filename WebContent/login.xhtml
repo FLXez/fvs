@@ -50,13 +50,13 @@
 		<table>
 		<tr>
 		<td><h:outputText value="Email:" /></td>
-		<td><h:inputText id ="email" value="#{login.user.email}">
+		<td><h:inputText id ="email" value="#{login.userDTO.email}">
 		</h:inputText></td>
 		</tr>
 		
 		<tr>
 		<td><h:outputText value="Passwort:"></h:outputText></td>
-		<td><h:inputSecret id="password" value="#{login.user.passwort}"/></td>
+		<td><h:inputSecret id="password" value="#{login.userDTO.passwort}"/></td>
 		</tr>
 		<tr>
 		<td style="text-align:center;" colspan="2"><h:message class="error" for="password" id="passwordError"/></td>

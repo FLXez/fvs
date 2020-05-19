@@ -9,6 +9,17 @@ import javax.faces.context.FacesContext;
 public class NotificationUtils {
 
 	
+	/**
+	 * @param logOnly
+	 * @param severity
+	 * @param field
+	 * @param summary
+	 * @param details
+	 * @param severity	: Meldeklasse
+	 * @param display	: Anzeige der Meldung
+	 * @param reason	: Grund für die Meldung
+	 * @param bean		: Bean
+	 */
 	public static void showMessage(boolean logOnly, int severity, String field, String summary, String details){
 
 		Severity ser;

@@ -17,50 +17,58 @@ public class LoginBean {
 
 	@Inject
 	UserDAO userDAO;
-	
-	UserDTO user;
-	
+
+	UserDTO userDTO;
+
 	@PostConstruct
 	public void init() {
-		user = new UserDTO();
-	}
-	
-	public UserDTO getUser() {
-		return this.user;
-	}
-	
-	public void setUser(UserDTO user) {
-		this.user = user;
+		userDTO = new UserDTO();
 	}
 
+	public UserDTO getUserDTO() {
+		return this.userDTO;
+	}
+
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
+	}
+	/**
+	 * Eingaben werden validiert und Login-Prozess wird angestoßen
+	 * Session wird ggf. aufgebaut
+	 */
 	public String validate() {
 		User userEntity = new User();
-		userEntity.setEmail(this.user.getEmail());
-		userEntity.setPasswort(this.user.getPasswort());
-		
-		if(!userDAO.valid(userEntity)) {	
-			NotificationUtils.showMessage(false, 1, "login:password", "E-Mail / Passwort falsch", "Die E-Mail oder das Passwort ist falsch."); 
+		userEntity.setEmail(userDTO.getEmail());
+		userEntity.setPasswort(userDTO.getPasswort());
+
+		if (!userDAO.valid(userEntity)) {
+			NotificationUtils.showMessage(false, 1, "login:password", 
+					"E-Mail / Passwort falsch",
+					"Die E-Mail oder das Passwort ist falsch.");
 			return "login";
 		}
-			
-		userEntity = userDAO.getByEmail(this.user.getEmail());
-		
+
+		userEntity = userDAO.getByEmail(userDTO.getEmail());
+
 		SessionUtils.setUid(userEntity.getUid());
 		SessionUtils.setEmail(userEntity.getEmail());
 		SessionUtils.setPrivilegien(userEntity.getPrivilegien());
-		
-		NotificationUtils.showMessage(true, 0, "", SessionUtils.getEmail() + " hat sich angemeldet", "");
-		user = new UserDTO(userEntity);
-		
 
-		return "index";		
+		NotificationUtils.showMessage(true, 0, "", 
+				SessionUtils.getEmail() + " hat sich angemeldet", "");
+		userDTO = new UserDTO(userEntity);
+
+		return "index";
 	}
-	
+
+	/**
+	 * Session wird zerstört
+	 */
 	public String invalidate() {
 		NotificationUtils.showMessage(true, 0, "", SessionUtils.getEmail() + " hat sich abgemeldet.", "");
 		SessionUtils.invalidate();
-		this.user = new UserDTO();
-		
+		this.userDTO = new UserDTO();
+
 		return "login";
 	}
 }

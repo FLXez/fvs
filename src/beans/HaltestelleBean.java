@@ -21,19 +21,19 @@ public class HaltestelleBean {
 	@Inject
 	HaltestelleDAO haltestelleDAO;
 
-	HaltestelleDTO newHaltestelleDTO;
+	HaltestelleDTO haltestelleDTO;
 
 	@PostConstruct
 	public void init() {
-		this.newHaltestelleDTO = new HaltestelleDTO();
+		this.haltestelleDTO = new HaltestelleDTO();
 	}
 
-	public void setNewHaltestelleDTO(HaltestelleDTO newHaltestelleDTO) {
-		this.newHaltestelleDTO = newHaltestelleDTO;
+	public void setHaltestelleDTO(HaltestelleDTO haltestelleDTO) {
+		this.haltestelleDTO = haltestelleDTO;
 	}
 
-	public HaltestelleDTO getNewHaltestelleDTO() {
-		return this.newHaltestelleDTO;
+	public HaltestelleDTO getHaltestelleDTO() {
+		return this.haltestelleDTO;
 	}
 
 	public List<HaltestelleDTO> getAllHaltestellen() {
@@ -48,36 +48,53 @@ public class HaltestelleBean {
 	public HaltestelleDTO getHaltestelleByID(int id) {
 		HaltestelleDTO haltestelleDTO;
 		Haltestelle haltestelle = haltestelleDAO.get(id);
-			haltestelleDTO = new HaltestelleDTO(haltestelle);
+		haltestelleDTO = new HaltestelleDTO(haltestelle);
 
-			return haltestelleDTO;
+		return haltestelleDTO;
 	}
 
 	public void add() {
-
-		if (newHaltestelleDTO.getBezeichnung().isEmpty()) {
-			NotificationUtils.showMessage(false, 1, "addStop:description", "Bezeichnung leer",
-					"Bitte vergeben Sie eine Bezeichnung.");
+		
+		if(!inputOkay()) {
 			return;
 		}
+		
+		Haltestelle haltestelle = new Haltestelle();
+		haltestelle.setBezeichnung(haltestelleDTO.getBezeichnung());
 
-		if (!haltestelleDAO.findByBezeichnung(newHaltestelleDTO.getBezeichnung())) {
-
-			Haltestelle haltestelle = new Haltestelle();
-			haltestelle.setBezeichnung(this.newHaltestelleDTO.getBezeichnung());
-
-			try {
-				haltestelleDAO.save(haltestelle);
-				newHaltestelleDTO = new HaltestelleDTO();
-				NotificationUtils.showMessage(false, 0, "addStop:description", "Haltestelle hinzugefügt",
-						"Die Haltestelle wurde erfolgreich hinzugefügt.");
-			} catch (EJBException e) {
-				NotificationUtils.showMessage(false, 2, "addStop:description", "Unerwarteter Fehler",
-						"Es ist ein unerwarteter Fehler aufgetreten.");
-			}
-		} else {
-			NotificationUtils.showMessage(false, 1, "addStop:description", "Haltestellenbezeichnung bereits vergeben",
-					"Eine Haltestelle mit dieser Bezeichnung existiert bereits.");
+		try {
+			haltestelleDAO.save(haltestelle);
+			NotificationUtils.showMessage(false, 0, "addStop:description", 
+					"Haltestelle hinzugefügt",
+					"Die Haltestelle wurde erfolgreich hinzugefügt.");
+		} catch (EJBException e) {
+			NotificationUtils.showMessage(false, 2, "addStop:description", 
+					"Unerwarteter Fehler",
+					"Es ist ein unerwarteter Fehler aufgetreten.");
 		}
+		
+		haltestelleDTO = new HaltestelleDTO();
+	}
+	
+	/**
+	 * Überprüft alle Eingaben auf ihre Richtigkeit
+	 */
+	private boolean inputOkay() {
+	
+		if (haltestelleDTO.getBezeichnung().isEmpty()) {
+			NotificationUtils.showMessage(false, 1, "addStop:description", 
+					"Bezeichnung leer",
+					"Bitte vergeben Sie eine Bezeichnung.");
+			return false;
+		}
+
+		if (haltestelleDAO.findByBezeichnung(haltestelleDTO.getBezeichnung())) {
+			NotificationUtils.showMessage(false, 1, "addStop:description", 
+					"Haltestellenbezeichnung bereits vergeben",
+					"Eine Haltestelle mit dieser Bezeichnung existiert bereits.");
+			return false;
+		}
+		
+		return true;
 	}
 }

@@ -60,18 +60,7 @@ public class VerbindungBean {
 	
 	public void add() {
 		
-		if(newVerbindungDTO.getHaltestelleSDTO() == null || newVerbindungDTO.getHaltestelleEDTO() == null ) {
-			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestelle leer", "Bitte geben Sie beide Haltestellen an.");
-			return;
-		}
-
-		if(newVerbindungDTO.getHaltestelleSDTO() == newVerbindungDTO.getHaltestelleEDTO()) {
-			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestellen identsich", "Bitte wählen Sie zwei verschiedene Haltestellen aus.");
-			return;
-		}
-		
-		if(newVerbindungDTO.getDauer() == 0) {
-			NotificationUtils.showMessage(false, 1, "linien:dauer", "Dauer 0", "Bitte geben Sie eine Dauer an.");			
+		if(!inputOkay()) {
 			return;
 		}
 		
@@ -103,4 +92,27 @@ public class VerbindungBean {
 			} catch(EJBException e) { NotificationUtils.showMessage(false, 2, "linien:dauer", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
 		} else { NotificationUtils.showMessage(false, 1, "linien:dauer", "Verbindung existiert bereits", "Diese Verbindung existiert bereits."); }
 	}	
+	
+	/**
+	 * Überprüft alle Eingaben auf ihre Richtigkeit
+	 */
+	private boolean inputOkay() {
+		
+		if(newVerbindungDTO.getHaltestelleSDTO() == null || newVerbindungDTO.getHaltestelleEDTO() == null ) {
+			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestelle leer", "Bitte geben Sie beide Haltestellen an.");
+			return false;
+		}
+
+		if(newVerbindungDTO.getHaltestelleSDTO() == newVerbindungDTO.getHaltestelleEDTO()) {
+			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestellen identsich", "Bitte wählen Sie zwei verschiedene Haltestellen aus.");
+			return false;
+		}
+		
+		if(newVerbindungDTO.getDauer() == 0) {
+			NotificationUtils.showMessage(false, 1, "linien:dauer", "Dauer 0", "Bitte geben Sie eine Dauer an.");			
+			return false;
+		}
+		
+		return true;
+	}
 }

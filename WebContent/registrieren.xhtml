@@ -32,19 +32,19 @@
 		<table>
 		<tr>
 			<td><h:outputText value="Email" /></td>
-			<td><h:inputText id="email" value="#{editUser.user.email}"/></td>
+			<td><h:inputText id="email" value="#{editUser.userDTO.email}"/></td>
 		</tr>	
 		<tr>
 			<td><h:outputText value="Vorname"></h:outputText></td>
-			<td><h:inputText id="vorname" value="#{editUser.user.vorname}"/></td>
+			<td><h:inputText id="vorname" value="#{editUser.userDTO.vorname}"/></td>
 		</tr>
 		<tr>
 			<td><h:outputText value="Nachname"></h:outputText></td>
-			<td><h:inputText id="name" value="#{editUser.user.name}"/></td>
+			<td><h:inputText id="name" value="#{editUser.userDTO.name}"/></td>
 		</tr>
 		<tr>
 			<td><h:outputText value="Passwort"></h:outputText></td>
-			<td><h:inputText id="passwort" value="#{editUser.user.passwort}"/></td>
+			<td><h:inputText id="passwort" value="#{editUser.userDTO.passwort}"/></td>
 		</tr>
 		<tr>
 			<td><h:message class="info" for="email" id="registerError"/></td>

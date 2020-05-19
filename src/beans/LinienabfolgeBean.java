@@ -24,6 +24,10 @@ import entity.Verbindung;
 import util.NotificationUtils;
 import util.SessionUtils;
 
+/**
+ * @author FLX
+ * Bean für linienabfolge.xhtml
+ */
 @Named("linienabfolgeBean")
 @ApplicationScoped
 public class LinienabfolgeBean {
@@ -128,17 +132,6 @@ public class LinienabfolgeBean {
 	public void setBid(int bid) {
 		this.bid = bid;
 	}
-
-
-	public LinienabfolgeDTO getLinienabfolge() {
-		return linienabfolge;
-	}
-
-
-	public void setLinienabfolge(LinienabfolgeDTO linienabfolge) {
-		this.linienabfolge = linienabfolge;
-	}
-
 
 	public List<LinienabfolgeDTO> getAllLinienabfolgen() { 
 		// Listen aufbauen, um diese durchgehen zu können
@@ -340,7 +333,7 @@ public class LinienabfolgeBean {
 			try {
 				linienabfolgeEntity.setVerbindung(verbindungDAO.getByHaltestellen(haltestelleS.getHid(), haltestelleE.getHid()));
 				linienabfolgeDAO.save(linienabfolgeEntity);		
-				NotificationUtils.showMessage(false, 1, "linien:dauer", "Linienabfolgeerfolgreich hinzugefügt", "Haltestelle wurde der Linienabfolge erfolgreich hinzugefügt.");
+				NotificationUtils.showMessage(false, 1, "linien:dauer", "Linienabfolge erfolgreich hinzugefügt", "Haltestelle wurde der Linienabfolge erfolgreich hinzugefügt.");
 			} catch (EJBException e) { NotificationUtils.showMessage(false, 2, "linien:dauer", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
 		}
 	}	

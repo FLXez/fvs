@@ -19,22 +19,22 @@ public class EditUserBean {
 	@Inject
 	UserDAO userDAO;
 
-	UserDTO user;
+	UserDTO userDTO;
 
 	String password;
 	String passwordC;
 
 	@PostConstruct
 	public void init() {
-		user = new UserDTO();
+		userDTO = new UserDTO();
 	}
 
-	public UserDTO getUser() {
-		return this.user;
+	public UserDTO getUserDTO() {
+		return this.userDTO;
 	}
 
-	public void setUser(UserDTO user) {
-		this.user = user;
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
 	}
 
 	public String getPassword() {
@@ -54,79 +54,110 @@ public class EditUserBean {
 	}
 
 	public void register() {
-
-		if (this.user.getEmail().isEmpty()) {
-			NotificationUtils.showMessage(false, 1, "register:email", "E-Mail leer",
-					"Bitte tragen Sie Ihre E-Mail Adresse ein.");
-			return;
-		}
-
-		if (this.user.getPasswort().isEmpty()) {
-			NotificationUtils.showMessage(false, 1, "register:email", "Passwort leer",
-					"Bitte vergeben Sie ein Passwort.");
-			return;
-		}
-
-		if (this.user.getName().isEmpty()) {
-			NotificationUtils.showMessage(false, 1, "register:email", "Name leer", "Bitte tragen Sie Ihren Namen ein.");
-			return;
-		}
-
-		if (this.user.getVorname().isEmpty()) {
-			NotificationUtils.showMessage(false, 1, "register:email", "Vorname leer",
-					"Bitte tragen Sie Ihren Vornamen ein.");
-			return;
-		}
-
-		if (this.user.getPrivilegien().isEmpty()) {
-			NotificationUtils.showMessage(false, 1, "register:email", "Privilegien leer",
-					"Bitte vergeben Sie die Privilegien.");
-			return;
-		}
-
-		if (!userDAO.existsByEmail(this.user.getEmail())) {
-			NotificationUtils.showMessage(false, 1, "register:email", "E-Mail in Verwendung",
-					"Ein Nutzer mit der E-Mail ist bereits registriert.");
+		
+		if(!inputOkay("register")) {
 			return;
 		}
 		
 		User userEntity = new User();
-		userEntity.setEmail(this.user.getEmail());
-		userEntity.setPasswort(this.user.getPasswort());
-		userEntity.setVorname(this.user.getVorname());
-		userEntity.setName(this.user.getName());
-		userEntity.setPrivilegien(this.user.getPrivilegien());
+		userEntity.setEmail(userDTO.getEmail());
+		userEntity.setPasswort(userDTO.getPasswort());
+		userEntity.setVorname(userDTO.getVorname());
+		userEntity.setName(userDTO.getName());
+		userEntity.setPrivilegien(userDTO.getPrivilegien());
 
 		try {
 			userDAO.save(userEntity);
-			user = new UserDTO();
 			NotificationUtils.showMessage(false, 0, "register:email", "Registrierung erfolreich",
 					"Der Nutzer wurde erfolgreich registriert.");
 		} catch (EJBException e) {
 			NotificationUtils.showMessage(false, 2, "register:email", "Unerwarteter Fehler",
 					"Es ist ein unerwarteter Fehler aufgetreten.");
 		}	
+		
+		userDTO = new UserDTO();
 	}
 
 	public void changePassword() {
 		
-		if(this.password.isEmpty() || this.passwordC.isEmpty()) { 
-			NotificationUtils.showMessage(false, 1, "newPassword:passwordC", "Feld leer", "Bitte füllen Sie beide Felder aus."); 
+		if(!inputOkay("changePassword")) {
 			return;
 		}
-
-		if(!this.password.equals(this.passwordC)) { 
-			NotificationUtils.showMessage(false, 1, "newPassword:passwordC", "Ungleiche Passwörter", "Die Passwörter stimmen nicht überein.");
-			return;
-		}
-				
-		String[] parms = {this.password};
+		
+		String[] parms = {password};
 				
 		User userEntity = userDAO.get(SessionUtils.getUid());
+		try {
+			userDAO.update(userEntity, parms);
+			NotificationUtils.showMessage(false, 0, "newPassword:passwordC", "Passwort geändert", "Das Passwort wurde erfolgreich geändert.");			
+		} catch (EJBException e) {
+			NotificationUtils.showMessage(false, 2, "newPassword:passwordC", "Unerwarteter Fehler",
+					"Es ist ein unerwarteter Fehler aufgetreten.");
+		}
 		
-		userDAO.update(userEntity, parms);
-		this.password = "";
-		this.passwordC = "";
-		NotificationUtils.showMessage(false, 0, "newPassword:passwordC", "Passwort geändert", "Das Passwort wurde erfolgreich geändert.");
+		password = new String();
+		passwordC = new String();
+	}
+	
+	/**
+	 * Überprüft alle Eingaben auf ihre Richtigkeit
+	 * @param method Methode, in der inputOkay() aufgerufen wird
+	 */
+	private boolean inputOkay(String method) {
+	
+		switch (method) {
+		case "register":
+			if (userDTO.getEmail().isEmpty()) {
+				NotificationUtils.showMessage(false, 1, "register:email", "E-Mail leer",
+						"Bitte tragen Sie Ihre E-Mail Adresse ein.");
+				return false;
+			}
+
+			if (userDTO.getPasswort().isEmpty()) {
+				NotificationUtils.showMessage(false, 1, "register:email", "Passwort leer",
+						"Bitte vergeben Sie ein Passwort.");
+				return false;
+			}
+
+			if (userDTO.getName().isEmpty()) {
+				NotificationUtils.showMessage(false, 1, "register:email", "Name leer", "Bitte tragen Sie Ihren Namen ein.");
+				return false;
+			}
+
+			if (userDTO.getVorname().isEmpty()) {
+				NotificationUtils.showMessage(false, 1, "register:email", "Vorname leer",
+						"Bitte tragen Sie Ihren Vornamen ein.");
+				return false;
+			}
+
+			if (userDTO.getPrivilegien().isEmpty()) {
+				NotificationUtils.showMessage(false, 1, "register:email", "Privilegien leer",
+						"Bitte vergeben Sie die Privilegien.");
+				return false;
+			}
+
+			if (!userDAO.existsByEmail(userDTO.getEmail())) {
+				NotificationUtils.showMessage(false, 1, "register:email", "E-Mail in Verwendung",
+						"Ein Nutzer mit der E-Mail ist bereits registriert.");
+				return false;
+			}
+			return true;
+			
+		case "changePassword":
+			if(this.password.isEmpty() || this.passwordC.isEmpty()) { 
+				NotificationUtils.showMessage(false, 1, "newPassword:passwordC", "Feld leer", "Bitte füllen Sie beide Felder aus."); 
+				return false;
+			}
+
+			if(!this.password.equals(this.passwordC)) { 
+				NotificationUtils.showMessage(false, 1, "newPassword:passwordC", "Ungleiche Passwörter", "Die Passwörter stimmen nicht überein.");
+				return false;
+			}				
+			return true;	
+			
+		default:
+			NotificationUtils.showMessage(true, 3, "", "EditUserBean - CheckInput - Ungültige Methode", "");			
+			return false;
+		}				
 	}
 }
