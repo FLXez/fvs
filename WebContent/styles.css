@@ -39,13 +39,13 @@
 }
 
 
-/* Buslinien CSS */
+/* Buslinien und davon weiterfuehrende Seiten */
 
-#linieT, #linieH {
+#linienHT, #linienH {
 	margin-left: 28px;
 }
 
-#linienT {
+#linienT, #fahrtT, #linienabfT {
 	border-collapse: collapse;
 	table-layout: fixed;
 	border: 1px solid black;
@@ -58,10 +58,32 @@
 	font-size: 15px;
 }
 
-.ltabutton {
+.fhttext {
+	width: 50px;
+	font-size: 15px;
+}
+
+.lahttext {
+	width: 50px;
+	font-size: 15px;
+}
+
+.fhtso, .lahtso {
+	width: 250px;
+	font-size: 18px;
+}
+
+.ltabutton, .fhtbutton {
 	width: 140px;
 	text-align: center;
 	font-size: 18px;
+	margin-left: 0px;
+}
+
+.fhtbutton, .lahtbutton {
+	width: 140px;
+	text-align: center;
+	font-size: 15px;
 	margin-left: 0px;
 }
 
@@ -78,4 +100,27 @@
 	width: 150px;
  	overflow: hidden;
 }
+
+#fahrtHT, #fahrtH {
+	margin-left: 4.7px;
+	text-align: left;
+}
+
+#fahrtT th, #fahrtT td {
+	border: 1px solid black;
+	width: 200px;
+ 	overflow: hidden;
+}
+
+#linienabfHT, #linienabfH {
+	margin-left: 16.3px;
+	text-align: left;
+}
+
+#linienabfT th, #linienabfT td {
+	border: 1px solid black;
+	width: 260px;
+ 	overflow: hidden;
+}
+
 

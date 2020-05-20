@@ -18,8 +18,11 @@
 			<p>
 				<a href="./index.xhtml">Profil</a>
 			</p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./registrieren.xhtml">Nutzer registrieren</a></p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./registrieren.xhtml">Nutzer registrieren</a>
+			</p>
 			<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
 			<p>
@@ -47,8 +50,9 @@
 
 		</div>
 		<div id="div-body">
+			<h2 id="fahrtH">Fahrt hinzufügen</h2>
 			<h:form id="fahrt">
-				<table>
+				<table id="fahrtHT">
 					<tr>
 						<th>Start</th>
 						<th>Ende</th>
@@ -56,20 +60,22 @@
 						<th>Hinzufügen?</th>
 					</tr>
 					<tr>
-						<td><h:selectOneMenu value="#{fahrtBean.hids}">
+						<td><h:selectOneMenu value="#{fahrtBean.hids}"
+								styleClass="fhtso">
 								<f:selectItems value="#{fahrtBean.allHaltestellenS}"
 									var="haltestelleDTO" itemLabel="#{haltestelleDTO.bezeichnung}"
-									itemValue="#{haltestelleDTO.hid}" />
+									itemValue="#{haltestelleDTO.hid}" styleClass="fhtso" />
 							</h:selectOneMenu></td>
-							<td><h:selectOneMenu value="#{fahrtBean.hide}">
+						<td><h:selectOneMenu value="#{fahrtBean.hide}"
+								styleClass="fhtso">
 								<f:selectItems value="#{fahrtBean.allHaltestellenE}"
 									var="haltestelleDTO" itemLabel="#{haltestelleDTO.bezeichnung}"
 									itemValue="#{haltestelleDTO.hid}" />
 							</h:selectOneMenu></td>
-						<td><h:inputText id="uhrzeit"
-								value="#{fahrtBean.uhrzeit}" /></td>
+						<td><h:inputText id="uhrzeit" value="#{fahrtBean.uhrzeit}"
+								styleClass="fhttext" /></td>
 						<td><h:commandButton action="#{fahrtBean.add}"
-								value="Hinzufügen" /></td>
+								value="Hinzufügen" styleClass="fhtbutton" /></td>
 					</tr>
 					<tr>
 						<td colspan="4"><h:message class="info" for="uhrzeit"
@@ -80,11 +86,12 @@
 
 			<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
-			<h:dataTable id="fahrtTabelle" value="#{fahrtBean.allFahrtenBid}"
-				var="f">
+
+			<h:dataTable id="fahrtT" value="#{fahrtBean.allFahrtenBid}" var="f">
 				<h:column>
 					<f:facet name="header">Buslinie</f:facet>
-					<h:outputText value="#{f.buslinieDTO.nummer} (#{f.buslinieDTO.richtung})" />
+					<h:outputText
+						value="#{f.buslinieDTO.nummer} (#{f.buslinieDTO.richtung})" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Starthaltestelle</f:facet>
