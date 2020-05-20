@@ -131,7 +131,7 @@ public class EditUserBean {
 				return false;
 			}
 
-			if (!userDAO.existsByEmail(userDTO.getEmail())) {
+			if (userDAO.existsByEmail(userDTO.getEmail())) {
 				NotificationUtils.showMessage(false, 1, "register:email", "E-Mail in Verwendung",
 						"Ein Nutzer mit der E-Mail ist bereits registriert.");
 				return false;
