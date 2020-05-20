@@ -71,15 +71,17 @@
 								value="#{editUser.userDTO.passwort}" styleClass="prhtext" /></td>
 					</tr>
 					<tr>
+						<td colspan="2">
 						<h:selectOneRadio value="#{editUser.userDTO.privilegien}">
-							<td>
+							
 								<f:selectItem itemValue="Mitarbeiter" itemLabel="Mitarbeiter"/>
-							</td>
-							<td>
+							
+							
 								<f:selectItem itemValue="Manager" itemLabel="Manager"/>
-							</td>
+							
 						
 						</h:selectOneRadio>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2"><h:message class="info" for="email"
