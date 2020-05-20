@@ -45,7 +45,7 @@
 	margin-left: 28px;
 }
 
-#linienT, #fahrtT, #linienabfT {
+#linienT, #fahrtT, #linienabfT, #prhT {
 	border-collapse: collapse;
 	table-layout: fixed;
 	border: 1px solid black;
@@ -123,4 +123,25 @@
  	overflow: hidden;
 }
 
+#prhH, #prhHT, #prhT {
+	margin-left: 15px;
+}
 
+#prhT td, #prhT th {
+	border: 1px solid black;
+	width: 260px;
+ 	overflow: hidden;
+ 	text-align: left;
+}
+
+.prhtext {
+	width: 200px;
+	font-size: 15px;
+}
+
+.prhbutton {
+	width: 140px;
+	text-align: center;
+	font-size: 17px;
+	margin-left: 0px;
+}

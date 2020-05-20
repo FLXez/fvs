@@ -1,57 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-   	  xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<link rel="stylesheet" type="text/css" href="styles.css"></link>
-<title>Index</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="stylesheet" type="text/css" href="styles.css"></link>
+	<title>Index</title>
 </h:head>
 <h:body>
 	<div id="div-container">
-	<div id="div-nav">
-			<p><a href="./index.xhtml">Profil</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./registrieren.xhtml">Nutzer registrieren</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./fahrplan.xhtml">Fahrplan</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./buslinien.xhtml">Buslinien</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./haltestellen.xhtml">Haltestellen</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><h:form><h:commandLink action="#{login.invalidate}" value="Ausloggen"/></h:form></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-		
-	</div>
-	<div id="div-body">
-		<h2>Liste aller Haltestellen</h2>
-		<h:form id="addStop">
-		<table>
-		<tr>
-			<td><h:outputText value="Haltestelle hinzuf&#252;gen:" /></td>
-			<td><h:inputText id="description" value="#{haltestelleBean.haltestelleDTO.bezeichnung}" /></td>
-		</tr>
-		<tr>
-			<td colspan="1"><h:commandButton action="#{haltestelleBean.add}" value="Hinzuf&#252;gen"/></td>
-			<td colspan="3"><h:message class="info" for="description" id="addStopInfo"/></td>
-		</tr>	
-		</table>
-		</h:form>
-		<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-		<h:dataTable id="no-display" value="#{haltestelleBean.allHaltestellen}" var="haltestelleDTO">
-      	<h:column>
-      		<f:facet name="header">Haltestellen-ID</f:facet>
-      		<h:outputText value="#{haltestelleDTO.hid}" />          		
-      	</h:column>
-      	<h:column>
-      		<f:facet name="header">Haltestellen-Name</f:facet>
-      		<h:outputText value="#{haltestelleDTO.bezeichnung}" />      		
-      	</h:column>      	
-      </h:dataTable>
-	</div>
+		<div id="div-nav">
+			<p>
+				<a href="./index.xhtml">Profil</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./registrieren.xhtml">Nutzer registrieren</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./fahrplan.xhtml">Fahrplan</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./buslinien.xhtml">Buslinien</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./haltestellen.xhtml">Haltestellen</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<h:form>
+					<h:commandLink action="#{login.invalidate}" value="Ausloggen" />
+				</h:form>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+
+		</div>
+		<div id="div-body">
+			<h2 id="prhH">Liste aller Haltestellen</h2>
+			<h:form id="addStop">
+				<table id="prhHT">
+					<tr>
+						<td><h:outputText value="Haltestelle hinzuf&#252;gen:" /></td>
+						<td><h:inputText id="description"
+								value="#{haltestelleBean.haltestelleDTO.bezeichnung}"
+								styleClass="prhtext" /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><h:commandButton
+								action="#{haltestelleBean.add}" value="Hinzuf&#252;gen"
+								styleClass="prhbutton" /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><h:message class="info" for="description"
+								id="addStopInfo" /></td>
+					</tr>
+				</table>
+			</h:form>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<h:dataTable id="prhT" value="#{haltestelleBean.allHaltestellen}"
+				var="haltestelleDTO">
+				<h:column>
+					<f:facet name="header">Haltestellen-ID</f:facet>
+					<h:outputText value="#{haltestelleDTO.hid}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">Haltestellen-Name</f:facet>
+					<h:outputText value="#{haltestelleDTO.bezeichnung}" />
+				</h:column>
+			</h:dataTable>
+		</div>
 	</div>
 </h:body>
 </html>

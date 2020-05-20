@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-   	  xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <link rel="stylesheet" type="text/css" href="styles.css"></link>
@@ -11,49 +11,77 @@
 </head>
 <h:body>
 	<div id="div-container">
-	<div id="div-nav">
-			<p><a href="./index.xhtml">Profil</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./registrieren.xhtml">Nutzer registrieren</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./fahrplan.xhtml">Fahrplan</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./buslinien.xhtml">Buslinien</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./haltestellen.xhtml">Haltestellen</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><h:form><h:commandLink action="#{login.invalidate}" value="Ausloggen"/></h:form></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-		
+		<div id="div-nav">
+			<p>
+				<a href="./index.xhtml">Profil</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./registrieren.xhtml">Nutzer registrieren</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./fahrplan.xhtml">Fahrplan</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./buslinien.xhtml">Buslinien</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./haltestellen.xhtml">Haltestellen</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<h:form>
+					<h:commandLink action="#{login.invalidate}" value="Ausloggen" />
+				</h:form>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+
+		</div>
+		<div id="div-body">
+			<h:form id="register">
+				<h2 id="prhH">Nutzer f&#252;r die fvs&trade; registrieren</h2>
+				<table id="prhHT">
+					<tr>
+						<td><h:outputText value="Email" /></td>
+						<td><h:inputText id="email" value="#{editUser.userDTO.email}"
+								styleClass="prhtext" /></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Vorname"></h:outputText></td>
+						<td><h:inputText id="vorname"
+								value="#{editUser.userDTO.vorname}" styleClass="prhtext" /></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Nachname"></h:outputText></td>
+						<td><h:inputText id="name" value="#{editUser.userDTO.name}"
+								styleClass="prhtext" /></td>
+					</tr>
+					<tr>
+						<td><h:outputText value="Passwort"></h:outputText></td>
+						<td><h:inputText id="passwort"
+								value="#{editUser.userDTO.passwort}" styleClass="prhtext" /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><h:message class="info" for="email"
+								id="registerError" /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><h:commandButton
+								action="#{editUser.register}" value="Registrieren"
+								styleClass="prhbutton" /></td>
+					</tr>
+				</table>
+			</h:form>
+		</div>
 	</div>
-	<div id="div-body">
-<h:form id="register">
-		<h3>fvs Registrierung</h3>
-		<table>
-		<tr>
-			<td><h:outputText value="Email" /></td>
-			<td><h:inputText id="email" value="#{editUser.userDTO.email}"/></td>
-		</tr>	
-		<tr>
-			<td><h:outputText value="Vorname"></h:outputText></td>
-			<td><h:inputText id="vorname" value="#{editUser.userDTO.vorname}"/></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="Nachname"></h:outputText></td>
-			<td><h:inputText id="name" value="#{editUser.userDTO.name}"/></td>
-		</tr>
-		<tr>
-			<td><h:outputText value="Passwort"></h:outputText></td>
-			<td><h:inputText id="passwort" value="#{editUser.userDTO.passwort}"/></td>
-		</tr>
-		<tr>
-			<td><h:message class="info" for="email" id="registerError"/></td>
-		</tr>		
-		</table>
-		<br></br><br></br>
-		<h:commandButton action="#{editUser.register}" value="Registrieren"/>
-	</h:form>
-</div>
-</div>
 </h:body>
 </html>

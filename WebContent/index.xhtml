@@ -1,55 +1,83 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-   	  xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<link rel="stylesheet" type="text/css" href="styles.css"></link>
-<title>Index</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<link rel="stylesheet" type="text/css" href="styles.css"></link>
+	<title>Index</title>
 </h:head>
 <h:body>
 	<div id="div-container">
-	<div id="div-nav">
-			<p><a href="./index.xhtml">Profil</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./registrieren.xhtml">Nutzer registrieren</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./fahrplan.xhtml">Fahrplan</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./buslinien.xhtml">Buslinien</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><a href="./haltestellen.xhtml">Haltestellen</a></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-			<p><h:form><h:commandLink action="#{login.invalidate}" value="Ausloggen"/></h:form></p>
-			<hr noshade="noshade" size="5" style="width:100%; text-align:center;" />
-		
-	</div>
-	<div id="div-body">
-		<h3>Wilkommen #{login.userDTO.vorname} #{login.userDTO.name}</h3>
-	<br/>
-	<h:form id="newPassword">
-		<table>
-			<tr>
-				<td>Ihre Email:</td>
-				<td>#{login.userDTO.email}</td>
-			</tr>
-			<tr>
-				<td>Neues Passwort:</td>
-				<td><h:inputText id="password" value="#{editUser.password}"/></td>
-			</tr>
-			<tr>
-				<td>Neues Passwort wiederholen:</td>
-				<td><h:inputText id="passwordC" value="#{editUser.passwordC}"/></td>
-			</tr>
-			<tr>
-				<td><h:message class="info" for="passwordC" id="newPasswordInfo"/></td>
-			</tr>
-		</table>
-		<h:commandButton action="#{editUser.changePassword}" value="Passwort &#196;ndern"/>
-	</h:form>
-	</div>
+		<div id="div-nav">
+			<p>
+				<a href="./index.xhtml">Profil</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./registrieren.xhtml">Nutzer registrieren</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./fahrplan.xhtml">Fahrplan</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./buslinien.xhtml">Buslinien</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<a href="./haltestellen.xhtml">Haltestellen</a>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+			<p>
+				<h:form>
+					<h:commandLink action="#{login.invalidate}" value="Ausloggen" />
+				</h:form>
+			</p>
+			<hr noshade="noshade" size="5"
+				style="width: 100%; text-align: center;" />
+
+		</div>
+		<div id="div-body">
+			<h2 id="prhH">Wilkommen #{login.userDTO.vorname}
+				#{login.userDTO.name}</h2>
+			<br />
+			<h:form id="newPassword">
+				<table id="prhHT">
+					<tr>
+						<td>Ihre Email:</td>
+						<td>#{login.userDTO.email}</td>
+					</tr>
+					<tr>
+						<td>Neues Passwort:</td>
+						<td><h:inputText id="password" value="#{editUser.password}"
+								styleClass="prhtext" /></td>
+					</tr>
+					<tr>
+						<td>Neues Passwort wiederholen:</td>
+						<td><h:inputText id="passwordC" value="#{editUser.passwordC}"
+								styleClass="prhtext" /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><h:message class="info" for="passwordC"
+								id="newPasswordInfo" /></td>
+					</tr>
+					<tr>
+						<td colspan="2"><h:commandButton
+								action="#{editUser.changePassword}" value="Passwort &#196;ndern"
+								styleClass="prhbutton" /></td>
+					</tr>
+				</table>
+			</h:form>
+		</div>
 	</div>
 </h:body>
 </html>
