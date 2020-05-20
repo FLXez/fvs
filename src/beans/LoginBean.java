@@ -32,6 +32,14 @@ public class LoginBean {
 		this.userDTO = userDTO;
 	}
 
+	public boolean isManager() {
+		if(SessionUtils.getPrivilegien().equals("Manager") || SessionUtils.getPrivilegien().equals("Admin")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	/**
 	 * Eingaben werden validiert und Login-Prozess wird angestoﬂen Session wird ggf.
 	 * aufgebaut
