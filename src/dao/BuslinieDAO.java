@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -8,57 +9,81 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import dto.BuslinieDTO;
 import entity.Buslinie;
 
 @Stateless
 @LocalBean
-public class BuslinieDAO implements DAO<Buslinie> {
+public class BuslinieDAO implements DAO<Buslinie, BuslinieDTO> {
 
 	@PersistenceContext
 	EntityManager em;
-	
-    @Override
-	public Buslinie get(int id) {
-		return em.find(Buslinie.class, id);
+
+	@Override
+	public BuslinieDTO get(int id) {
+		return new BuslinieDTO(em.find(Buslinie.class, id));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Buslinie> getAll() {
+	public List<BuslinieDTO> getAll() {
 		Query q = em.createQuery("SELECT b FROM Buslinie b");
-		return q.getResultList();
+		List<Buslinie> buslinieEntities = new ArrayList<Buslinie>();
+		List<BuslinieDTO> buslinieDTOs = new ArrayList<BuslinieDTO>();
+
+		buslinieEntities = q.getResultList();
+		buslinieEntities.forEach((buslinieEntity) -> buslinieDTOs.add(new BuslinieDTO(buslinieEntity)));
+
+		return buslinieDTOs;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Buslinie> getByNummer(int nummer) {
+	public List<BuslinieDTO> getByNummer(int nummer) {
 		Query q = em.createQuery("SELECT b FROM Buslinie b WHERE b.nummer='" + nummer + "' ORDER BY b.richtung ASC");
-		return q.getResultList();
+
+		List<Buslinie> buslinieEntities = new ArrayList<Buslinie>();
+		List<BuslinieDTO> buslinieDTOs = new ArrayList<BuslinieDTO>();
+
+		buslinieEntities = q.getResultList();
+		buslinieEntities.forEach((buslinieEntity) -> buslinieDTOs.add(new BuslinieDTO(buslinieEntity)));
+
+		return buslinieDTOs;
 	}
-	
-	public Buslinie getByNummerRichtung(int nummer, String richtung) {
-		Query q = em.createQuery("SELECT b FROM Buslinie b WHERE b.nummer= '" + nummer + "' AND b.richtung='" + richtung + "'", Buslinie.class);
-		return (Buslinie) q.getSingleResult();
+
+	public BuslinieDTO getByNummerRichtung(int nummer, String richtung) {
+		Query q = em.createQuery(
+				"SELECT b FROM Buslinie b WHERE b.nummer= '" + nummer + "' AND b.richtung='" + richtung + "'",
+				Buslinie.class);
+
+		return new BuslinieDTO((Buslinie) q.getSingleResult());
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Buslinie> existsByNummer(int nummer) {
+	public List<BuslinieDTO> existsByNummer(int nummer) {
 		Query q = em.createQuery("SELECT b.nummer FROM Buslinie b WHERE b.nummer= '" + nummer + "'");
-		return q.getResultList();
-	}
-	
-	@Override
-	public void save(Buslinie buslinie) {
-		em.persist(buslinie);
+
+		List<Buslinie> buslinieEntities = new ArrayList<Buslinie>();
+		List<BuslinieDTO> buslinieDTOs = new ArrayList<BuslinieDTO>();
+
+		buslinieEntities = q.getResultList();
+		buslinieEntities.forEach((buslinieEntity) -> buslinieDTOs.add(new BuslinieDTO(buslinieEntity)));
+
+		return buslinieDTOs;
 	}
 
 	@Override
-	public void update(Buslinie buslinie, String[] parms) {
-		//TODO Parms parsen (siehe UserDAO)
-		em.merge(buslinie);
+	public void save(BuslinieDTO buslinieDTO) {
+		em.persist(buslinieDTO.toEntity());
 	}
 
 	@Override
-	public void delete(Buslinie buslinie) {
-		em.remove(buslinie);
+	public void update(BuslinieDTO buslinieDTO, String[] parms) {
+		// TODO Parms parsen (siehe UserDAO)
+		em.merge(buslinieDTO.toEntity());
+	}
+
+	@Override
+	public void delete(BuslinieDTO buslinieDTO) {
+		em.remove(buslinieDTO.toEntity());
 	}
 }

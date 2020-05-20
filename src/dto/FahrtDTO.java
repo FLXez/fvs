@@ -27,6 +27,18 @@ public class FahrtDTO implements Serializable {
 		this.haltestelleSDTO = new HaltestelleDTO(fahrtEntity.getHaltestelleS());
 		this.setBuslinieDTO(new BuslinieDTO(fahrtEntity.getBuslinie()));
 	}
+	
+	public Fahrt toEntity() {
+		Fahrt fahrt = new Fahrt();
+		
+		fahrt.setFid(this.fid);
+		fahrt.setBuslinie(this.buslinieDTO.toEntity());
+		fahrt.setHaltestelleS(this.haltestelleSDTO.toEntity());
+		fahrt.setHaltestelleE(this.haltestelleEDTO.toEntity());
+		fahrt.setUhrzeit(this.uhrzeit);
+		
+		return fahrt;
+	}
 
 	public int getFid() {
 		return fid;

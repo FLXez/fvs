@@ -1,6 +1,5 @@
 package beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,7 +11,6 @@ import javax.inject.Named;
 import dao.VerbindungDAO;
 import dto.VerbindungDTO;
 import entity.Haltestelle;
-import entity.Verbindung;
 import util.NotificationUtils;
 
 @Named("verbindungBean")
@@ -23,9 +21,9 @@ public class VerbindungBean {
 	VerbindungDAO verbindungDAO;
 	@Inject
 	HaltestelleBean haltestelleBean;
-	
+
 	VerbindungDTO newVerbindungDTO;
-	
+
 	@PostConstruct
 	public void init() {
 		newVerbindungDTO = new VerbindungDTO();
@@ -40,79 +38,72 @@ public class VerbindungBean {
 	}
 
 	public List<VerbindungDTO> getAllVerbindungs() {
-		// Listen aufbauen, um diese durchgehen zu können
-		List<Verbindung> verbindungs = new ArrayList<Verbindung>();
-		List<VerbindungDTO> verbindungDTOs = new ArrayList<VerbindungDTO>();
-		verbindungs = verbindungDAO.getAll();
-		// Verbindung Entity wird zu Verbindung DTO
-		verbindungs.forEach((verbindung) -> verbindungDTOs.add(new VerbindungDTO(verbindung)));
-		
-		return verbindungDTOs;
+		return verbindungDAO.getAll();
 	}
-	
+
 	public VerbindungDTO getVerbindungByID(int id) {
-		VerbindungDTO verbindungDTO;
-		Verbindung verbindung = verbindungDAO.get(id);
-		verbindungDTO = new VerbindungDTO(verbindung);
-			
-		return verbindungDTO;
+		return verbindungDAO.get(id);
 	}
-	
+
 	public void add() {
-		
-		if(!inputOkay()) {
+
+		if (!inputOkay()) {
 			return;
 		}
-		
+
 		Haltestelle haltestelleStart = new Haltestelle();
 		int hids = newVerbindungDTO.getHaltestelleSDTO().getHid();
 		newVerbindungDTO.setHaltestelleSDTO(haltestelleBean.getHaltestelleByID(hids));
-		
+
 		haltestelleStart.setHid(newVerbindungDTO.getHaltestelleSDTO().getHid());
 		haltestelleStart.setBezeichnung(newVerbindungDTO.getHaltestelleSDTO().getBezeichnung());
-		
+
 		Haltestelle haltestelleEnde = new Haltestelle();
 		int hide = newVerbindungDTO.getHaltestelleEDTO().getHid();
 		newVerbindungDTO.setHaltestelleEDTO(haltestelleBean.getHaltestelleByID(hide));
-		
+
 		haltestelleEnde.setHid(newVerbindungDTO.getHaltestelleEDTO().getHid());
 		haltestelleEnde.setBezeichnung(newVerbindungDTO.getHaltestelleEDTO().getBezeichnung());
-		
-		if(!verbindungDAO.findByHaltestellen(haltestelleStart.getHid(), haltestelleEnde.getHid())) {
-						
-			Verbindung verbindung = new Verbindung();		
-			verbindung.setHaltestelleS(haltestelleStart);
-			verbindung.setHaltestelleE(haltestelleEnde);
-			verbindung.setDauer(newVerbindungDTO.getDauer());
-			
+
+		if (!verbindungDAO.existsByHaltestellen(haltestelleStart.getHid(), haltestelleEnde.getHid())) {
+
 			try {
-				verbindungDAO.save(verbindung);
+				verbindungDAO.save(newVerbindungDTO);
 				newVerbindungDTO = new VerbindungDTO();
-				NotificationUtils.showMessage(false, 1, "linien:dauer", "Verbindung hinzugefügt", "Die Verbindung wurde erfolgreich hinzugefügt.");
-			} catch(EJBException e) { NotificationUtils.showMessage(false, 2, "linien:dauer", "Unerwarteter Fehler", "Es ist ein unerwarteter Fehler aufgetreten."); }
-		} else { NotificationUtils.showMessage(false, 1, "linien:dauer", "Verbindung existiert bereits", "Diese Verbindung existiert bereits."); }
-	}	
-	
+				NotificationUtils.showMessage(false, 1, "linien:dauer", "Verbindung hinzugefügt",
+						"Die Verbindung wurde erfolgreich hinzugefügt.");
+			} catch (EJBException e) {
+				NotificationUtils.showMessage(false, 2, "linien:dauer", "Unerwarteter Fehler",
+						"Es ist ein unerwarteter Fehler aufgetreten.");
+			}
+		} else {
+			NotificationUtils.showMessage(false, 1, "linien:dauer", "Verbindung existiert bereits",
+					"Diese Verbindung existiert bereits.");
+		}
+	}
+
 	/**
 	 * Überprüft alle Eingaben auf ihre Richtigkeit
 	 */
 	private boolean inputOkay() {
-		
-		if(newVerbindungDTO.getHaltestelleSDTO() == null || newVerbindungDTO.getHaltestelleEDTO() == null ) {
-			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestelle leer", "Bitte geben Sie beide Haltestellen an.");
+
+		if (newVerbindungDTO.getHaltestelleSDTO() == null || newVerbindungDTO.getHaltestelleEDTO() == null) {
+			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestelle leer",
+					"Bitte geben Sie beide Haltestellen an.");
 			return false;
 		}
 
-		if(newVerbindungDTO.getHaltestelleSDTO() == newVerbindungDTO.getHaltestelleEDTO()) {
-			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestellen identsich", "Bitte wählen Sie zwei verschiedene Haltestellen aus.");
+		if (newVerbindungDTO.getHaltestelleSDTO() == newVerbindungDTO.getHaltestelleEDTO()) {
+			NotificationUtils.showMessage(false, 1, "linien:dauer", "Haltestellen identsich",
+					"Bitte wählen Sie zwei verschiedene Haltestellen aus.");
 			return false;
 		}
-		
-		if(newVerbindungDTO.getDauer() == 0) {
-			NotificationUtils.showMessage(false, 1, "linien:dauer", "Dauer 0", "Bitte geben Sie eine Dauer an.");			
+
+		if (newVerbindungDTO.getDauer() == 0) {
+			NotificationUtils.showMessage(false, 1, "linien:dauer", "Dauer 0", "Bitte geben Sie eine Dauer an.");
 			return false;
 		}
-		
+
 		return true;
 	}
 }

@@ -32,6 +32,19 @@ public class UserDTO implements Serializable {
 		this.vorname = userEntity.getVorname();
 		
 	}
+	
+	public User toEntity() {
+		User user = new User();
+		
+		user.setUid(this.uid);
+		user.setEmail(this.email);
+		user.setName(this.name);
+		user.setPasswort(this.passwort);
+		user.setPasswort(this.privilegien);
+		user.setVorname(this.vorname);
+		
+		return user;
+	}
 
 	public int getUid() {
 		return this.uid;

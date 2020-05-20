@@ -29,6 +29,19 @@ public class LinienabfolgeDTO implements Serializable {
 		this.verbindungDTO = new VerbindungDTO(linienabfolgeEntity.getVerbindung());
 	}
 
+	public Linienabfolge toEntity() {
+		Linienabfolge linienabfolge = new Linienabfolge();
+		
+		linienabfolge.setLid(this.lid);
+		linienabfolge.setPosition(this.position);
+		linienabfolge.setBuslinieH(this.buslinieHDTO.toEntity());
+		linienabfolge.setBuslinieR(this.buslinieRDTO.toEntity());
+		linienabfolge.setVerbindung(this.verbindungDTO.toEntity());
+		
+		return linienabfolge;
+		
+	}
+	
 	public int getLid() {
 		return lid;
 	}

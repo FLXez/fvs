@@ -24,6 +24,16 @@ public class BuslinieDTO implements Serializable {
 		this.nummer = buslinie.getNummer();
 		this.richtung = buslinie.getRichtung();
 	}
+	
+	public Buslinie toEntity() {
+		Buslinie buslinie = new Buslinie();
+		
+		buslinie.setBid(this.bid);
+		buslinie.setNummer(this.nummer);
+		buslinie.setRichtung(this.richtung);
+		
+		return buslinie;
+	}
 
 	public int getBid() {
 		return bid;

@@ -22,6 +22,15 @@ public class HaltestelleDTO implements Serializable {
 		
 	}
 	
+	public Haltestelle toEntity() {
+		Haltestelle haltestelle = new Haltestelle();
+		
+		haltestelle.setHid(this.hid);
+		haltestelle.setBezeichnung(this.bezeichnung);
+		
+		return haltestelle;
+	}
+	
 	public int getHid() {
 		return this.hid;
 	}

@@ -7,7 +7,6 @@ import javax.inject.Named;
 
 import dao.UserDAO;
 import dto.UserDTO;
-import entity.User;
 import util.NotificationUtils;
 import util.SessionUtils;
 
@@ -32,31 +31,25 @@ public class LoginBean {
 	public void setUserDTO(UserDTO userDTO) {
 		this.userDTO = userDTO;
 	}
+
 	/**
-	 * Eingaben werden validiert und Login-Prozess wird angestoﬂen
-	 * Session wird ggf. aufgebaut
+	 * Eingaben werden validiert und Login-Prozess wird angestoﬂen Session wird ggf.
+	 * aufgebaut
 	 */
 	public String validate() {
-		User userEntity = new User();
-		userEntity.setEmail(userDTO.getEmail());
-		userEntity.setPasswort(userDTO.getPasswort());
-
-		if (!userDAO.valid(userEntity)) {
-			NotificationUtils.showMessage(false, 1, "login:password", 
-					"E-Mail / Passwort falsch",
+		if (!userDAO.valid(userDTO)) {
+			NotificationUtils.showMessage(false, 1, "login:password", "E-Mail / Passwort falsch",
 					"Die E-Mail oder das Passwort ist falsch.");
 			return "login";
 		}
 
-		userEntity = userDAO.getByEmail(userDTO.getEmail());
+		userDTO = userDAO.getByEmail(userDTO.getEmail());
 
-		SessionUtils.setUid(userEntity.getUid());
-		SessionUtils.setEmail(userEntity.getEmail());
-		SessionUtils.setPrivilegien(userEntity.getPrivilegien());
+		SessionUtils.setUid(userDTO.getUid());
+		SessionUtils.setEmail(userDTO.getEmail());
+		SessionUtils.setPrivilegien(userDTO.getPrivilegien());
 
-		NotificationUtils.showMessage(true, 0, "", 
-				SessionUtils.getEmail() + " hat sich angemeldet", "");
-		userDTO = new UserDTO(userEntity);
+		NotificationUtils.showMessage(true, 0, "", SessionUtils.getEmail() + " hat sich angemeldet", "");
 
 		return "index";
 	}

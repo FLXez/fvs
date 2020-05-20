@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -8,46 +9,59 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import dto.FahrtDTO;
 import entity.Fahrt;
 
 @Stateless
 @LocalBean
-public class FahrtDAO implements DAO<Fahrt> {
+public class FahrtDAO implements DAO<Fahrt, FahrtDTO> {
 
 	@PersistenceContext
 	EntityManager em;
 	
 	@Override
-	public Fahrt get(int id) {
-		return em.find(Fahrt.class, id);
+	public FahrtDTO get(int id) {
+		return new FahrtDTO(em.find(Fahrt.class, id));
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Fahrt> getByBuslinie(int bid) {
-		Query q =  em.createQuery("SELECT f FROM Fahrt f WHERE f.buslinie.bid ='" + bid +"'");
-		return q.getResultList();
+	public List<FahrtDTO> getByBuslinie(int bid) {
+		Query q = em.createQuery("SELECT f FROM Fahrt f WHERE f.buslinie.bid ='" + bid +"'");
+		List<Fahrt> fahrtEntities = new ArrayList<Fahrt>();
+		List<FahrtDTO> fahrtDTOs = new ArrayList<FahrtDTO>();
+		
+		fahrtEntities = q.getResultList();
+		fahrtEntities.forEach((fahrtEntity) -> fahrtDTOs.add(new FahrtDTO(fahrtEntity)));
+		
+		return fahrtDTOs;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Fahrt> getAll() {
+	public List<FahrtDTO> getAll() {
 		Query q = em.createQuery("SELECT f FROM Fahrt f");
-		return q.getResultList();
+		List<Fahrt> fahrtEntities = new ArrayList<Fahrt>();
+		List<FahrtDTO> fahrtDTOs = new ArrayList<FahrtDTO>();
+		
+		fahrtEntities = q.getResultList();
+		fahrtEntities.forEach((fahrtEntity) -> fahrtDTOs.add(new FahrtDTO(fahrtEntity)));
+		
+		return fahrtDTOs;
 	}
 
 	@Override
-	public void save(Fahrt fahrt) {
-		em.persist(fahrt);
+	public void save(FahrtDTO fahrtDTO) {
+		em.persist(fahrtDTO.toEntity());
 	}
 
 	@Override
-	public void update(Fahrt fahrt, String[] parms) {
+	public void update(FahrtDTO fahrtDTO, String[] parms) {
 		//TODO Parms parsen (siehe UserDAO)		
-		em.merge(fahrt);
+		em.merge(fahrtDTO.toEntity());
 	}
 
 	@Override
-	public void delete(Fahrt fahrt) {
-		em.remove(fahrt);
+	public void delete(FahrtDTO fahrtDTO) {
+		em.remove(fahrtDTO.toEntity());
 	}
 }

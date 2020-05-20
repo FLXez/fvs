@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -8,52 +9,64 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import dto.LinienabfolgeDTO;
 import entity.Linienabfolge;
 
 @Stateless
 @LocalBean
-public class LinienabfolgeDAO implements DAO<Linienabfolge> {
+public class LinienabfolgeDAO implements DAO<Linienabfolge, LinienabfolgeDTO> {
 
 	@PersistenceContext
 	EntityManager em;
 	
 	@Override
-	public Linienabfolge get(int id) {
+	public LinienabfolgeDTO get(int id) {
+		return new LinienabfolgeDTO(em.find(Linienabfolge.class, id));
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<LinienabfolgeDTO> getByBuslinien(int bidh, int bidr, String sortierung) {
+		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.buslinieH.bid = '" + bidh + "' AND l.buslinieR.bid ='" + bidr + "' ORDER BY l.position " + sortierung + "");
+		List<Linienabfolge> linienabfolgeEntities = new ArrayList<Linienabfolge>();
+		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
 		
-		return em.find(Linienabfolge.class, id);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Linienabfolge> getByBuslinien(int bidh, int bidr, String sortierung) {
-		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.buslinieH.bid = '" + bidh + "' AND l.buslinieR.bid ='" + bidr + "' ORDER BY l.position " + sortierung + "");	
-		return q.getResultList();
+		linienabfolgeEntities = q.getResultList();
+		linienabfolgeEntities.forEach((linienabfolgeEntity) -> linienabfolgeDTOs.add(new LinienabfolgeDTO(linienabfolgeEntity)) );
+		
+		return linienabfolgeDTOs;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Linienabfolge> getAll() {
+	public List<LinienabfolgeDTO> getAll() {
 		Query q = em.createQuery("SELECT l FROM Linienabfolge l");
-		return q.getResultList();
+		List<Linienabfolge> linienabfolgeEntities = new ArrayList<Linienabfolge>();
+		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
+		
+		linienabfolgeEntities = q.getResultList();
+		linienabfolgeEntities.forEach((linienabfolgeEntity) -> linienabfolgeDTOs.add(new LinienabfolgeDTO(linienabfolgeEntity)) );
+		
+		return linienabfolgeDTOs;
 	}
 
 	@Override
-	public void save(Linienabfolge linienabfolge) {
-		em.persist(linienabfolge);
+	public void save(LinienabfolgeDTO linienabfolgeDTO) {
+		em.persist(linienabfolgeDTO.toEntity());
 	}
 
 	@Override
-	public void update(Linienabfolge linienabfolge, String[] parms) {
+	public void update(LinienabfolgeDTO linienabfolgeDTO, String[] parms) {
 		//TODO Parms parsen (siehe UserDAO)
-		em.merge(linienabfolge);
+		em.merge(linienabfolgeDTO.toEntity());
 	}
 
-	public void update(Linienabfolge linienabfolge) {
+	public void update(LinienabfolgeDTO linienabfolgeDTO) {
 		//TODO Parms parsen (siehe UserDAO)
-		em.merge(linienabfolge);
+		em.merge(linienabfolgeDTO.toEntity());
 	}
 	
 	@Override
-	public void delete(Linienabfolge linienabfolge) {
-		em.remove(linienabfolge);		
+	public void delete(LinienabfolgeDTO linienabfolgeDTO) {
+		em.remove(linienabfolgeDTO.toEntity());		
 	}
 }

@@ -1,6 +1,5 @@
 package beans;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +10,6 @@ import javax.inject.Named;
 
 import dao.BuslinieDAO;
 import dto.BuslinieDTO;
-import entity.Buslinie;
 import util.NotificationUtils;
 import util.SessionUtils;
 
@@ -38,11 +36,7 @@ public class BuslinieBean {
 	}
 
 	public List<BuslinieDTO> getAllBuslinien() {
-		List<Buslinie> busliniens = new ArrayList<Buslinie>();
-		List<BuslinieDTO> buslinieDTOs = new ArrayList<BuslinieDTO>();
-		busliniens = buslinieDAO.getAll();
-		busliniens.forEach((buslinie) -> buslinieDTOs.add(new BuslinieDTO(buslinie)));
-		return buslinieDTOs;
+		return buslinieDAO.getAll();
 	}
 
 	public String forwardLinienabfolge(String bid) {
@@ -57,30 +51,30 @@ public class BuslinieBean {
 
 	public void add() {
 
-		if(!inputOkay()) {
+		if (!inputOkay()) {
 			return;
 		}
-		
-		Buslinie buslinieH = new Buslinie();
-		Buslinie buslinieR = new Buslinie();
-		buslinieH.setNummer(this.buslinieDTO.getNummer());
-		buslinieH.setRichtung("H");
-		buslinieR.setNummer(this.buslinieDTO.getNummer());
-		buslinieR.setRichtung("R");
+
+		BuslinieDTO buslinieDTOH = new BuslinieDTO();
+		BuslinieDTO buslinieDTOR = new BuslinieDTO();
+		buslinieDTOH.setNummer(buslinieDTO.getNummer());
+		buslinieDTOH.setRichtung("H");
+		buslinieDTOR.setNummer(buslinieDTO.getNummer());
+		buslinieDTOR.setRichtung("R");
 
 		try {
-			buslinieDAO.save(buslinieH);
-			buslinieDAO.save(buslinieR);
+			buslinieDAO.save(buslinieDTOH);
+			buslinieDAO.save(buslinieDTOR);
 			NotificationUtils.showMessage(false, 1, "addLine:number", "Buslinie hinzugefügt",
 					"Die Buslinie wurde erfolgreich hinzugefügt.");
 		} catch (EJBException e) {
 			NotificationUtils.showMessage(false, 2, "addLine:number", "Unerwarteter Fehler",
 					"Es ist ein unerwarteter Fehler aufgetreten.");
 		}
-		
+
 		buslinieDTO = new BuslinieDTO();
 	}
-	
+
 	/**
 	 * Überprüft alle Eingaben auf ihre Richtigkeit
 	 */
@@ -96,7 +90,7 @@ public class BuslinieBean {
 					"Diese Buslinie ist bereits vorhanden.");
 			return false;
 		}
-		
-		return true;		
+
+		return true;
 	}
 }

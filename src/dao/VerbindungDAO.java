@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -9,41 +10,46 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import dto.VerbindungDTO;
 import entity.Verbindung;
 
 
 @Stateless
 @LocalBean
-public class VerbindungDAO implements DAO<Verbindung> {
+public class VerbindungDAO implements DAO<Verbindung, VerbindungDTO> {
 
 	@PersistenceContext
 	EntityManager em;
 	
 	@Override
-	public Verbindung get(int id) {
-		return em.find(Verbindung.class, id);
+	public VerbindungDTO get(int id) {
+		return new VerbindungDTO(em.find(Verbindung.class, id));
 	}
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Verbindung> getAll() {
+	public List<VerbindungDTO> getAll() {
 		Query q = em.createQuery("SELECT v FROM Verbindung v");
+		List<Verbindung> verbindungEntities = new ArrayList<Verbindung>();
+		List<VerbindungDTO> verbindungDTOs = new ArrayList<VerbindungDTO>();
 		
-		return q.getResultList();	
+		verbindungEntities = q.getResultList();
+		verbindungEntities.forEach((verbindungEntity) -> verbindungDTOs.add(new VerbindungDTO(verbindungEntity)));
+		
+		return verbindungDTOs;	
 	}
 	
-	public Verbindung getByHaltestelleS(int hidS) {
+	public VerbindungDTO getByHaltestelleS(int hidS) {
 		Query q = em.createQuery("SELECT v FROM Verbindung v WHERE v.haltestelleS.hid = '" + hidS + "' AND v.haltestelleE.hid = NULL", Verbindung.class);
-		return (Verbindung) q.getSingleResult();
+		return new VerbindungDTO((Verbindung) q.getSingleResult());
 	}
 
-	public Verbindung getByHaltestellen(int hidS, int hidE) {
+	public VerbindungDTO getByHaltestellen(int hidS, int hidE) {
 		Query q = em.createQuery("SELECT v FROM Verbindung v WHERE v.haltestelleS.hid = '" + hidS + "' AND v.haltestelleE.hid = '" + hidE + "'", Verbindung.class);
-		return (Verbindung) q.getSingleResult();
+		return new VerbindungDTO((Verbindung) q.getSingleResult());
 	}
 	
-	//TODO Verbindung übergeben
-	public boolean findByHaltestellen(int hidS, int hidE) {
+	public boolean existsByHaltestellen(int hidS, int hidE) {
 		Query q = em.createQuery("SELECT v.haltestelleS.hid , v.haltestelleE.hid FROM Verbindung v WHERE v.haltestelleS.hid = '" + hidS + "' AND v.haltestelleE.hid = '" + hidE + "'");
 		try {
 			q.getSingleResult();
@@ -55,22 +61,22 @@ public class VerbindungDAO implements DAO<Verbindung> {
 	}
 
 	@Override
-	public void save(Verbindung verbindung) {
-		em.persist(verbindung);
+	public void save(VerbindungDTO verbindungDTO) {
+		em.persist(verbindungDTO.toEntity());
 	}
 
 	@Override
-	public void update(Verbindung verbindung, String[] parms) {
+	public void update(VerbindungDTO verbindungDTO, String[] parms) {
 		//TODO Parms parsen (siehe UserDAO)		
-		em.merge(verbindung);
+		em.merge(verbindungDTO.toEntity());
 	}
 	
-	public void update(Verbindung verbindung) {	
-		em.merge(verbindung);
+	public void update(VerbindungDTO verbindungDTO) {	
+		em.merge(verbindungDTO.toEntity());
 	}
 
 	@Override
-	public void delete(Verbindung verbindung) {
-		em.remove(verbindung);
+	public void delete(VerbindungDTO verbindungDTO) {
+		em.remove(verbindungDTO.toEntity());
 	}
 }

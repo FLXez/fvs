@@ -19,9 +19,7 @@ import dao.VerbindungDAO;
 import dto.BuslinieDTO;
 import dto.FahrtDTO;
 import dto.HaltestelleDTO;
-import entity.Buslinie;
-import entity.Fahrt;
-import entity.Linienabfolge;
+import dto.LinienabfolgeDTO;
 import util.NotificationUtils;
 import util.SessionUtils;
 
@@ -67,13 +65,13 @@ public class FahrtBean {
 	public void init() {
 		uP = Pattern.compile("([0-1][0-9]|[2][0-3]):([0-5][0-9])");
 		bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
-		Buslinie buslinie = buslinieDAO.get(bid);
+		BuslinieDTO buslinieDTO = buslinieDAO.get(bid);
 
-		List<Buslinie> buslinien = new ArrayList<Buslinie>();
-		buslinien = buslinieDAO.getByNummer(buslinie.getNummer());
+		List<BuslinieDTO> buslinieDTOs = new ArrayList<BuslinieDTO>();
+		buslinieDTOs = buslinieDAO.getByNummer(buslinieDTO.getNummer());
 		// ORDER BY richtung - somit erst H, dann R
-		buslinieHDTO = new BuslinieDTO(buslinien.get(0));
-		buslinieRDTO = new BuslinieDTO(buslinien.get(1));
+		buslinieHDTO = buslinieDTOs.get(0);
+		buslinieRDTO = buslinieDTOs.get(1);
 
 		feHaltestelleEDTOs = new ArrayList<HaltestelleDTO>();
 		feHaltestelleSDTOs = new ArrayList<HaltestelleDTO>();
@@ -81,13 +79,13 @@ public class FahrtBean {
 
 	public void onPageLoad() {
 		bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
-		Buslinie buslinie = buslinieDAO.get(bid);
+		BuslinieDTO buslinieDTO = buslinieDAO.get(bid);
 
-		List<Buslinie> buslinien = new ArrayList<Buslinie>();
-		buslinien = buslinieDAO.getByNummer(buslinie.getNummer());
+		List<BuslinieDTO> buslinieDTOs = new ArrayList<BuslinieDTO>();
+		buslinieDTOs = buslinieDAO.getByNummer(buslinieDTO.getNummer());
 		// ORDER BY richtung - somit erst H, dann R
-		buslinieHDTO = new BuslinieDTO(buslinien.get(0));
-		buslinieRDTO = new BuslinieDTO(buslinien.get(1));
+		buslinieHDTO = buslinieDTOs.get(0);
+		buslinieRDTO = buslinieDTOs.get(1);
 
 		getAllFahrtenBid();
 	}
@@ -125,36 +123,25 @@ public class FahrtBean {
 	}
 
 	public List<FahrtDTO> getAll() {
-		List<Fahrt> fahrten = new ArrayList<Fahrt>();
-		List<FahrtDTO> fahrtDTOs = new ArrayList<FahrtDTO>();
-		fahrten = fahrtDAO.getAll();
-		fahrten.forEach((fahrt) -> fahrtDTOs.add(new FahrtDTO(fahrt)));
-		return fahrtDTOs;
+		return fahrtDAO.getAll();
 	}
 
 	public List<FahrtDTO> getAllFahrtenBid() {
-		// Liste aufbauen, um diese durchgehen zu können
-		List<Fahrt> fahrten = new ArrayList<Fahrt>();
-		List<FahrtDTO> fahrtDTOs = new ArrayList<FahrtDTO>();
-		fahrten = fahrtDAO.getByBuslinie(bid);
-		fahrten.forEach((fahrt) -> fahrtDTOs.add(new FahrtDTO(fahrt)));
-		return fahrtDTOs;
+		return fahrtDAO.getByBuslinie(bid);
 	}
 
 	public List<HaltestelleDTO> getAllHaltestellenS() {
-		List<Linienabfolge> linienabfolgen = new ArrayList<Linienabfolge>();
+		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
 		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();
 
 		// Hinlinie wird bearbeitet
 		if (bid == buslinieHDTO.getBid()) {
-			linienabfolgen = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC");
-			linienabfolgen.forEach((linienabfolge) -> haltestelleDTOs
-					.add(new HaltestelleDTO(linienabfolge.getVerbindung().getHaltestelleS())));
+			linienabfolgeDTOs = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC");
+			linienabfolgeDTOs.forEach((lDTO) -> haltestelleDTOs.add(lDTO.getVerbindungDTO().getHaltestelleSDTO()));
 			// Rücklinie wird bearbeitet
 		} else {
-			linienabfolgen = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "DESC");
-			linienabfolgen.forEach((linienabfolge) -> haltestelleDTOs
-					.add(new HaltestelleDTO(linienabfolge.getVerbindung().getHaltestelleE())));
+			linienabfolgeDTOs = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "DESC");
+			linienabfolgeDTOs.forEach((lDTO) -> haltestelleDTOs.add(lDTO.getVerbindungDTO().getHaltestelleEDTO()));
 		}
 		// Liste fürs Backend zwischenspeichern
 		feHaltestelleSDTOs = haltestelleDTOs;
@@ -163,19 +150,17 @@ public class FahrtBean {
 	}
 
 	public List<HaltestelleDTO> getAllHaltestellenE() {
-		List<Linienabfolge> linienabfolgen = new ArrayList<Linienabfolge>();
+		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
 		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();
 
 		// Hinlinie wird bearbeitet
 		if (bid == buslinieHDTO.getBid()) {
-			linienabfolgen = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC");
-			linienabfolgen.forEach((linienabfolge) -> haltestelleDTOs
-					.add(new HaltestelleDTO(linienabfolge.getVerbindung().getHaltestelleE())));
+			linienabfolgeDTOs = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC");
+			linienabfolgeDTOs.forEach((lDTO) -> haltestelleDTOs.add(lDTO.getVerbindungDTO().getHaltestelleEDTO()));
 			// Rücklinie wird bearbeitet
 		} else {
-			linienabfolgen = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "DESC");
-			linienabfolgen.forEach((linienabfolge) -> haltestelleDTOs
-					.add(new HaltestelleDTO(linienabfolge.getVerbindung().getHaltestelleS())));
+			linienabfolgeDTOs = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "DESC");
+			linienabfolgeDTOs.forEach((lDTO) -> haltestelleDTOs.add(lDTO.getVerbindungDTO().getHaltestelleSDTO()));
 		}
 		// Liste fürs Backend zwischenspeichern
 		feHaltestelleEDTOs = haltestelleDTOs;
@@ -189,14 +174,14 @@ public class FahrtBean {
 			return;
 		}
 
-		Fahrt fahrt = new Fahrt();
-		fahrt.setBuslinie(buslinieDAO.get(bid));
-		fahrt.setUhrzeit(uhrzeit);
-		fahrt.setHaltestelleS(haltestelleDAO.get(hids));
-		fahrt.setHaltestelleE(haltestelleDAO.get(hide));
+		FahrtDTO fahrtDTO = new FahrtDTO();
+		fahrtDTO.setBuslinieDTO(buslinieDAO.get(bid));
+		fahrtDTO.setUhrzeit(uhrzeit);
+		fahrtDTO.setHaltestelleSDTO(haltestelleDAO.get(hids));
+		fahrtDTO.setHaltestelleEDTO(haltestelleDAO.get(hide));
 
 		try {
-			fahrtDAO.save(fahrt);
+			fahrtDAO.save(fahrtDTO);
 			NotificationUtils.showMessage(false, 1, "fahrt:uhrzeit", "Fahrt hinzugefügt",
 					"Die Fahrt wurde erfolgreich hinzugefügt.");
 		} catch (EJBException e) {
@@ -210,7 +195,7 @@ public class FahrtBean {
 	 * Überprüft alle Eingaben auf ihre Richtigkeit
 	 */
 	private boolean inputOkay() {
-		
+
 		if (linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC").isEmpty()) {
 			NotificationUtils.showMessage(false, 2, "fahrt:uhrzeit", "Keine Linienabfolge",
 					"Bitte erstellen Sie zuerst eine Linienabfolge.");
@@ -224,8 +209,8 @@ public class FahrtBean {
 			return false;
 		}
 
-		List<Fahrt> fahrten = new ArrayList<Fahrt>();
-		fahrten = fahrtDAO.getByBuslinie(bid);
+		List<FahrtDTO> fahrtDTOs = new ArrayList<FahrtDTO>();
+		fahrtDTOs = fahrtDAO.getByBuslinie(bid);
 
 		// haltestelle aus Liste ziehen, damit via indexOf findbar
 		for (HaltestelleDTO haltestelle : feHaltestelleSDTOs) {
@@ -247,10 +232,9 @@ public class FahrtBean {
 			return false;
 		}
 
-		for (Fahrt fahrt : fahrten) {
-			if (fahrt.getHaltestelleE().getHid() == haltestelleEDTO.getHid()
-					&& fahrt.getHaltestelleS().getHid() == haltestelleSDTO.getHid()
-					&& fahrt.getUhrzeit().equals(uhrzeit)) {
+		for (FahrtDTO f : fahrtDTOs) {
+			if (f.getHaltestelleEDTO().getHid() == haltestelleEDTO.getHid()
+					&& f.getHaltestelleSDTO().getHid() == haltestelleSDTO.getHid() && f.getUhrzeit().equals(uhrzeit)) {
 				NotificationUtils.showMessage(false, 2, "fahrt:uhrzeit", "Fahrt bereits vorhanden",
 						"Diese Fahrt ist bereits vorhanden.");
 				return false;

@@ -28,6 +28,17 @@ public class VerbindungDTO implements Serializable {
 		this.haltestelleSDTO = new HaltestelleDTO(verbindungEntity.getHaltestelleS());
 
 	}
+	
+	public Verbindung toEntity() {
+		Verbindung verbindung = new Verbindung();
+		
+		verbindung.setVid(this.vid);
+		verbindung.setDauer(this.dauer);
+		verbindung.setHaltestelleS(this.haltestelleSDTO.toEntity());
+		verbindung.setHaltestelleE(this.haltestelleEDTO.toEntity());
+		
+		return verbindung;
+	}
 
 	public int getVid() {
 		return vid;

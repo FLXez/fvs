@@ -2,16 +2,15 @@ package dao;
 
 import java.util.List;
 
-public interface DAO<Entity> {
+public interface DAO<Entity, DTO> {
 	
-	Entity get(int id);
+	DTO get(int id);
 	
-	List<Entity> getAll();
+	List<DTO> getAll();
 	
-	void save(Entity entity);
+	void save(DTO dto);
 	
-	void update(Entity entity, String[] parms);
+	void update(DTO dto, String[] parms);
 	
-	void delete(Entity entity);
-
+	void delete(DTO dto);
 }

@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -10,24 +11,25 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import dto.UserDTO;
 import entity.User;
 
 @Stateless
 @LocalBean
-public class UserDAO implements DAO<User> {
+public class UserDAO implements DAO<User, UserDTO> {
 	
 	@PersistenceContext
 	EntityManager em;
     
 	@Override
-	public User get(int id) {		
-		return em.find(User.class, id);		
+	public UserDTO get(int id) {		
+		return new UserDTO(em.find(User.class, id));		
 	}
 
-	public User getByEmail(String email) {		
+	public UserDTO getByEmail(String email) {		
 		Query q = em.createNativeQuery("SELECT u.email, u.uid, u.privilegien, u.vorname, u.name FROM User u WHERE u.email = '" + email + "'", User.class);
 		
-		return (User) q.getSingleResult();
+		return new UserDTO((User) q.getSingleResult());
 	}
 	
 	public boolean existsByEmail(String email) {
@@ -43,33 +45,36 @@ public class UserDAO implements DAO<User> {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<User> getAll() {
+	public List<UserDTO> getAll() {
 		Query q = em.createQuery("SELECT u FROM User u");
+		List<User> userEntites = new ArrayList<User>();
+		List<UserDTO> userDTOs = new ArrayList<UserDTO>();
 		
-		return q.getResultList();
-				
+		userEntites = q.getResultList();
+		userEntites.forEach((userEntity) -> userDTOs.add(new UserDTO(userEntity)));
+		
+		return userDTOs;				
 	}
 
 	@Override
-	public void save(User user) {
-			em.persist(user);
+	public void save(UserDTO userDTO) {
+			em.persist(userDTO.toEntity());
 	}
 	
 	@Override
-	public void update(User user, String[] parms) {
-		user.setPasswort(Objects.requireNonNull(parms[0], "Passwort muss angegeben sein!"));
+	public void update(UserDTO userDTO, String[] parms) {
+		userDTO.setPasswort(Objects.requireNonNull(parms[0], "Passwort muss angegeben sein!"));
 		
-		em.merge(user);
+		em.merge(userDTO.toEntity());
 	} 
 	
 	@Override
-	public void delete(User user) {		
-		em.remove(user);	
+	public void delete(UserDTO userDTO) {		
+		em.remove(userDTO.toEntity());	
 	}
 	
-	public boolean valid(User user) {
-		
-		Query q = em.createQuery("SELECT u.email, u.passwort FROM User u WHERE u.email = '" + user.getEmail() + "' and u.passwort = '" + user.getPasswort() +"'");
+	public boolean valid(UserDTO userDTO) {		
+		Query q = em.createQuery("SELECT u.email, u.passwort FROM User u WHERE u.email = '" + userDTO.getEmail() + "' and u.passwort = '" + userDTO.getPasswort() +"'");
 		try {
 			q.getSingleResult();
 			return true;
@@ -78,5 +83,5 @@ public class UserDAO implements DAO<User> {
 			return false;
 		}
 		
-	}
+	}	
 }

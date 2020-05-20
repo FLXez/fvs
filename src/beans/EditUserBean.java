@@ -8,7 +8,6 @@ import javax.inject.Named;
 
 import dao.UserDAO;
 import dto.UserDTO;
-import entity.User;
 import util.NotificationUtils;
 import util.SessionUtils;
 
@@ -54,57 +53,52 @@ public class EditUserBean {
 	}
 
 	public void register() {
-		
-		if(!inputOkay("register")) {
+
+		if (!inputOkay("register")) {
 			return;
 		}
-		
-		User userEntity = new User();
-		userEntity.setEmail(userDTO.getEmail());
-		userEntity.setPasswort(userDTO.getPasswort());
-		userEntity.setVorname(userDTO.getVorname());
-		userEntity.setName(userDTO.getName());
-		userEntity.setPrivilegien(userDTO.getPrivilegien());
 
 		try {
-			userDAO.save(userEntity);
+			userDAO.save(userDTO);
 			NotificationUtils.showMessage(false, 0, "register:email", "Registrierung erfolreich",
 					"Der Nutzer wurde erfolgreich registriert.");
 		} catch (EJBException e) {
 			NotificationUtils.showMessage(false, 2, "register:email", "Unerwarteter Fehler",
 					"Es ist ein unerwarteter Fehler aufgetreten.");
-		}	
-		
+		}
+
 		userDTO = new UserDTO();
 	}
 
 	public void changePassword() {
-		
-		if(!inputOkay("changePassword")) {
+
+		if (!inputOkay("changePassword")) {
 			return;
 		}
-		
-		String[] parms = {password};
-				
-		User userEntity = userDAO.get(SessionUtils.getUid());
+
+		String[] parms = { password };
+
+		UserDTO userDTO = userDAO.get(SessionUtils.getUid());
 		try {
-			userDAO.update(userEntity, parms);
-			NotificationUtils.showMessage(false, 0, "newPassword:passwordC", "Passwort geändert", "Das Passwort wurde erfolgreich geändert.");			
+			userDAO.update(userDTO, parms);
+			NotificationUtils.showMessage(false, 0, "newPassword:passwordC", "Passwort geändert",
+					"Das Passwort wurde erfolgreich geändert.");
 		} catch (EJBException e) {
 			NotificationUtils.showMessage(false, 2, "newPassword:passwordC", "Unerwarteter Fehler",
 					"Es ist ein unerwarteter Fehler aufgetreten.");
 		}
-		
+
 		password = new String();
 		passwordC = new String();
 	}
-	
+
 	/**
 	 * Überprüft alle Eingaben auf ihre Richtigkeit
+	 * 
 	 * @param method Methode, in der inputOkay() aufgerufen wird
 	 */
 	private boolean inputOkay(String method) {
-	
+
 		switch (method) {
 		case "register":
 			if (userDTO.getEmail().isEmpty()) {
@@ -120,7 +114,8 @@ public class EditUserBean {
 			}
 
 			if (userDTO.getName().isEmpty()) {
-				NotificationUtils.showMessage(false, 1, "register:email", "Name leer", "Bitte tragen Sie Ihren Namen ein.");
+				NotificationUtils.showMessage(false, 1, "register:email", "Name leer",
+						"Bitte tragen Sie Ihren Namen ein.");
 				return false;
 			}
 
@@ -142,22 +137,24 @@ public class EditUserBean {
 				return false;
 			}
 			return true;
-			
+
 		case "changePassword":
-			if(this.password.isEmpty() || this.passwordC.isEmpty()) { 
-				NotificationUtils.showMessage(false, 1, "newPassword:passwordC", "Feld leer", "Bitte füllen Sie beide Felder aus."); 
+			if (this.password.isEmpty() || this.passwordC.isEmpty()) {
+				NotificationUtils.showMessage(false, 1, "newPassword:passwordC", "Feld leer",
+						"Bitte füllen Sie beide Felder aus.");
 				return false;
 			}
 
-			if(!this.password.equals(this.passwordC)) { 
-				NotificationUtils.showMessage(false, 1, "newPassword:passwordC", "Ungleiche Passwörter", "Die Passwörter stimmen nicht überein.");
+			if (!this.password.equals(this.passwordC)) {
+				NotificationUtils.showMessage(false, 1, "newPassword:passwordC", "Ungleiche Passwörter",
+						"Die Passwörter stimmen nicht überein.");
 				return false;
-			}				
-			return true;	
-			
+			}
+			return true;
+
 		default:
-			NotificationUtils.showMessage(true, 3, "", "EditUserBean - CheckInput - Ungültige Methode", "");			
+			NotificationUtils.showMessage(true, 3, "", "EditUserBean - CheckInput - Ungültige Methode", "");
 			return false;
-		}				
+		}
 	}
 }

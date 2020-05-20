@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -9,29 +10,35 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import dto.HaltestelleDTO;
 import entity.Haltestelle;
 
 @Stateless
 @LocalBean
-public class HaltestelleDAO implements DAO<Haltestelle> {
+public class HaltestelleDAO implements DAO<Haltestelle, HaltestelleDTO> {
 
 	@PersistenceContext
 	EntityManager em;
 
 	@Override
-	public Haltestelle get(int id) {
-		return em.find(Haltestelle.class, id);
+	public HaltestelleDTO get(int id) {		
+		return new HaltestelleDTO(em.find(Haltestelle.class, id));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Haltestelle> getAll() {
+	public List<HaltestelleDTO> getAll() {		
 		Query q = em.createQuery("SELECT h FROM Haltestelle h");
+		List<Haltestelle> haltestelleEntities = new ArrayList<Haltestelle>();
+		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();
 		
-		return q.getResultList();
+		haltestelleEntities = q.getResultList();
+		haltestelleEntities.forEach((haltestelleEntity) -> haltestelleDTOs.add(new HaltestelleDTO(haltestelleEntity)));
+		
+		return haltestelleDTOs;
 	}
 	
-	public boolean findByBezeichnung(String bezeichnung) {
+	public boolean existsByBezeichnung(String bezeichnung) {
 		Query q = em.createQuery("SELECT h.bezeichnung FROM Haltestelle h WHERE h.bezeichnung = '" + bezeichnung + "'");
 		try {
 			q.getSingleResult();
@@ -43,18 +50,18 @@ public class HaltestelleDAO implements DAO<Haltestelle> {
 	}
 	
 	@Override
-	public void save(Haltestelle haltestelle) {
-		em.persist(haltestelle);
+	public void save(HaltestelleDTO haltestelleDTO) {
+		em.persist(haltestelleDTO.toEntity());
 	}
 
 	@Override
-	public void update(Haltestelle haltestelle, String[] parms) {
+	public void update(HaltestelleDTO haltestelleDTO, String[] parms) {
 		//TODO Parms parsen (siehe UserDAO)
-		em.merge(haltestelle);
+		em.merge(haltestelleDTO.toEntity());
 	}
 
 	@Override
-	public void delete(Haltestelle haltestelle) {
-		em.remove(haltestelle);
+	public void delete(HaltestelleDTO haltestelleDTO) {
+		em.remove(haltestelleDTO.toEntity());
 	}
 }
