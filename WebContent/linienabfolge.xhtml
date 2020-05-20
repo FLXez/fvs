@@ -51,8 +51,15 @@
 
 		</div>
 		<div id="div-body">
-		<h2 id="linienabfH">Linienabfolge für Linie <h:outputText value="#{linienabfolgeBean.bid}" /> anpassen</h2>
-		
+			<h2 id="linienabfH">
+				Linienabfolge für Linie
+				<h:outputText
+					value="#{linienabfolgeBean.buslinieEditDTO.nummer}" />
+				<h:outputText
+					value="#{linienabfolgeBean.buslinieEditDTO.richtung}" />
+				anpassen
+			</h2>
+
 			<h:form id="linien">
 				<table id="linienabfHT">
 					<tr>
@@ -61,7 +68,8 @@
 						<th>Hinzufügen</th>
 					</tr>
 					<tr>
-						<td><h:selectOneMenu value="#{linienabfolgeBean.hid}" styleClass="lahtso">
+						<td><h:selectOneMenu value="#{linienabfolgeBean.hid}"
+								styleClass="lahtso">
 								<f:selectItems value="#{haltestelleBean.allHaltestellen}"
 									var="haltestelleDTO" itemLabel="#{haltestelleDTO.bezeichnung}"
 									itemValue="#{haltestelleDTO.hid}" />
@@ -69,7 +77,7 @@
 						<td><h:inputText id="dauer" styleClass="lahttext"
 								value="#{linienabfolgeBean.dauer}" /></td>
 						<td><h:commandButton action="#{linienabfolgeBean.add}"
-								value="Hinzufügen" styleClass="lahtbutton"/></td>
+								value="Hinzufügen" styleClass="lahtbutton" /></td>
 					</tr>
 					<tr>
 						<td colspan="3"><h:message class="info" for="dauer"
