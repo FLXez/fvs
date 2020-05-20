@@ -135,7 +135,7 @@
 
 #prhT td, #prhT th {
 	border: 1px solid black;
-	width: 260px;
+	width: 200px;
  	overflow: hidden;
  	text-align: left;
 }
@@ -150,4 +150,12 @@
 	text-align: center;
 	font-size: 17px;
 	margin-left: 0px;
+}
+
+.prhTbutton {
+	width: 198px;
+	text-align: center;
+	font-size: 17px;
+	display: block;
+	margin: auto;
 }

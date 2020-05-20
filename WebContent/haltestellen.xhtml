@@ -80,6 +80,14 @@
 						<f:facet name="header">Haltestellen-Name</f:facet>
 						<h:outputText value="#{haltestelleDTO.bezeichnung}" />
 					</h:column>
+					<h:column>
+						<f:facet name="header">Befahrende Linien</f:facet>
+						<h:form>
+							<h:commandButton
+								
+								value="Ansehen" styleClass="prhTbutton" />
+						</h:form>
+					</h:column>
 				</h:dataTable>
 			</div>
 		</div>
