@@ -41,6 +41,7 @@ public class LinienabfolgeBean {
 
 	LinienabfolgeDTO linienabfolge;
 
+	BuslinieDTO buslinieEditDTO;
 	BuslinieDTO buslinieHDTO;
 	BuslinieDTO buslinieRDTO;
 
@@ -57,9 +58,9 @@ public class LinienabfolgeBean {
 		linienabfolge = new LinienabfolgeDTO();
 		bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
 
-		BuslinieDTO buslinieDTO = buslinieDAO.get(bid);
+		buslinieEditDTO = buslinieDAO.get(bid);
 		List<BuslinieDTO> buslinieDTOs = new ArrayList<BuslinieDTO>();
-		buslinieDTOs = buslinieDAO.getByNummer(buslinieDTO.getNummer());
+		buslinieDTOs = buslinieDAO.getByNummer(buslinieEditDTO.getNummer());
 		// ORDER BY richtung - somit erst H, dann R
 		buslinieHDTO = buslinieDTOs.get(0);
 		buslinieRDTO = buslinieDTOs.get(1);
@@ -71,14 +72,22 @@ public class LinienabfolgeBean {
 		linienabfolge = new LinienabfolgeDTO();
 		bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
 
-		BuslinieDTO buslinieDTO = buslinieDAO.get(bid);
+		buslinieEditDTO = buslinieDAO.get(bid);
 		List<BuslinieDTO> buslinieDTOs = new ArrayList<BuslinieDTO>();
-		buslinieDTOs = buslinieDAO.getByNummer(buslinieDTO.getNummer());
+		buslinieDTOs = buslinieDAO.getByNummer(buslinieEditDTO.getNummer());
 		// ORDER BY richtung - somit erst H, dann R
 		buslinieHDTO = buslinieDTOs.get(0);
 		buslinieRDTO = buslinieDTOs.get(1);
 
 		getAllLinienabfolgenBid();
+	}
+
+	public BuslinieDTO getBuslinieEditDTO() {
+		return buslinieEditDTO;
+	}
+
+	public void setBuslinieEditDTO(BuslinieDTO buslinieEditDTO) {
+		this.buslinieEditDTO = buslinieEditDTO;
 	}
 
 	public BuslinieDTO getBuslinieHDTO() {
