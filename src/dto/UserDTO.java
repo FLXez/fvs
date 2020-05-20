@@ -40,7 +40,7 @@ public class UserDTO implements Serializable {
 		user.setEmail(this.email);
 		user.setName(this.name);
 		user.setPasswort(this.passwort);
-		user.setPasswort(this.privilegien);
+		user.setPrivilegien(this.privilegien);
 		user.setVorname(this.vorname);
 		
 		return user;

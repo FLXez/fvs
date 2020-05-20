@@ -101,31 +101,31 @@ public class EditUserBean {
 
 		switch (method) {
 		case "register":
-			if (userDTO.getEmail().isEmpty()) {
+			if (userDTO.getEmail().equals("")) {
 				NotificationUtils.showMessage(false, 1, "register:email", "E-Mail leer",
 						"Bitte tragen Sie Ihre E-Mail Adresse ein.");
 				return false;
 			}
 
-			if (userDTO.getPasswort().isEmpty()) {
+			if (userDTO.getPasswort().equals("")) {
 				NotificationUtils.showMessage(false, 1, "register:email", "Passwort leer",
 						"Bitte vergeben Sie ein Passwort.");
 				return false;
 			}
 
-			if (userDTO.getName().isEmpty()) {
+			if (userDTO.getName().equals("")) {
 				NotificationUtils.showMessage(false, 1, "register:email", "Name leer",
 						"Bitte tragen Sie Ihren Namen ein.");
 				return false;
 			}
 
-			if (userDTO.getVorname().isEmpty()) {
+			if (userDTO.getVorname().equals("")) {
 				NotificationUtils.showMessage(false, 1, "register:email", "Vorname leer",
 						"Bitte tragen Sie Ihren Vornamen ein.");
 				return false;
 			}
 
-			if (userDTO.getPrivilegien().isEmpty()) {
+			if (userDTO.getPrivilegien().equals("")) {
 				NotificationUtils.showMessage(false, 1, "register:email", "Privilegien leer",
 						"Bitte vergeben Sie die Privilegien.");
 				return false;
@@ -139,7 +139,7 @@ public class EditUserBean {
 			return true;
 
 		case "changePassword":
-			if (this.password.isEmpty() || this.passwordC.isEmpty()) {
+			if (this.password.equals("") || this.passwordC.equals("")) {
 				NotificationUtils.showMessage(false, 1, "newPassword:passwordC", "Feld leer",
 						"Bitte füllen Sie beide Felder aus.");
 				return false;
