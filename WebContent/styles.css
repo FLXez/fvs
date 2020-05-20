@@ -36,8 +36,15 @@
 	border-right: 1px solid black;
 	background-color: white;
 	font-size: 18px; 
+	box-sizing: border-box;
+ 	display: flex;
+ 	flex-direction: column;
 }
 
+#div-lower-body {
+	overflow-y: auto;
+	max-height: inherit;
+}
 
 /* Buslinien und davon weiterfuehrende Seiten */
 

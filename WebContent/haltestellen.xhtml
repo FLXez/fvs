@@ -69,17 +69,19 @@
 			</h:form>
 			<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
-			<h:dataTable id="prhT" value="#{haltestelleBean.allHaltestellen}"
-				var="haltestelleDTO">
-				<h:column>
-					<f:facet name="header">Haltestellen-ID</f:facet>
-					<h:outputText value="#{haltestelleDTO.hid}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Haltestellen-Name</f:facet>
-					<h:outputText value="#{haltestelleDTO.bezeichnung}" />
-				</h:column>
-			</h:dataTable>
+			<div id="div-lower-body">
+				<h:dataTable id="prhT" value="#{haltestelleBean.allHaltestellen}"
+					var="haltestelleDTO">
+					<h:column>
+						<f:facet name="header">Haltestellen-ID</f:facet>
+						<h:outputText value="#{haltestelleDTO.hid}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Haltestellen-Name</f:facet>
+						<h:outputText value="#{haltestelleDTO.bezeichnung}" />
+					</h:column>
+				</h:dataTable>
+			</div>
 		</div>
 	</div>
 </h:body>
