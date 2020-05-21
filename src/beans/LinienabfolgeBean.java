@@ -231,8 +231,9 @@ public class LinienabfolgeBean {
 					return;
 				}
 			}
-
-			verbindungDTO = verbindungDAO.getByHaltestellen(haltestelleSDTO.getHid(), haltestelleEDTO.getHid());
+			verbindungDTO = new VerbindungDTO();
+			verbindungDTO.setHaltestelleSDTO(haltestelleSDTO);
+			verbindungDTO.setHaltestelleEDTO(haltestelleEDTO);
 
 			checkVerbindung(verbindungDTO);
 
@@ -317,8 +318,10 @@ public class LinienabfolgeBean {
 					return;
 				}
 			}
-
-			verbindungDTO = verbindungDAO.getByHaltestellen(haltestelleSDTO.getHid(), haltestelleEDTO.getHid());
+			
+			verbindungDTO = new VerbindungDTO();
+			verbindungDTO.setHaltestelleSDTO(haltestelleSDTO);
+			verbindungDTO.setHaltestelleEDTO(haltestelleEDTO);
 
 			checkVerbindung(verbindungDTO);
 
@@ -339,13 +342,14 @@ public class LinienabfolgeBean {
 		}
 	}
 
-	private void checkVerbindung(VerbindungDTO verbindungDTO) {
-		if (!verbindungDAO.existsByHaltestellen(verbindungDTO.getHaltestelleSDTO().getHid(),
-				verbindungDTO.getHaltestelleEDTO().getHid())) {
-			verbindungDAO.save(verbindungDTO);
+	private void checkVerbindung(VerbindungDTO v) {
+		if (!verbindungDAO.existsByHaltestellen(v.getHaltestelleSDTO().getHid(),
+				v.getHaltestelleEDTO().getHid())) {
+			int hidsNew = v.getHaltestelleSDTO().getHid();
+			int hideNew = v.getHaltestelleEDTO().getHid();
+			verbindungDAO.save(v);
 			// VerbindungDTO überschreiben, damit ID mit gespeichert ist
-			verbindungDTO = verbindungDAO.getByHaltestellen(verbindungDTO.getHaltestelleSDTO().getHid(),
-					verbindungDTO.getHaltestelleEDTO().getHid());
+			verbindungDTO = verbindungDAO.getByHaltestellen(hidsNew, hideNew);
 		}
 	}
 }
