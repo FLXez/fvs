@@ -47,11 +47,24 @@
 
 		</div>
 		<div id="div-body">
-			<h2 id="prhH">Linien die die Haltestelle befahren</h2>
+			<h2 id="prhH">Linien die <h:outputText value="#{linienhaltestellenBean.haltestelleDTO.bezeichnung}" /> befahren</h2>
 						<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
 			<div id="div-lower-body">
-				
+			<h:dataTable
+					id="linienhsT" value="#{linienhaltestellenBean.allByHid}"
+					var="l">
+					<h:column>
+						<f:facet name="header">Nummer</f:facet>
+						<h:outputText
+							value="#{l.nummer}" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Richtung</f:facet>
+						<h:outputText
+							value="#{l.richtung}" />
+					</h:column>	
+			</h:dataTable>	
 			</div>
 		</div>
 	</div>
