@@ -76,7 +76,7 @@ CREATE TABLE `haltestelle` (
 --
 
 INSERT INTO `haltestelle` (`hid`, `bezeichnung`) VALUES
-(1, 'Hannover, Kröpcke Uhr'),
+(1, 'Hannover, Steintor'),
 (2, 'Hannover, Hauptbahnhof'),
 (3, 'Hannover, Silas Home'),
 (4, 'tbahnhof'),
