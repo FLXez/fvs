@@ -58,34 +58,35 @@
 				<h:outputText value="#{linienplanBean.haltestelleDTO.bezeichnung}" />
 			</h2>
 			<h:form>
-			<h:selectOneMenu value="#{linienplanBean.fid}" styleClass="lphso">
-				<f:selectItems value="#{linienplanBean.possibleFahrten}" var="f"
-					itemLabel="Linie #{linienplanBean.buslinieDTO.nummer} (#{linienplanBean.buslinieDTO.richtung}) nach #{f.haltestelleEDTO.bezeichnung} um #{f.uhrzeit}"
-					itemValue="#{f.fid}" />
-			</h:selectOneMenu>
-			<h:commandButton action="#{linienplanBean.submit}" value="Selektierten Linienplan anzeigen" styleClass="lphtbutton"/>
+				<h:selectOneMenu value="#{linienplanBean.fid}" styleClass="lphso">
+					<f:selectItems value="#{linienplanBean.possibleFahrten}" var="f"
+						itemLabel="Linie #{linienplanBean.buslinieDTO.nummer} (#{linienplanBean.buslinieDTO.richtung}) nach #{f.haltestelleEDTO.bezeichnung} um #{f.uhrzeit}"
+						itemValue="#{f.fid}" />
+				</h:selectOneMenu>
+				<h:commandButton action="#{linienplanBean.submit}"
+					value="Selektierten Linienplan anzeigen" styleClass="lphtbutton" />
 			</h:form>
-			
+
 			<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
 
 			<div id="div-lower-body">
 				<div id="double-table">
-				<ui:fragment rendered="#{linienplanBean.fid != 0}">
-					<h:dataTable id="linienplanTP" value="#{linienplanBean.forPath}"
-						var="p">
-						<h:column>
-							<f:facet name="header">Haltestelle</f:facet>
-							<h:outputText value="#{p.bezeichnung}" />
-						</h:column>
-					</h:dataTable>
-					<h:dataTable id="linienplanTT" value="#{linienplanBean.forTime}" 
-						var="u">
-						<h:column>
-							<f:facet name="header">Uhrzeit</f:facet>
-							<h:outputText value="#{u}" />
-						</h:column>
-					</h:dataTable>
+					<ui:fragment rendered="#{linienplanBean.fid != 0}">
+						<h:dataTable id="linienplanTP" value="#{linienplanBean.forPath}"
+							var="p">
+							<h:column>
+								<f:facet name="header">Haltestelle</f:facet>
+								<h:outputText value="#{p.bezeichnung}" />
+							</h:column>
+						</h:dataTable>
+						<h:dataTable id="linienplanTT" value="#{linienplanBean.forTime}"
+							var="u">
+							<h:column>
+								<f:facet name="header">Uhrzeit</f:facet>
+								<h:outputText value="#{u}" />
+							</h:column>
+						</h:dataTable>
 					</ui:fragment>
 				</div>
 			</div>
