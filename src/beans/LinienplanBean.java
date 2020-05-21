@@ -37,6 +37,7 @@ public class LinienplanBean {
 	BuslinieDTO buslinieDTO;
 	HaltestelleDTO haltestelleDTO;
 	
+	int fid;
 	
 	@PostConstruct
 	public void init() {
@@ -69,6 +70,14 @@ public class LinienplanBean {
 		this.haltestelleDTO = haltestelleDTO;
 	}
 	
+	public int getFid() {
+		return fid;
+	}
+
+	public void setFid(int fid) {
+		this.fid = fid;
+	}
+
 	public List<FahrtDTO> getPossibleFahrten(){
 		List<FahrtDTO> possibleFahrtDTOs = new ArrayList<FahrtDTO>();
 		
