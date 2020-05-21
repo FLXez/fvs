@@ -54,22 +54,36 @@
 				Linienplan für Linie
 				<h:outputText value="#{linienplanBean.buslinieDTO.nummer}" />
 				<h:outputText value="#{linienplanBean.buslinieDTO.richtung}" />
-				ab 
+				ab
 				<h:outputText value="#{linienplanBean.haltestelleDTO.bezeichnung}" />
 			</h2>
-			
-			<h:selectOneMenu value="#{linienplanBean.fid}"
-								styleClass="lphso">
-								<f:selectItems value="#{linienplanBean.possibleFahrten}" var="f"
-									itemLabel="#{linienplanBean.buslinieDTO.nummer} (#{linienplanBean.buslinieDTO.richtung}) nach #{f.haltestelleEDTO.bezeichnung} um #{f.uhrzeit}"
-									itemValue="#{linienplanBean.fid}" />
+
+			<h:selectOneMenu value="#{linienplanBean.fid}" styleClass="lphso">
+				<f:selectItems value="#{linienplanBean.possibleFahrten}" var="f"
+					itemLabel="Linie #{linienplanBean.buslinieDTO.nummer} (#{linienplanBean.buslinieDTO.richtung}) nach #{f.haltestelleEDTO.bezeichnung} um #{f.uhrzeit}"
+					itemValue="#{linienplanBean.fid}" />
 			</h:selectOneMenu>
-			
+
 			<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
 
 			<div id="div-lower-body">
-				
+				<div id="double-table">
+					<h:dataTable id="linienplanT" value="#{linienplanBean.forPath}"
+						var="p">
+						<h:column>
+							<f:facet name="header">Haltestelle</f:facet>
+							<h:outputText value="p.bezeichnung" />
+						</h:column>
+					</h:dataTable>
+					<h:dataTable id="linienplanT" value="#{linienplanBean.forTime}" 
+						var="u">
+						<h:column>
+							<f:facet name="header">Uhrzeit</f:facet>
+							<h:outputText value="u.uhrzeiten" />
+						</h:column>
+					</h:dataTable>
+				</div>
 			</div>
 		</div>
 	</div>
