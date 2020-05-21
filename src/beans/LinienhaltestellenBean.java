@@ -76,9 +76,7 @@ public class LinienhaltestellenBean {
 		List<BuslinieDTO> buslinieDTOs = new ArrayList<BuslinieDTO>();
 
 		for (LinienabfolgeDTO l : linienabfolgeDTOs) {
-			if (l.getVerbindungDTO().getHaltestelleEDTO().getHid() == haltestelleDTO.getHid() || l.getVerbindungDTO().getHaltestelleSDTO().getHid() == haltestelleDTO.getHid()) {
-					buslinieDTOs.add(l.getBuslinieHDTO());					
-			}
+			buslinieDTOs.add(l.getBuslinieHDTO());					
 		}
 		return buslinieDTOs;
 	}
