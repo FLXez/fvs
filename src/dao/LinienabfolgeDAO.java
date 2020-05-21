@@ -37,6 +37,18 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge, LinienabfolgeDTO> {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<LinienabfolgeDTO> getByHid(int hid, String sortierung) {
+		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.verbindung.haltestelleH.hid = '" + hid + "' OR l.verbindung.haltestelleS.hid ='" + hid + "' ORDER BY l.position " + sortierung + " GROUP BY l.buslinie");
+		List<Linienabfolge> linienabfolgeEntities = new ArrayList<Linienabfolge>();
+		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
+		
+		linienabfolgeEntities = q.getResultList();
+		linienabfolgeEntities.forEach((linienabfolgeEntity) -> linienabfolgeDTOs.add(new LinienabfolgeDTO(linienabfolgeEntity)) );
+		
+		return linienabfolgeDTOs;
+	}
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<LinienabfolgeDTO> getAll() {
 		Query q = em.createQuery("SELECT l FROM Linienabfolge l");

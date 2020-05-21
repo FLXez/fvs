@@ -35,6 +35,14 @@
             <from-outcome>fahrt</from-outcome>
             <to-view-id>/fahrt.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule> 
+    </navigation-rule>
+    
+    <navigation-rule>
+        <from-view-id>/haltestellen.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>linienhaltestellen</from-outcome>
+            <to-view-id>/linienhaltestellen.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>  
 
 </faces-config>

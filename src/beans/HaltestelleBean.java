@@ -11,6 +11,7 @@ import javax.inject.Named;
 import dao.HaltestelleDAO;
 import dto.HaltestelleDTO;
 import util.NotificationUtils;
+import util.SessionUtils;
 
 @Named("haltestelleBean")
 @ApplicationScoped
@@ -40,6 +41,11 @@ public class HaltestelleBean {
 
 	public HaltestelleDTO getHaltestelleByID(int id) {
 		return haltestelleDAO.get(id);
+	}
+	
+	public String forwardLinienhaltestellen(String hid) {
+		SessionUtils.getSession().setAttribute("hid", hid);
+		return "linienhaltestellen";
 	}
 
 	public void add() {
