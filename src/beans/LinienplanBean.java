@@ -106,6 +106,7 @@ public class LinienplanBean {
 
 		List<FahrtDTO> allFahrtDTOs = new ArrayList<FahrtDTO>();
 		allFahrtDTOs = fahrtDAO.getByBuslinie(buslinieDTO.getBid());
+		
 		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
 		linienabfolgeDTOs = linienabfolgeDAO.getAll("ASC");
 
