@@ -61,6 +61,18 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge, LinienabfolgeDTO> {
 		return linienabfolgeDTOs;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<LinienabfolgeDTO> getAll(String sortierung) {
+		Query q = em.createQuery("SELECT l FROM Linienabfolge l ORDER BY l.position" + sortierung + "");
+		List<Linienabfolge> linienabfolgeEntities = new ArrayList<Linienabfolge>();
+		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
+		
+		linienabfolgeEntities = q.getResultList();
+		linienabfolgeEntities.forEach((linienabfolgeEntity) -> linienabfolgeDTOs.add(new LinienabfolgeDTO(linienabfolgeEntity)) );
+		
+		return linienabfolgeDTOs;
+	}
+	
 	@Override
 	public void save(LinienabfolgeDTO linienabfolgeDTO) {
 		em.persist(linienabfolgeDTO.toEntity());

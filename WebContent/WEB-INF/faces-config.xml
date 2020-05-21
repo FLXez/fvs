@@ -45,4 +45,12 @@
         </navigation-case>
     </navigation-rule>  
 
+    <navigation-rule>
+        <from-view-id>/linienhaltestellen.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>linienplan</from-outcome>
+            <to-view-id>/linienplan.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
+
 </faces-config>

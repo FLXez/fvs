@@ -43,6 +43,12 @@ public class LinienhaltestellenBean {
 		haltestelleDTO = haltestelleDAO.get(hid);
 	}
 	
+	public String forwardLinienplan(int bid, int hid) {
+		SessionUtils.getSession().setAttribute("bid", bid);
+		SessionUtils.getSession().setAttribute("hid", hid);
+		return "linienplan";
+	}
+	
 	public HaltestelleDTO getHaltestelleDTO() {
 		return haltestelleDTO;
 	}
