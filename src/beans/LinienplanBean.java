@@ -67,6 +67,9 @@ public class LinienplanBean {
 		hid = Integer.parseInt(SessionUtils.getSession().getAttribute("hid").toString());
 		buslinieDTO = buslinieDAO.get(bid);
 		haltestelleDTO = haltestelleDAO.get(hid);
+		linienabfolgeSelected = new ArrayList<LinienabfolgeDTO>();
+		uhrzeiten = new ArrayList<String>();
+		uhrzeitTemp = new String();
 		//Workaround
 		fid = this.fid;
 	}
@@ -162,12 +165,18 @@ public class LinienplanBean {
 			if(fDTO.getHaltestelleSDTO().getHid() == lDTO.getVerbindungDTO().getHaltestelleSDTO().getHid()) {
 				fahrtGoing = true;
 			}
-			
+			//Workaround
+			if(fDTO.getHaltestelleSDTO().getHid() == lDTO.getVerbindungDTO().getHaltestelleSDTO().getHid() 
+					&& fDTO.getHaltestelleSDTO().getHid() == haltestelleDTO.getHid()) {
+				uhrzeitTemp = fDTO.getUhrzeit();
+			}
 			if(fahrtGoing) {
-				if(lDTO.getVerbindungDTO().getHaltestelleSDTO().getHid() == haltestelleDTO.getHid()) {					
+				if(lDTO.getVerbindungDTO().getHaltestelleSDTO().getHid() == haltestelleDTO.getHid()) {
 					returnElement = true;
 				}
 			}
+			
+			// Sonderfall
 			// Linienabfolge Element ist teil der Fahrt!
 			if(returnElement) {
 				haltestelleDTOs.add(lDTO.getVerbindungDTO().getHaltestelleSDTO());
