@@ -68,6 +68,13 @@
 						<h:outputText
 							value="#{l.richtung}" />
 					</h:column>	
+					<h:column>
+						<f:facet name="Fahrplan von der Haltestelle aus"></f:facet>
+						<h:form>
+							<h:commandButton action="#{linienhaltestellenBean.forwardLinienplan(l.bid, linienhaltestellenBean.haltestelleDTO.hid)}"
+								value="Fahrplan anzeigen" styleClass="lhtbutton" />
+						</h:form>
+					</h:column>
 			</h:dataTable>	
 			</div>
 		</div>
