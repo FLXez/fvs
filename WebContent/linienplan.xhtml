@@ -57,19 +57,20 @@
 				ab
 				<h:outputText value="#{linienplanBean.haltestelleDTO.bezeichnung}" />
 			</h2>
-
-			<h:selectOneMenu value="#{linienplanBean.fid}" styleClass="lphso">
+			<h:form>
+			<h:selectOneMenu value="#{linienplanBean.fid}" styleClass="lphso" onchange="submit()" valueChangeListener="#{linienplanBean.submit}">
 				<f:selectItems value="#{linienplanBean.possibleFahrten}" var="f"
 					itemLabel="Linie #{linienplanBean.buslinieDTO.nummer} (#{linienplanBean.buslinieDTO.richtung}) nach #{f.haltestelleEDTO.bezeichnung} um #{f.uhrzeit}"
-					itemValue="#{linienplanBean.fid}" />
+					itemValue="#{f.fid}" />
 			</h:selectOneMenu>
-
+			</h:form>
+			
 			<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
 
 			<div id="div-lower-body">
 				<div id="double-table">
-				<h:panelGroup rendered="#{linienplanBean.fid} != 0">
+				<ui:fragment rendered="#{linienplanBean.fid} != 0">
 					<h:dataTable id="linienplanTP" value="#{linienplanBean.forPath}"
 						var="p">
 						<h:column>
@@ -84,7 +85,7 @@
 							<h:outputText value="u.uhrzeiten" />
 						</h:column>
 					</h:dataTable>
-					</h:panelGroup>
+					</ui:fragment>
 				</div>
 			</div>
 		</div>
