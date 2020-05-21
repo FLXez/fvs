@@ -125,4 +125,6 @@ public class LinienplanBean {
 		}
 		return possibleFahrtDTOs;
 	}
+	
+	
 }
