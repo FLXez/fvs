@@ -130,6 +130,10 @@ public class LinienabfolgeBean {
 		this.bid = bid;
 	}
 
+	public List<HaltestelleDTO> getAllHaltestellen() {
+		return haltestelleDAO.getAll();
+	}
+	
 	public List<LinienabfolgeDTO> getAllLinienabfolgen() {
 		return linienabfolgeDAO.getAll();
 	}
