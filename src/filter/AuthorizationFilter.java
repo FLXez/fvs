@@ -37,15 +37,15 @@ public class AuthorizationFilter implements Filter {
 			if (reqURI.indexOf("/login.xhtml") >= 0
 					|| (session != null && session.getAttribute("privilegien").equals("Admin"))
 					|| (session != null && session.getAttribute("privilegien").equals("Manager"))
-					|| (session != null && session.getAttribute("privilegien").equals("Mitarbeiter") && reqURI.indexOf("/mitarbeiter/") >= 0)
-					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/index.xhtml") >= 0)
-					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/haltestellen.xhtml") >= 0)	
-					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/linien.xhtml") >= 0)	
-					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/registrieren.xhtml") >= 0)	
+					|| (session != null && session.getAttribute("privilegien").equals("Mitarbeiter") && reqURI.indexOf("/mitarbeiter/") >= 0)			
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/buslinien.xhtml") >= 0)
 					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/fahrplan.xhtml") >= 0)
-					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/linienabfolge.xhtml") >= 0)
 					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/fahrt.xhtml") >= 0)
-					
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/haltestellen.xhtml") >= 0)	
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/index.xhtml") >= 0)
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/linienabfolge.xhtml") >= 0)
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/linienhaltestellen.xhtml") >= 0)
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/registrieren.xhtml") >= 0)	
 					)
 			{ chain.doFilter(request, response); }
 			else {
