@@ -63,8 +63,8 @@ public class LinienplanBean {
 	public void onPageLoad() {
 		buslinieDTO = new BuslinieDTO();
 		haltestelleDTO = new HaltestelleDTO();
-		bid = (int) SessionUtils.getSession().getAttribute("bid");
-		hid = (int) SessionUtils.getSession().getAttribute("hid");
+		bid = Integer.parseInt(SessionUtils.getSession().getAttribute("bid").toString());
+		hid = Integer.parseInt(SessionUtils.getSession().getAttribute("hid").toString());
 		buslinieDTO = buslinieDAO.get(bid);
 		haltestelleDTO = haltestelleDAO.get(hid);
 	}
@@ -91,6 +91,11 @@ public class LinienplanBean {
 
 	public void setFid(int fid) {
 		this.fid = fid;
+	}
+	
+	//Test
+	public void submit() {
+		setFid(this.fid);
 	}
 
 	public List<FahrtDTO> getPossibleFahrten() {
