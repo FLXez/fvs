@@ -141,9 +141,6 @@ public class LinienplanBean {
 				possibleFahrtDTOs.add(fDTO);
 			}
 		}		
-		if(fid == 0 && !possibleFahrtDTOs.isEmpty()) {
-			fid = possibleFahrtDTOs.get(0).getFid();
-		}
 		return possibleFahrtDTOs;
 	}
 
