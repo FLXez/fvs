@@ -37,6 +37,30 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge, LinienabfolgeDTO> {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public List<LinienabfolgeDTO> getByBuslinieH(int bidh, String sortierung) {
+		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.buslinieH.bid = '" + bidh + "' ORDER BY l.position " + sortierung + "");
+		List<Linienabfolge> linienabfolgeEntities = new ArrayList<Linienabfolge>();
+		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
+		
+		linienabfolgeEntities = q.getResultList();
+		linienabfolgeEntities.forEach((linienabfolgeEntity) -> linienabfolgeDTOs.add(new LinienabfolgeDTO(linienabfolgeEntity)) );
+		
+		return linienabfolgeDTOs;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<LinienabfolgeDTO> getByBuslinieR(int bidr, String sortierung) {
+		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.buslinieR.bid = '" + bidr + "' ORDER BY l.position " + sortierung + "");
+		List<Linienabfolge> linienabfolgeEntities = new ArrayList<Linienabfolge>();
+		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
+		
+		linienabfolgeEntities = q.getResultList();
+		linienabfolgeEntities.forEach((linienabfolgeEntity) -> linienabfolgeDTOs.add(new LinienabfolgeDTO(linienabfolgeEntity)) );
+		
+		return linienabfolgeDTOs;
+	}
+	
+	@SuppressWarnings("unchecked")
 	public List<LinienabfolgeDTO> getByHid(int hid, String sortierung) {
 		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.verbindung.haltestelleS.hid = '" + hid + "' OR l.verbindung.haltestelleE.hid ='" + hid + "' GROUP BY l.buslinieH.bid, l.buslinieR.bid ORDER BY l.position " + sortierung + "");
 		List<Linienabfolge> linienabfolgeEntities = new ArrayList<Linienabfolge>();
