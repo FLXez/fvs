@@ -26,7 +26,7 @@ public class FahrtDAO implements DAO<Fahrt, FahrtDTO> {
 
 	@SuppressWarnings("unchecked")
 	public List<FahrtDTO> getByBuslinie(int bid) {
-		Query q = em.createQuery("SELECT f FROM Fahrt f WHERE f.buslinie.bid ='" + bid +"'");
+		Query q = em.createQuery("SELECT f FROM Fahrt f WHERE f.buslinie.bid ='" + bid +"' ORDER BY f.uhrzeit ASC");
 		List<Fahrt> fahrtEntities = new ArrayList<Fahrt>();
 		List<FahrtDTO> fahrtDTOs = new ArrayList<FahrtDTO>();
 		
