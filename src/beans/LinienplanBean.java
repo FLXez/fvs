@@ -70,8 +70,6 @@ public class LinienplanBean {
 		linienabfolgeSelected = new ArrayList<LinienabfolgeDTO>();
 		uhrzeiten = new ArrayList<String>();
 		uhrzeitTemp = new String();
-		//Workaround
-		fid = this.fid;
 	}
 
 	public BuslinieDTO getBuslinieDTO() {
@@ -141,6 +139,9 @@ public class LinienplanBean {
 			if (fahrtPossible) {
 				possibleFahrtDTOs.add(fDTO);
 			}
+		}		
+		if(fid == 0 && !possibleFahrtDTOs.isEmpty()) {
+			fid = possibleFahrtDTOs.get(0).getFid();
 		}
 		return possibleFahrtDTOs;
 	}
@@ -181,7 +182,6 @@ public class LinienplanBean {
 			if(returnElement) {
 				haltestelleDTOs.add(lDTO.getVerbindungDTO().getHaltestelleSDTO());
 				uhrzeiten.add(uhrzeitTemp);
-				System.out.println(uhrzeiten.get(uhrzeiten.size()-1));
 			}
 			// Zum ende, da sonst Zeit zu früh hochgerechnet wird
 			if(fahrtGoing) {
