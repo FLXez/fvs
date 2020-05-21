@@ -63,7 +63,7 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge, LinienabfolgeDTO> {
 
 	@SuppressWarnings("unchecked")
 	public List<LinienabfolgeDTO> getAll(String sortierung) {
-		Query q = em.createQuery("SELECT l FROM Linienabfolge l ORDER BY l.position" + sortierung + "");
+		Query q = em.createQuery("SELECT l FROM Linienabfolge l ORDER BY l.position " + sortierung + "");
 		List<Linienabfolge> linienabfolgeEntities = new ArrayList<Linienabfolge>();
 		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
 		

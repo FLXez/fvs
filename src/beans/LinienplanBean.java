@@ -39,19 +39,26 @@ public class LinienplanBean {
 	
 	int fid;
 	
+	int bid;
+	int hid;
+	
 	@PostConstruct
 	public void init() {
-		int bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
-		int hid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("hid"));
-		this.buslinieDTO = buslinieDAO.get(bid);
-		this.haltestelleDTO = haltestelleDAO.get(hid);
+		buslinieDTO = new BuslinieDTO();
+		haltestelleDTO = new HaltestelleDTO();
+		bid = (int) SessionUtils.getSession().getAttribute("bid");
+		hid = (int) SessionUtils.getSession().getAttribute("hid");
+		buslinieDTO = buslinieDAO.get(bid);
+		haltestelleDTO = haltestelleDAO.get(hid);
 	}
 	
 	public void onPageLoad(){
-		int bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
-		int hid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("hid"));
-		this.buslinieDTO = buslinieDAO.get(bid);
-		this.haltestelleDTO = haltestelleDAO.get(hid);
+		buslinieDTO = new BuslinieDTO();
+		haltestelleDTO = new HaltestelleDTO();
+		bid = (int) SessionUtils.getSession().getAttribute("bid");
+		hid = (int) SessionUtils.getSession().getAttribute("hid");
+		buslinieDTO = buslinieDAO.get(bid);
+		haltestelleDTO = haltestelleDAO.get(hid);
 	}
 
 	public BuslinieDTO getBuslinieDTO() {

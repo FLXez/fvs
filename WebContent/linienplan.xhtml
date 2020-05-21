@@ -58,11 +58,11 @@
 				<h:outputText value="#{linienplanBean.haltestelleDTO.bezeichnung}" />
 			</h2>
 			
-			<h:selectOneMenu value="#{linienabfolgeBean.hid}"
+			<h:selectOneMenu value="#{linienplanBean.fid}"
 								styleClass="lphso">
-								<f:selectItems value="#{linienplanBean.getPossibleFahrten}"
-									itemLabel="#{linienabfolgeBean.buslinieEditDTO.nummer} (#{linienabfolgeBean.buslinieEditDTO.richtung}) nach #{fahrtDTO.haltestelleEDTO.bezeichnung} um #{fahrtDTO.uhrzeit}"
-									itemValue="#{linienabfolgeBean.hid}" />
+								<f:selectItems value="#{linienplanBean.possibleFahrten}" var="f"
+									itemLabel="#{linienplanBean.buslinieDTO.nummer} (#{linienplanBean.buslinieDTO.richtung}) nach #{f.haltestelleEDTO.bezeichnung} um #{f.uhrzeit}"
+									itemValue="#{linienplanBean.fid}" />
 			</h:selectOneMenu>
 			
 			<hr noshade="noshade" size="5"
