@@ -193,6 +193,7 @@ public class LinienabfolgeBean {
 				return;
 			}
 
+			verbindungDTO.setDauer(dauer);
 			checkVerbindung(verbindungDTO);
 
 			linienabfolgeDTO.setPosition(0);
@@ -201,7 +202,7 @@ public class LinienabfolgeBean {
 
 			// Speichern der Linienabfolge
 			try {
-				linienabfolgeDTO.setVerbindungDTO(verbindungDTO);
+				linienabfolgeDTO.setVerbindungDTO(verbindungDAO.getByHaltestellen(verbindungDTO.getHaltestelleSDTO().getHid(),verbindungDTO.getHaltestelleEDTO().getHid()));
 				linienabfolgeDAO.save(linienabfolgeDTO);
 				NotificationUtils.showMessage(false, 1, "linien:dauer", "Linienabfolge 0 erfolgreich hinzugefügt",
 						"Starthaltestelle wurde der Linienabfolge erfolgreich hinzugefügt.");
@@ -238,6 +239,7 @@ public class LinienabfolgeBean {
 			verbindungDTO = new VerbindungDTO();
 			verbindungDTO.setHaltestelleSDTO(haltestelleSDTO);
 			verbindungDTO.setHaltestelleEDTO(haltestelleEDTO);
+			verbindungDTO.setDauer(dauer);
 
 			checkVerbindung(verbindungDTO);
 
@@ -246,7 +248,7 @@ public class LinienabfolgeBean {
 			linienabfolgeDTO.setPosition(linienabfolgeDTOs.get(linienabfolgeDTOs.size() - 1).getPosition() + 1);
 
 			try {
-				linienabfolgeDTO.setVerbindungDTO(verbindungDTO);
+				linienabfolgeDTO.setVerbindungDTO(verbindungDAO.getByHaltestellen(verbindungDTO.getHaltestelleSDTO().getHid(),verbindungDTO.getHaltestelleEDTO().getHid()));
 				linienabfolgeDAO.save(linienabfolgeDTO);
 				NotificationUtils.showMessage(false, 1, "linien:dauer", "Linienabfolgeerfolgreich hinzugefügt",
 						"Haltestelle wurde der Linienabfolge erfolgreich hinzugefügt.");
@@ -280,6 +282,7 @@ public class LinienabfolgeBean {
 				return;
 			}
 
+			verbindungDTO.setDauer(dauer);
 			checkVerbindung(verbindungDTO);
 
 			linienabfolgeDTO.setPosition(0);
@@ -288,7 +291,7 @@ public class LinienabfolgeBean {
 
 			// Speichern der Linienabfolge
 			try {
-				linienabfolgeDTO.setVerbindungDTO(verbindungDTO);
+				linienabfolgeDTO.setVerbindungDTO(verbindungDAO.getByHaltestellen(verbindungDTO.getHaltestelleSDTO().getHid(),verbindungDTO.getHaltestelleEDTO().getHid()));
 				linienabfolgeDAO.save(linienabfolgeDTO);
 				NotificationUtils.showMessage(false, 1, "linien:dauer", "Linienabfolge 0 erfolgreich hinzugefügt",
 						"Starthaltestelle wurde der Linienabfolge erfolgreich hinzugefügt.");
@@ -326,6 +329,7 @@ public class LinienabfolgeBean {
 			verbindungDTO = new VerbindungDTO();
 			verbindungDTO.setHaltestelleSDTO(haltestelleSDTO);
 			verbindungDTO.setHaltestelleEDTO(haltestelleEDTO);
+			verbindungDTO.setDauer(dauer);
 
 			checkVerbindung(verbindungDTO);
 
@@ -335,7 +339,7 @@ public class LinienabfolgeBean {
 			linienabfolgeDTO.setPosition(linienabfolgeDTOs.get(0).getPosition() - 1);
 
 			try {
-				linienabfolgeDTO.setVerbindungDTO(verbindungDTO);
+				linienabfolgeDTO.setVerbindungDTO(verbindungDAO.getByHaltestellen(verbindungDTO.getHaltestelleSDTO().getHid(),verbindungDTO.getHaltestelleEDTO().getHid()));
 				linienabfolgeDAO.save(linienabfolgeDTO);
 				NotificationUtils.showMessage(false, 1, "linien:dauer", "Linienabfolge erfolgreich hinzugefügt",
 						"Haltestelle wurde der Linienabfolge erfolgreich hinzugefügt.");
@@ -349,11 +353,7 @@ public class LinienabfolgeBean {
 	private void checkVerbindung(VerbindungDTO v) {
 		if (!verbindungDAO.existsByHaltestellen(v.getHaltestelleSDTO().getHid(),
 				v.getHaltestelleEDTO().getHid())) {
-			int hidsNew = v.getHaltestelleSDTO().getHid();
-			int hideNew = v.getHaltestelleEDTO().getHid();
 			verbindungDAO.save(v);
-			// VerbindungDTO überschreiben, damit ID mit gespeichert ist
-			verbindungDTO = verbindungDAO.getByHaltestellen(hidsNew, hideNew);
 		}
 	}
 }
