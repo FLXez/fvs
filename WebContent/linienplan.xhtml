@@ -70,19 +70,19 @@
 
 			<div id="div-lower-body">
 				<div id="double-table">
-				<ui:fragment rendered="#{linienplanBean.fid} != 0">
+				<ui:fragment rendered="#{linienplanBean.fid != 0}">
 					<h:dataTable id="linienplanTP" value="#{linienplanBean.forPath}"
 						var="p">
 						<h:column>
 							<f:facet name="header">Haltestelle</f:facet>
-							<h:outputText value="p.bezeichnung" />
+							<h:outputText value="#{p.bezeichnung}" />
 						</h:column>
 					</h:dataTable>
 					<h:dataTable id="linienplanTT" value="#{linienplanBean.forTime}" 
 						var="u">
 						<h:column>
 							<f:facet name="header">Uhrzeit</f:facet>
-							<h:outputText value="u.uhrzeiten" />
+							<h:outputText value="#{u}" />
 						</h:column>
 					</h:dataTable>
 					</ui:fragment>

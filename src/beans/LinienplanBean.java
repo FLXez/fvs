@@ -67,6 +67,7 @@ public class LinienplanBean {
 		hid = Integer.parseInt(SessionUtils.getSession().getAttribute("hid").toString());
 		buslinieDTO = buslinieDAO.get(bid);
 		haltestelleDTO = haltestelleDAO.get(hid);
+		fid = this.fid;
 	}
 
 	public BuslinieDTO getBuslinieDTO() {
@@ -96,6 +97,7 @@ public class LinienplanBean {
 	//Test
 	public void submit() {
 		setFid(this.fid);
+		System.out.println(this.fid); 
 	}
 
 	public List<FahrtDTO> getPossibleFahrten() {
@@ -143,6 +145,7 @@ public class LinienplanBean {
 	public List<HaltestelleDTO> getForPath(){
 		linienabfolgeSelected = new ArrayList<LinienabfolgeDTO>();
 		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();
+		uhrzeiten = new ArrayList<String>();
 		
 		FahrtDTO fDTO = fahrtDAO.get(fid);
 		
