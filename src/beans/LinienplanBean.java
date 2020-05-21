@@ -170,6 +170,7 @@ public class LinienplanBean {
 			}
 			// Linienabfolge Element ist teil der Fahrt!
 			if(returnElement) {
+				addUhrzeit(fDTO, lDTO);
 				haltestelleDTOs.add(lDTO.getVerbindungDTO().getHaltestelleSDTO());
 				uhrzeiten.add(uhrzeitTemp);
 				System.out.println(uhrzeiten.get(uhrzeiten.size()-1));
