@@ -56,7 +56,7 @@ public class LinienabfolgeBean {
 	@PostConstruct
 	public void init() {
 		linienabfolge = new LinienabfolgeDTO();
-		bid = (int) SessionUtils.getSession().getAttribute("bid");
+		bid = Integer.parseInt(SessionUtils.getSession().getAttribute("bid").toString());
 
 		buslinieEditDTO = buslinieDAO.get(bid);
 		List<BuslinieDTO> buslinieDTOs = new ArrayList<BuslinieDTO>();
