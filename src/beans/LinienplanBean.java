@@ -146,40 +146,44 @@ public class LinienplanBean {
 		linienabfolgeSelected = new ArrayList<LinienabfolgeDTO>();
 		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();
 		uhrzeiten = new ArrayList<String>();
+		uhrzeitTemp = new String();
 		
 		FahrtDTO fDTO = fahrtDAO.get(fid);
 		
 		List<LinienabfolgeDTO> lDTOs = new ArrayList<LinienabfolgeDTO>();
 		lDTOs = linienabfolgeDAO.getByBuslinieH(bid, "ASC");
+		
 		boolean returnElement = false;
 		boolean fahrtGoing = false;
+		
 		for (LinienabfolgeDTO lDTO : lDTOs) {
 
 			//Erst ab Start der Fahrt
 			if(fDTO.getHaltestelleSDTO().getHid() == lDTO.getVerbindungDTO().getHaltestelleSDTO().getHid()) {
 				fahrtGoing = true;
-				addUhrzeit(fDTO, lDTO);
-				System.out.println(lDTO.getPosition());
-				System.out.println(lDTO.getVerbindungDTO().getDauer());
 			}
 			
 			if(fahrtGoing) {
-				if(lDTO.getVerbindungDTO().getHaltestelleSDTO().getHid() == haltestelleDTO.getHid() || lDTO.getVerbindungDTO().getHaltestelleEDTO().getHid() == haltestelleDTO.getHid()) {					
+				if(lDTO.getVerbindungDTO().getHaltestelleSDTO().getHid() == haltestelleDTO.getHid()) {					
 					returnElement = true;
 				}
 			}
 			// Linienabfolge Element ist teil der Fahrt!
 			if(returnElement) {
-				addUhrzeit(fDTO, lDTO);
 				haltestelleDTOs.add(lDTO.getVerbindungDTO().getHaltestelleSDTO());
 				uhrzeiten.add(uhrzeitTemp);
 				System.out.println(uhrzeiten.get(uhrzeiten.size()-1));
-				// Ende der Fahrt erreicht?
-				if(fDTO.getHaltestelleEDTO().getHid() == lDTO.getVerbindungDTO().getHaltestelleEDTO().getHid()) {
-					haltestelleDTOs.add(lDTO.getVerbindungDTO().getHaltestelleEDTO());
-					returnElement = false;
-					fahrtGoing = false;
-				}
+			}
+			// Zum ende, da sonst Zeit zu früh hochgerechnet wird
+			if(fahrtGoing) {
+				addUhrzeit(fDTO, lDTO);
+			}
+			// Ende der Fahrt erreicht?
+			if(fDTO.getHaltestelleEDTO().getHid() == lDTO.getVerbindungDTO().getHaltestelleEDTO().getHid()) {
+				haltestelleDTOs.add(lDTO.getVerbindungDTO().getHaltestelleEDTO());
+				uhrzeiten.add(uhrzeitTemp);
+				returnElement = false;
+				fahrtGoing = false;
 			}
 		}		 				
 		return haltestelleDTOs;
@@ -192,7 +196,7 @@ public class LinienplanBean {
 	public void addUhrzeit(FahrtDTO fDTO, LinienabfolgeDTO lDTO) {
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
 		Date d = new Date();
-		if(uhrzeiten.isEmpty()) {
+		if(uhrzeitTemp.equals("")) {
 			try {
 				d = df.parse(fDTO.getUhrzeit());
 			} catch (ParseException e) {
@@ -201,11 +205,11 @@ public class LinienplanBean {
 			}			
 		} else {
 			try {
-				d = df.parse(uhrzeiten.get(uhrzeiten.size()-1));
+				d = df.parse(uhrzeitTemp);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}			
+			}							
 		}
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(d);
