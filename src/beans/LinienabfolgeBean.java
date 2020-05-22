@@ -160,10 +160,8 @@ public class LinienabfolgeBean {
 
 		if (bid == buslinieHDTO.getBid()) {
 			hAdd(linienabfolgeDTOs);
-			dauer = 0;
 		} else {
 			rAdd(linienabfolgeDTOs);
-			dauer = 0;
 		}
 
 	}
@@ -201,8 +199,9 @@ public class LinienabfolgeBean {
 			try {
 				linienabfolgeDTO.setVerbindungDTO(verbindungDAO.getByHaltestellen(verbindungDTO.getHaltestelleSDTO().getHid(),verbindungDTO.getHaltestelleEDTO().getHid()));
 				linienabfolgeDAO.save(linienabfolgeDTO);
+				dauer = 0;
 				NotificationUtils.showMessage(false, 1, "linien:dauer", "Linienabfolge 0 erfolgreich hinzugefügt",
-						"Starthaltestelle wurde der Linienabfolge erfolgreich hinzugefügt.");
+						"Linienabfolgeelement erfolgreich hinzugefügt.");
 			} catch (EJBException e) {
 				NotificationUtils.showMessage(false, 2, "linien:dauer", "Unerwarteter Fehler",
 						"Es ist ein unerwarteter Fehler aufgetreten.");
@@ -247,6 +246,7 @@ public class LinienabfolgeBean {
 			try {
 				linienabfolgeDTO.setVerbindungDTO(verbindungDAO.getByHaltestellen(verbindungDTO.getHaltestelleSDTO().getHid(),verbindungDTO.getHaltestelleEDTO().getHid()));
 				linienabfolgeDAO.save(linienabfolgeDTO);
+				dauer = 0;
 				NotificationUtils.showMessage(false, 1, "linien:dauer", "Linienabfolgeerfolgreich hinzugefügt",
 						"Haltestelle wurde der Linienabfolge erfolgreich hinzugefügt.");
 			} catch (EJBException e) {
@@ -290,6 +290,7 @@ public class LinienabfolgeBean {
 			try {
 				linienabfolgeDTO.setVerbindungDTO(verbindungDAO.getByHaltestellen(verbindungDTO.getHaltestelleSDTO().getHid(),verbindungDTO.getHaltestelleEDTO().getHid()));
 				linienabfolgeDAO.save(linienabfolgeDTO);
+				dauer = 0;
 				NotificationUtils.showMessage(false, 1, "linien:dauer", "Linienabfolge 0 erfolgreich hinzugefügt",
 						"Starthaltestelle wurde der Linienabfolge erfolgreich hinzugefügt.");
 			} catch (EJBException e) {
@@ -338,6 +339,7 @@ public class LinienabfolgeBean {
 			try {
 				linienabfolgeDTO.setVerbindungDTO(verbindungDAO.getByHaltestellen(verbindungDTO.getHaltestelleSDTO().getHid(),verbindungDTO.getHaltestelleEDTO().getHid()));
 				linienabfolgeDAO.save(linienabfolgeDTO);
+				dauer = 0;
 				NotificationUtils.showMessage(false, 1, "linien:dauer", "Linienabfolge erfolgreich hinzugefügt",
 						"Haltestelle wurde der Linienabfolge erfolgreich hinzugefügt.");
 			} catch (EJBException e) {
@@ -351,6 +353,9 @@ public class LinienabfolgeBean {
 		if (!verbindungDAO.existsByHaltestellen(v.getHaltestelleSDTO().getHid(),
 				v.getHaltestelleEDTO().getHid())) {
 			verbindungDAO.save(v);
+		} else {
+			NotificationUtils.showMessage(false, 1, "linien:linienInfo", "Verbindung existent",
+					"Verbindung existierte bereits. Alte Dauer übernommen.");		
 		}
 	}
 }
