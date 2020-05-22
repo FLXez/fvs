@@ -47,7 +47,7 @@
 
 		</div>
 		<div id="div-body">
-			<h:form id="register">
+			<h:form id="register" rendered="#{login.isNotMitarbeiter()}">
 				<h2 id="prhH">Nutzer f&#252;r die fvs&trade; registrieren</h2>
 				<table id="prhHT">
 					<tr>
@@ -71,11 +71,17 @@
 								value="#{editUser.userDTO.passwort}" styleClass="prhtext" /></td>
 					</tr>
 					<tr>
-						<td colspan="2"><h:selectOneRadio
+						<td colspan="2">
+							<h:selectOneRadio rendered="#{login.isAdmin()}"
 								value="#{editUser.userDTO.privilegien}">
 								<f:selectItem itemValue="Mitarbeiter" itemLabel="Mitarbeiter" />
 								<f:selectItem itemValue="Manager" itemLabel="Manager" />
-							</h:selectOneRadio></td>
+							</h:selectOneRadio>
+							<h:selectOneRadio rendered="#{login.isManager()}"
+								value="#{editUser.userDTO.privilegien}">
+								<f:selectItem itemValue="Mitarbeiter" itemLabel="Mitarbeiter" />
+							</h:selectOneRadio>
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2"><h:message class="info" for="email"

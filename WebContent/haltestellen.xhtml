@@ -48,7 +48,7 @@
 		</div>
 		<div id="div-body">
 			<h2 id="prhH">Liste aller Haltestellen</h2>
-			<h:form id="addStop">
+			<h:form id="addStop" rendered="#{login.isNotMitarbeiter()}">
 				<table id="prhHT">
 					<tr>
 						<td><h:outputText value="Haltestelle hinzuf&#252;gen:" /></td>

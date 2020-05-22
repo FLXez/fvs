@@ -33,10 +33,26 @@ public class LoginBean {
 	}
 
 	public boolean isManager() {
-		if(SessionUtils.getPrivilegien().equals("Manager") || SessionUtils.getPrivilegien().equals("Admin")) {
+		if(SessionUtils.getPrivilegien().equals("Manager")) {
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	public boolean isAdmin() {
+		if(SessionUtils.getPrivilegien().equals("Admin")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean isNotMitarbeiter() {
+		if(SessionUtils.getPrivilegien().equals("Mitarbeiter")) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 	

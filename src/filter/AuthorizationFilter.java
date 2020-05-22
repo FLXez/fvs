@@ -45,11 +45,12 @@ public class AuthorizationFilter implements Filter {
 					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/index.xhtml") >= 0)
 					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/linienabfolge.xhtml") >= 0)
 					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/linienhaltestellen.xhtml") >= 0)
+					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/linienplan.xhtml") >= 0)
 					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/registrieren.xhtml") >= 0)	
 					)
 			{ chain.doFilter(request, response); }
 			else {
-				if((session != null && session.getAttribute("privilegien").equals("Manager") && reqURI.indexOf("/mitarbeiter/") >= 0) || (session != null && session.getAttribute("privilegien").equals("Mitarbeiter") && reqURI.indexOf("/manager/") >= 0))
+				if((session != null && session.getAttribute("privilegien").equals("Manager") && reqURI.indexOf("/mitarbeiter/") >= 0) || (session != null && session.getAttribute("privilegien").equals("Mitarbeiter") && reqURI.indexOf("/registrierung.xhtml") >= 0))
 				{
 					response.sendRedirect(request.getContextPath() + "/index.xhtml"); 	
 				}

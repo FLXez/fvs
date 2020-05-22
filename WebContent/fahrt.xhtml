@@ -51,7 +51,7 @@
 		</div>
 		<div id="div-body">
 			<h2 id="fahrtH">Fahrt hinzufügen</h2>
-			<h:form id="fahrt">
+			<h:form id="fahrt" rendered="#{login.isNotMitarbeiter()}">
 				<table id="fahrtHT">
 					<tr>
 						<th>Start</th>
