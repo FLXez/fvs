@@ -71,7 +71,7 @@ public class HaltestelleBean {
 	 */
 	private boolean inputOkay() {
 
-		if (haltestelleDTO.getBezeichnung().isEmpty()) {
+		if (haltestelleDTO.getBezeichnung().equals("")) {
 			NotificationUtils.showMessage(false, 1, "addStop:description", "Bezeichnung leer",
 					"Bitte vergeben Sie eine Bezeichnung.");
 			return false;
