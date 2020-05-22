@@ -20,9 +20,6 @@ import dto.VerbindungDTO;
 import util.NotificationUtils;
 import util.SessionUtils;
 
-/**
- * @author FLX Bean für linienabfolge.xhtml
- */
 @Named("linienabfolgeBean")
 @ApplicationScoped
 public class LinienabfolgeBean {
