@@ -102,15 +102,60 @@ public class LinienplanBean {
 	}
 
 	public List<FahrtDTO> getPossibleFahrten() {
-		List<FahrtDTO> possibleFahrtDTOs = new ArrayList<FahrtDTO>();
-
 		List<FahrtDTO> allFahrtDTOs = new ArrayList<FahrtDTO>();
+		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
 		allFahrtDTOs = fahrtDAO.getByBuslinie(buslinieDTO.getBid());
 		
-		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
-		linienabfolgeDTOs = linienabfolgeDAO.getAll("ASC");
+		if(buslinieDTO.getRichtung().equals("H")) {
+			linienabfolgeDTOs = linienabfolgeDAO.getAll("ASC");
+			return getPossibleFahrtenH(allFahrtDTOs, linienabfolgeDTOs);
+		} else {
+			linienabfolgeDTOs = linienabfolgeDAO.getAll("DESC");
+			return getPossibleFahrtenR(allFahrtDTOs, linienabfolgeDTOs);
+		}
+	}
+	
+	public List<FahrtDTO> getPossibleFahrtenR(List<FahrtDTO> allFahrtDTOs, List<LinienabfolgeDTO> linienabfolgeDTOs) {
+		List<FahrtDTO> possibleFahrtDTOs = new ArrayList<FahrtDTO>();
 
-		// Hinlinie -- TODO if rücklinie
+		// Rücklinie
+		for (FahrtDTO fDTO : allFahrtDTOs) {
+			boolean fahrtPossible = false;
+			boolean fahrtGoing = false;
+			List<LinienabfolgeDTO> fahrtLinie = new ArrayList<LinienabfolgeDTO>();
+			for (LinienabfolgeDTO lDTO : linienabfolgeDTOs) {
+				// Anfang der Fahrt in der Abfolge finden
+				if (fDTO.getHaltestelleSDTO().getHid() == lDTO.getVerbindungDTO().getHaltestelleEDTO().getHid()) {
+					fahrtGoing = true;
+				}
+				// Linienabfolge Element ist teil der Fahrt!
+				if (fahrtGoing) {
+					fahrtLinie.add(lDTO);
+					// Ende erreicht?
+					if (fDTO.getHaltestelleEDTO().getHid() == lDTO.getVerbindungDTO().getHaltestelleSDTO().getHid()) {
+						fahrtGoing = false;
+					}
+				}
+			}
+			//
+			for (LinienabfolgeDTO flDTO : fahrtLinie) {
+				if (flDTO.getVerbindungDTO().getHaltestelleSDTO().getHid() == haltestelleDTO.getHid()
+						|| flDTO.getVerbindungDTO().getHaltestelleEDTO().getHid() == haltestelleDTO.getHid()) {
+					fahrtPossible = true;
+				}
+			}
+
+			if (fahrtPossible) {
+				possibleFahrtDTOs.add(fDTO);
+			}
+		}		
+		return possibleFahrtDTOs;
+	}
+	
+	public List<FahrtDTO> getPossibleFahrtenH(List<FahrtDTO> allFahrtDTOs, List<LinienabfolgeDTO> linienabfolgeDTOs) {
+		List<FahrtDTO> possibleFahrtDTOs = new ArrayList<FahrtDTO>();
+		
+		// Hinlinie
 		for (FahrtDTO fDTO : allFahrtDTOs) {
 			boolean fahrtPossible = false;
 			boolean fahrtGoing = false;
@@ -145,15 +190,70 @@ public class LinienplanBean {
 	}
 
 	public List<HaltestelleDTO> getForPath(){
-		linienabfolgeSelected = new ArrayList<LinienabfolgeDTO>();
-		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();
+		List<LinienabfolgeDTO> lDTOs = new ArrayList<LinienabfolgeDTO>();
+		FahrtDTO fDTO = fahrtDAO.get(fid);
+		
 		uhrzeiten = new ArrayList<String>();
 		uhrzeitTemp = new String();
 		
-		FahrtDTO fDTO = fahrtDAO.get(fid);
+		if(buslinieDTO.getRichtung().equals("H")) {
+			lDTOs = linienabfolgeDAO.getByBuslinieH(bid, "ASC");
+			return getForPathH(fDTO, lDTOs);
+		} else {
+			lDTOs = linienabfolgeDAO.getByBuslinieR(bid, "DESC");
+			return getForPathR(fDTO, lDTOs);
+		}
 		
-		List<LinienabfolgeDTO> lDTOs = new ArrayList<LinienabfolgeDTO>();
-		lDTOs = linienabfolgeDAO.getByBuslinieH(bid, "ASC");
+	}
+	
+	public List<HaltestelleDTO> getForPathR(FahrtDTO fDTO, List<LinienabfolgeDTO> lDTOs){
+		linienabfolgeSelected = new ArrayList<LinienabfolgeDTO>();
+		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();		
+		
+		boolean returnElement = false;
+		boolean fahrtGoing = false;
+		
+		for (LinienabfolgeDTO lDTO : lDTOs) {
+
+			//Erst ab Start der Fahrt
+			if(fDTO.getHaltestelleSDTO().getHid() == lDTO.getVerbindungDTO().getHaltestelleEDTO().getHid()) {
+				fahrtGoing = true;
+			}
+			//Workaround
+			if(fDTO.getHaltestelleSDTO().getHid() == lDTO.getVerbindungDTO().getHaltestelleEDTO().getHid() 
+					&& fDTO.getHaltestelleSDTO().getHid() == haltestelleDTO.getHid()) {
+				uhrzeitTemp = fDTO.getUhrzeit();
+			}
+			if(fahrtGoing) {
+				if(lDTO.getVerbindungDTO().getHaltestelleEDTO().getHid() == haltestelleDTO.getHid()) {
+					returnElement = true;
+				}
+			}
+			
+			// Sonderfall
+			// Linienabfolge Element ist teil der Fahrt!
+			if(returnElement) {
+				haltestelleDTOs.add(lDTO.getVerbindungDTO().getHaltestelleEDTO());
+				uhrzeiten.add(uhrzeitTemp);
+			}
+			// Zum ende, da sonst Zeit zu früh hochgerechnet wird
+			if(fahrtGoing) {
+				addUhrzeit(fDTO, lDTO);
+			}
+			// Ende der Fahrt erreicht?
+			if(fDTO.getHaltestelleEDTO().getHid() == lDTO.getVerbindungDTO().getHaltestelleSDTO().getHid()) {
+				haltestelleDTOs.add(lDTO.getVerbindungDTO().getHaltestelleSDTO());
+				uhrzeiten.add(uhrzeitTemp);
+				returnElement = false;
+				fahrtGoing = false;
+			}
+		}		 				
+		return haltestelleDTOs;
+	}
+	
+	public List<HaltestelleDTO> getForPathH(FahrtDTO fDTO, List<LinienabfolgeDTO> lDTOs){
+		linienabfolgeSelected = new ArrayList<LinienabfolgeDTO>();
+		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();
 		
 		boolean returnElement = false;
 		boolean fahrtGoing = false;
@@ -194,7 +294,7 @@ public class LinienplanBean {
 			}
 		}		 				
 		return haltestelleDTOs;
-	}
+	}	
 	
 	public List<String> getForTime() {
 		return uhrzeiten;
