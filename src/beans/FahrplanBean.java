@@ -110,7 +110,7 @@ public class FahrplanBean {
 	public void display() {
 		
 		m = uP.matcher(uhrzeit);
-		if (!m.matches()) {
+		if (!m.matches() && !uhrzeit.equals("")) {
 			NotificationUtils.showMessage(false, 2, "fahrplan:zeithorizont", "Ungültiger Zeithorizont",
 					"Bitte geben Sie eine gültige Uhrzeit an.");
 			return;	
