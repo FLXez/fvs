@@ -4,7 +4,7 @@ public class FahrplanDTO {
 	
 	BuslinieDTO buslinieDTO;
 	
-	HaltestelleDTO zielHaltestelleDTO;
+	HaltestelleDTO zielhaltestelleDTO;
 	
 	String uhrzeit;
 	
@@ -17,7 +17,7 @@ public class FahrplanDTO {
 	
 	public FahrplanDTO(BuslinieDTO b, HaltestelleDTO h, String u, String v) {
 		this.buslinieDTO = b;
-		this.zielHaltestelleDTO = h;
+		this.zielhaltestelleDTO = h;
 		this.uhrzeit = u;
 		this.verspaetung = v;
 		System.out.println(b.getNummer() + " " + h.getBezeichnung() + " " + u + " " + v);
@@ -31,12 +31,12 @@ public class FahrplanDTO {
 		this.buslinieDTO = buslinieDTO;
 	}
 
-	public HaltestelleDTO getZielHaltestelleDTO() {
-		return zielHaltestelleDTO;
+	public HaltestelleDTO getZielhaltestelleDTO() {
+		return zielhaltestelleDTO;
 	}
 
-	public void setZielHaltestelleDTO(HaltestelleDTO zielHaltestelleDTO) {
-		this.zielHaltestelleDTO = zielHaltestelleDTO;
+	public void setZielhaltestelleDTO(HaltestelleDTO zielhaltestelleDTO) {
+		this.zielhaltestelleDTO = zielhaltestelleDTO;
 	}
 
 	public String getUhrzeit() {
