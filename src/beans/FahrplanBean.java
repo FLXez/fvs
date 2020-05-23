@@ -196,7 +196,7 @@ public class FahrplanBean {
 				}
 				if((d1.before(d2) || d1.equals(d2)) && (d3.after(d2) || d3.equals(d2))) {
 					int randomNum = ThreadLocalRandom.current().nextInt(0, 10 + 1);	
-					fahrplanDTOs.add(new FahrplanDTO(fDTO.getBuslinieDTO(), fDTO.getHaltestelleEDTO(), uhrzeitCalc, Integer.toString(randomNum), toMins(uhrzeitCalc)));						
+					fahrplanDTOs.add(new FahrplanDTO(fDTO.getBuslinieDTO(), fDTO.getHaltestelleEDTO(), uhrzeitCalc, Integer.toString(randomNum)));						
 				}
 			}
 			uhrzeitCalc = "";
@@ -252,16 +252,5 @@ public class FahrplanBean {
 			return false;			
 		}		
 		return true;
-	}
-	
-	private String toMins(String s) {
-	    String[] hourMin = s.split(":");
-	    int hour = Integer.parseInt(hourMin[0]);
-	    System.out.println(hour);
-	    int mins = Integer.parseInt(hourMin[1]);
-	    System.out.println(mins);
-	    int hoursInMins = hour * 60;
-	    System.out.println("---");
-	    return Integer.toString(hoursInMins + mins);
 	}
 }
