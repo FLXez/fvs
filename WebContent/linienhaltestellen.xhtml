@@ -51,7 +51,7 @@
 
 		</div>
 		<div id="div-body">
-			<h2 id="prhH">Linien die <h:outputText value="#{linienhaltestellenBean.haltestelleDTO.bezeichnung}" /> befahren</h2>
+			<h2 id="lhH">Linien die <h:outputText value="#{linienhaltestellenBean.haltestelleDTO.bezeichnung}" /> befahren</h2>
 						<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
 			<div id="div-lower-body">
@@ -72,7 +72,7 @@
 						<f:facet name="header">Fahrplan von der Haltestelle aus</f:facet>
 						<h:form>
 							<h:commandButton action="#{linienhaltestellenBean.forwardLinienplan(l.bid, linienhaltestellenBean.haltestelleDTO.hid)}"
-								value="Fahrplan anzeigen" styleClass="lhtbutton" />
+								value="Fahrplan anzeigen" styleClass="linienhstbutton" />
 						</h:form>
 					</h:column>
 			</h:dataTable>	

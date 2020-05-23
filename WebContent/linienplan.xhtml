@@ -50,23 +50,25 @@
 
 		</div>
 		<div id="div-body">
-			<h2 id="linienabfH">
+			<h2 id="lpH">
 				Linienplan für Linie
 				<h:outputText value="#{linienplanBean.buslinieDTO.nummer}" />
 				<h:outputText value="#{linienplanBean.buslinieDTO.richtung}" />
 				ab
 				<h:outputText value="#{linienplanBean.haltestelleDTO.bezeichnung}" />
 			</h2>
+			<div id="lpH">
 			<h:form>
 				<h:selectOneMenu value="#{linienplanBean.fid}" styleClass="lphso">
 					<f:selectItems value="#{linienplanBean.possibleFahrten}" var="f"
 						itemLabel="Linie #{linienplanBean.buslinieDTO.nummer} (#{linienplanBean.buslinieDTO.richtung}) nach #{f.haltestelleEDTO.bezeichnung} um #{f.uhrzeit}"
 						itemValue="#{f.fid}" />
 				</h:selectOneMenu>
+				<h:outputText value="     " />
 				<h:commandButton action="#{linienplanBean.submit}"
 					value="Selektierten Linienplan anzeigen" styleClass="lphtbutton" />
 			</h:form>
-
+			</div>
 			<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
 

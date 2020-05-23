@@ -51,7 +51,7 @@
 	margin-left: 28px;
 }
 
-#linienT, #fahrtT, #linienabfT, #prhT, #fahrplanT {
+#linienT, #fahrtT, #linienabfT, #prhT, #fahrplanT, #linienhsT {
 	border-collapse: collapse;
 	table-layout: fixed;
 	border: 1px solid black;
@@ -84,6 +84,11 @@
 	font-size: 18px;
 }
 
+.lphso {
+	width: 500px;
+	font-size: 18px;
+}
+
 .ltabutton, .fhtbutton {
 	width: 140px;
 	text-align: center;
@@ -103,6 +108,14 @@
 	text-align: center;
 	font-size: 16px;
 	margin-left: 0px;
+}
+
+.lphtbutton {
+	width: 250px;
+	text-align: center;
+	font-size: 16px;
+	margin-left: 0px;
+	vertical-align: top;	
 }
 
 .ltbutton {
@@ -179,15 +192,51 @@
 	display: block;
 	margin: auto;
 }
+
+.linienhstbutton {
+	width: 150px;
+	text-align: center;
+	font-size: 16px;
+	display: block;
+	margin: auto;
+}
+
+#lpH {
+	margin-left: 15px;
+}
+
 #linienplanTP {
+	margin-left: 15px;
 	display: inline-block;
 	border: 1px solid black;
+	border-collapse: collapse;
 	float: left;
+	border-left: 1px solid black;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
 }
 
 #linienplanTT {
 	display: inline-block;
+	border-collapse: collapse;
+	border-right: 1px solid black;
+	border-top: 1px solid black;
+	border-bottom: 1px solid black;
+}
+
+#linienplanTP th, #linienplanTP td {
 	border: 1px solid black;
+	width: 200px;
+	overflow: hidden;
+	text-align: left;
+	border: 1 px solid black;
+}
+
+#linienplanTT td, #linienplanTT th {
+	border: 1px solid black;
+	width: 80px;
+	overflow: hidden;
+	text-align: left;
 }
 
 #fph {
@@ -211,4 +260,15 @@
 
 .red {
 	color: red;
+}
+
+#lhH, #linienhsT {
+	margin-left: 15px;
+}
+
+#linienhsT th, #linienhsT td {
+	border: 1px solid black;
+	width: 80px;
+	overflow: hidden;
+	text-align: left;
 }
