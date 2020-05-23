@@ -127,6 +127,7 @@ public class FahrplanBean {
 			List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
 			boolean fahrtPossible = false;
 			boolean fahrtGoing = false;
+			System.out.println(fDTO.getUhrzeit());
 			
 			if(fDTO.getBuslinieDTO().getRichtung().equals("H")) {
 				linienabfolgeDTOs = linienabfolgeDAO.getByBuslinieH(fDTO.getBuslinieDTO().getBid(), "ASC");
@@ -168,6 +169,7 @@ public class FahrplanBean {
 				}								
 			}
 			if (fahrtPossible) {
+				System.out.println("found");
 				Date d1 = new Date();
 				Date d2 = new Date();
 				Date d3 = new Date();
@@ -176,16 +178,17 @@ public class FahrplanBean {
 					d1 = df.parse(uhrzeit);
 					d2 = df.parse(uhrzeitCalc);
 					d3 = df.parse(uhrzeitHorizont);
+					System.out.println(d1 + "" + d2 + "" + d3);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				if(d1.before(d2) && d3.after(d2)) {
+				if((d1.before(d2) || d1.equals(d2)) && (d3.after(d2) || d3.equals(d2))) {
 					int randomNum = ThreadLocalRandom.current().nextInt(0, 10 + 1);	
 					fahrplanDTOs.add(new FahrplanDTO(fDTO.getBuslinieDTO(), fDTO.getHaltestelleEDTO(), uhrzeitCalc, Integer.toString(randomNum)));						
 				}
-				uhrzeitCalc = "";
 			}
+			uhrzeitCalc = "";
 		}		
 		return fahrplanDTOs;
 	}
