@@ -10,6 +10,9 @@
 	<title>Index</title>
 </h:head>
 <h:body>
+	<f:metadata>
+		<f:event type="preRenderView" listener="#{fahrplanBean.onPageLoad}" />
+	</f:metadata>
 	<div id="div-container">
 		<div id="div-nav">
 			<p>
@@ -52,7 +55,8 @@
 					<tr>
 						<th>Haltestelle</th>
 						<th>Uhrzeit</th>
-						<th>Zeithorizont <br />in Min</th>
+						<th>Zeithorizont <br />in Min
+						</th>
 					</tr>
 					<tr>
 						<td><h:selectOneMenu value="#{fahrplanBean.hid}"
@@ -79,32 +83,32 @@
 			</h:form>
 			<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
-		</div>
-		<div id="div-lower-body">
-			<h:dataTable rendered="#{fahrplanBean.haltestelleDTO != null}" id="fahrplanT"
-				value="#{fahrplanBean.fahrplanInfo()}" var="f">
-				<h:column>
-					<f:facet name="header">Buslinie</f:facet>
-					<h:outputText value="#{f.buslinieDTO.nummer}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Fahrtrichtung</f:facet>
-					<h:outputText value="#{f.buslinieDTO.richtung}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Abfahrzeit</f:facet>
-					<h:outputText value="#{f.uhrzeit}" />
-					<h:outputText styleclass="red" value=" (#{f.verspaetung})" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">Linienabfolge anzeigen</f:facet>
-					<h:form>
-						<h:commandButton
-							action="#{fahrplanBean.forwardLinienabfolge(f.bid)}"
-							value="Linienabfolge anzeigen" styleClass="ltbutton" />
-					</h:form>
-				</h:column>
-			</h:dataTable>
+			<div id="div-lower-body">
+				<h:dataTable rendered="#{fahrplanBean.haltestelleDTO != null}"
+					id="fahrplanT" value="#{fahrplanBean.fahrplanInfo()}" var="f">
+					<h:column>
+						<f:facet name="header">Buslinie</f:facet>
+						<h:outputText value="#{f.buslinieDTO.nummer}" /> <h:outputText value=" (#{f.buslinieDTO.richtung})" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Fahrtziel</f:facet>
+							<h:outputText value="#{f.zielhaltestelleDTO.bezeichnung}" />							
+					</h:column>
+					<h:column>
+						<f:facet name="header">Abfahrzeit</f:facet>
+						<h:outputText value="#{f.uhrzeit}" />
+						<h:outputText styleclass="red" value=" (#{f.verspaetung})" />
+					</h:column>
+					<h:column>
+						<f:facet name="header">Linienabfolge anzeigen</f:facet>
+						<h:form>
+							<h:commandButton
+								action="#{fahrplanBean.forwardLinienabfolge(f.bid)}"
+								value="Linienabfolge anzeigen" styleClass="ltbutton" />
+						</h:form>
+					</h:column>
+				</h:dataTable>
+			</div>
 		</div>
 	</div>
 </h:body>
