@@ -81,8 +81,8 @@
 				style="width: 100%; text-align: center;" />
 		</div>
 		<div id="div-lower-body">
-			<h:dataTable rendered="#{fahrplanBean.hid != null}" id="fahrplanT"
-				value="#{fahrplanBean.fahrplan}" var="f">
+			<h:dataTable rendered="#{fahrplanBean.haltestelleDTO != null}" id="fahrplanT"
+				value="#{fahrplanBean.fahrplanInfo()}" var="f">
 				<h:column>
 					<f:facet name="header">Buslinie</f:facet>
 					<h:outputText value="#{f.buslinieDTO.nummer}" />

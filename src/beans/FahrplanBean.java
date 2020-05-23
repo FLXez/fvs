@@ -52,11 +52,11 @@ public class FahrplanBean {
 
 	@PostConstruct
 	public void init() {
-
+		uhrzeitCalc = "";
 	}
 
 	public void onPageLoad() {
-
+		uhrzeitCalc = "";
 	}
 
 	public HaltestelleDTO getHaltestelleDTO() {
@@ -118,7 +118,7 @@ public class FahrplanBean {
 		uhrzeitHorizont = df.format(cal.getTime());
 	}
 
-	public List<FahrplanDTO> fahrplanMethod() {
+	public List<FahrplanDTO> fahrplanInfo() {
 		List<FahrplanDTO> fahrplanDTOs = new ArrayList<FahrplanDTO>();
 		List<FahrtDTO> allFahrtDTOs = new ArrayList<FahrtDTO>();
 		allFahrtDTOs = fahrtDAO.getAll();
