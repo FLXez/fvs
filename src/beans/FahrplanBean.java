@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
@@ -21,6 +23,7 @@ import dto.FahrplanDTO;
 import dto.FahrtDTO;
 import dto.HaltestelleDTO;
 import dto.LinienabfolgeDTO;
+import util.NotificationUtils;
 import util.SessionUtils;
 
 @Named("fahrplanBean")
@@ -49,10 +52,14 @@ public class FahrplanBean {
 	String uhrzeitHorizont;
 
 	String uhrzeitCalc;
+	
+	Pattern uP;
+	Matcher m;
 
 	@PostConstruct
 	public void init() {
 		uhrzeitCalc = "";
+		uP = Pattern.compile("([0-1][0-9]|[2][0-3]):([0-5][0-9])");
 	}
 
 	public void onPageLoad() {
@@ -101,6 +108,20 @@ public class FahrplanBean {
 	}
 
 	public void display() {
+		
+		m = uP.matcher(uhrzeit);
+		if (!m.matches()) {
+			NotificationUtils.showMessage(false, 2, "fahrplan:zeithorizont", "Ungültiger Zeithorizont",
+					"Bitte geben Sie eine gültige Uhrzeit an.");
+			return;	
+		}
+
+		if(hid == 0) {
+			NotificationUtils.showMessage(false, 2, "fahrplan:zeithorizont", "Keine Haltestelle",
+					"Bitte wählen Sie eine Haltestelle aus.");
+			return;
+		}
+		
 		haltestelleDTO = haltestelleDAO.get(hid);
 
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
@@ -119,6 +140,7 @@ public class FahrplanBean {
 	}
 
 	public List<FahrplanDTO> fahrplanInfo() {
+		
 		List<FahrplanDTO> fahrplanDTOs = new ArrayList<FahrplanDTO>();
 		List<FahrtDTO> allFahrtDTOs = new ArrayList<FahrtDTO>();
 		allFahrtDTOs = fahrtDAO.getAll();
