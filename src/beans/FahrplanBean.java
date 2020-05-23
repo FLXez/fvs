@@ -108,20 +108,10 @@ public class FahrplanBean {
 	}
 
 	public void display() {
-		
-		m = uP.matcher(uhrzeit);
-		if (!m.matches() && !uhrzeit.equals("")) {
-			NotificationUtils.showMessage(false, 2, "fahrplan:zeithorizont", "Ungültiger Zeithorizont",
-					"Bitte geben Sie eine gültige Uhrzeit an.");
-			return;	
-		}
 
-		if(hid == 0) {
-			NotificationUtils.showMessage(false, 2, "fahrplan:zeithorizont", "Keine Haltestelle",
-					"Bitte wählen Sie eine Haltestelle aus.");
+		if(!inputOkay()) {
 			return;
 		}
-		
 		haltestelleDTO = haltestelleDAO.get(hid);
 
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm");
@@ -237,5 +227,29 @@ public class FahrplanBean {
 		cal.setTime(d);
 		cal.add(Calendar.MINUTE, lDTO.getVerbindungDTO().getDauer());
 		uhrzeitCalc = df.format(cal.getTime());
+	}
+	
+	private boolean inputOkay() {
+		
+		m = uP.matcher(uhrzeit);
+		if (!m.matches() && !uhrzeit.equals("")) {
+			NotificationUtils.showMessage(false, 2, "fahrplan:zeithorizont", "Ungültiger Zeithorizont",
+					"Bitte geben Sie eine gültige Uhrzeit an.");
+			return false;	
+		}
+
+		if(hid == 0) {
+			NotificationUtils.showMessage(false, 2, "fahrplan:zeithorizont", "Keine Haltestelle",
+					"Bitte wählen Sie eine Haltestelle aus.");
+			return false;
+		}
+			
+		if(uhrzeitHorizont.substring(0).equals("-")) {
+			NotificationUtils.showMessage(false, 2, "fahrplan:zeithorizont", "Ungültiger Zeithorizont",
+					"Bitte geben Sie eine Zahl größer gleich 0 an.");
+			return false;			
+		}
+		
+		return true;
 	}
 }
