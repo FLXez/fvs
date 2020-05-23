@@ -10,16 +10,19 @@ public class FahrplanDTO {
 	
 	String verspaetung;
 	
+	String uhrzeitSort;
+	
 	
 	public FahrplanDTO() {
 		
 	}
 	
-	public FahrplanDTO(BuslinieDTO b, HaltestelleDTO h, String u, String v) {
+	public FahrplanDTO(BuslinieDTO b, HaltestelleDTO h, String u, String v, String us) {
 		this.buslinieDTO = b;
 		this.zielhaltestelleDTO = h;
 		this.uhrzeit = u;
 		this.verspaetung = v;
+		this.uhrzeitSort = us;
 	}
 
 	public BuslinieDTO getBuslinieDTO() {
@@ -53,7 +56,12 @@ public class FahrplanDTO {
 	public void setVerspaetung(String verspaetung) {
 		this.verspaetung = verspaetung;
 	}
-	
-	
 
+	public String getUhrzeitSort() {
+		return uhrzeitSort;
+	}
+
+	public void setUhrzeitSort(String uhrzeitSort) {
+		this.uhrzeitSort = uhrzeitSort;
+	}
 }

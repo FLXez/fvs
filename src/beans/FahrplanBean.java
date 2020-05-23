@@ -4,6 +4,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -139,7 +141,6 @@ public class FahrplanBean {
 			List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
 			boolean fahrtPossible = false;
 			boolean fahrtGoing = false;
-			System.out.println(fDTO.getUhrzeit());
 			
 			if(fDTO.getBuslinieDTO().getRichtung().equals("H")) {
 				linienabfolgeDTOs = linienabfolgeDAO.getByBuslinieH(fDTO.getBuslinieDTO().getBid(), "ASC");
@@ -181,7 +182,6 @@ public class FahrplanBean {
 				}								
 			}
 			if (fahrtPossible) {
-				System.out.println("found");
 				Date d1 = new Date();
 				Date d2 = new Date();
 				Date d3 = new Date();
@@ -190,18 +190,20 @@ public class FahrplanBean {
 					d1 = df.parse(uhrzeit);
 					d2 = df.parse(uhrzeitCalc);
 					d3 = df.parse(uhrzeitHorizont);
-					System.out.println(d1 + "" + d2 + "" + d3);
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				if((d1.before(d2) || d1.equals(d2)) && (d3.after(d2) || d3.equals(d2))) {
 					int randomNum = ThreadLocalRandom.current().nextInt(0, 10 + 1);	
-					fahrplanDTOs.add(new FahrplanDTO(fDTO.getBuslinieDTO(), fDTO.getHaltestelleEDTO(), uhrzeitCalc, Integer.toString(randomNum)));						
+					fahrplanDTOs.add(new FahrplanDTO(fDTO.getBuslinieDTO(), fDTO.getHaltestelleEDTO(), uhrzeitCalc, Integer.toString(randomNum), toMins(uhrzeitCalc)));						
 				}
 			}
 			uhrzeitCalc = "";
 		}		
+		Comparator<FahrplanDTO> compareByUhrzeit = (FahrplanDTO o1, FahrplanDTO o2) ->
+        o1.getUhrzeitSort().compareTo(o2.getUhrzeitSort());
+		//Collections.sort(fahrplanDTOs, compareByUhrzeit);
 		return fahrplanDTOs;
 	}
 
@@ -248,8 +250,18 @@ public class FahrplanBean {
 			NotificationUtils.showMessage(false, 2, "fahrplan:zeithorizont", "Ungültiger Zeithorizont",
 					"Bitte geben Sie eine Zahl größer gleich 0 an.");
 			return false;			
-		}
-		
+		}		
 		return true;
+	}
+	
+	private String toMins(String s) {
+	    String[] hourMin = s.split(":");
+	    int hour = Integer.parseInt(hourMin[0]);
+	    System.out.println(hour);
+	    int mins = Integer.parseInt(hourMin[1]);
+	    System.out.println(mins);
+	    int hoursInMins = hour * 60;
+	    System.out.println("---");
+	    return Integer.toString(hoursInMins + mins);
 	}
 }
