@@ -74,7 +74,12 @@
 	font-size: 15px;
 }
 
-.fhtso, .lahtso {
+.fphttext {
+	width: 50px;
+	font-size: 15px;
+}
+
+.fhtso, .lahtso, .fphtso {
 	width: 250px;
 	font-size: 18px;
 }
