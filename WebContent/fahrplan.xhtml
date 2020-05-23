@@ -85,15 +85,16 @@
 				value="#{fahrplanBean.fahrplan}" var="f">
 				<h:column>
 					<f:facet name="header">Buslinie</f:facet>
-					<h:outputText value="#{f.}" />
+					<h:outputText value="#{f.buslinieDTO.nummer}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Fahrtrichtung</f:facet>
-					<h:outputText value="#{f.}" />
+					<h:outputText value="#{f.buslinieDTO.richtung}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Abfahrzeit</f:facet>
-					<h:outputText value="#{f.}" />
+					<h:outputText value="#{f.uhrzeit}" />
+					<h:outputText styleclass="red" value=" (#{f.verspaetung})" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">Linienabfolge anzeigen</f:facet>
