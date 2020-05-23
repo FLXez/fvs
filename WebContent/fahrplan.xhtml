@@ -50,13 +50,13 @@
 
 		</div>
 		<div id="div-body">
+			<h2 id="fph">Fahrplanauskunft</h2>
 			<h:form id="fahrplan">
 				<table id="fahrplanHT">
 					<tr>
 						<th>Haltestelle</th>
 						<th>Uhrzeit</th>
-						<th>Zeithorizont <br />in Min
-						</th>
+						<th>Zeithorizont (min)</th>
 					</tr>
 					<tr>
 						<td><h:selectOneMenu value="#{fahrplanBean.hid}"
@@ -104,7 +104,7 @@
 						<h:form>
 							<h:commandButton
 								action="#{fahrplanBean.forwardLinienabfolge(f.buslinieDTO.bid)}"
-								value="Linienabfolge anzeigen" styleClass="ltbutton" />
+								value="Linienabfolge anzeigen" styleClass="fptbutton" />
 						</h:form>
 					</h:column>
 				</h:dataTable>

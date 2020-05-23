@@ -51,7 +51,7 @@
 	margin-left: 28px;
 }
 
-#linienT, #fahrtT, #linienabfT, #prhT {
+#linienT, #fahrtT, #linienabfT, #prhT, #fahrplanT {
 	border-collapse: collapse;
 	table-layout: fixed;
 	border: 1px solid black;
@@ -98,8 +98,23 @@
 	margin-left: 0px;
 }
 
+.fphtbutton {
+	width: 160px;
+	text-align: center;
+	font-size: 16px;
+	margin-left: 0px;
+}
+
 .ltbutton {
 	width: 140px;
+	text-align: center;
+	font-size: 18px;
+	display: block;
+	margin: auto;
+}
+
+.fptbutton {
+	width: 200px;
 	text-align: center;
 	font-size: 18px;
 	display: block;
@@ -173,6 +188,25 @@
 #linienplanTT {
 	display: inline-block;
 	border: 1px solid black;
+}
+
+#fph {
+	margin-left: 20px;
+}
+
+#fahrplanHT {
+	margin-left: 16px;
+	width: 60%;
+	text-align: left;
+	border-spacing: 5px;
+	border-collapse: seperate;
+}
+
+#fahrplanT td, #fahrplanT th {
+	border: 1px solid black;
+	width: 190px;
+ 	overflow: hidden;
+ 	text-align: left;
 }
 
 .red {
