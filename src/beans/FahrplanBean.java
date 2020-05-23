@@ -202,8 +202,8 @@ public class FahrplanBean {
 			uhrzeitCalc = "";
 		}		
 		Comparator<FahrplanDTO> compareByUhrzeit = (FahrplanDTO o1, FahrplanDTO o2) ->
-        o1.getUhrzeitSort().compareTo(o2.getUhrzeitSort());
-		//Collections.sort(fahrplanDTOs, compareByUhrzeit);
+        o1.getUhrzeit().compareTo(o2.getUhrzeit());
+		Collections.sort(fahrplanDTOs, compareByUhrzeit);
 		return fahrplanDTOs;
 	}
 
