@@ -244,7 +244,7 @@ public class FahrplanBean {
 			return false;
 		}
 			
-		if(uhrzeitHorizont.substring(0).equals("-")) {
+		if(Zeithorizont < 0) {
 			NotificationUtils.showMessage(false, 2, "fahrplan:zeithorizont", "Ungültiger Zeithorizont",
 					"Bitte geben Sie eine Zahl größer gleich 0 an.");
 			return false;			

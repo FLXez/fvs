@@ -20,7 +20,6 @@ public class FahrplanDTO {
 		this.zielhaltestelleDTO = h;
 		this.uhrzeit = u;
 		this.verspaetung = v;
-		System.out.println(b.getNummer() + " " + h.getBezeichnung() + " " + u + " " + v);
 	}
 
 	public BuslinieDTO getBuslinieDTO() {
