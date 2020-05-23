@@ -48,7 +48,7 @@
 		</div>
 		<div id="div-body">
 			<h2 id="linienH">Liste aller Buslinien</h2>
-			<h:form id="addLine">
+			<h:form id="addLine" rendered="#{login.isNotMitarbeiter()}">
 				<table id="linienHT">
 					<tr>
 						<td><h:outputText style="font-weight: bold;"
