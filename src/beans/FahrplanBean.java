@@ -21,6 +21,7 @@ import dto.FahrplanDTO;
 import dto.FahrtDTO;
 import dto.HaltestelleDTO;
 import dto.LinienabfolgeDTO;
+import util.SessionUtils;
 
 @Named("fahrplanBean")
 @ApplicationScoped
@@ -93,6 +94,11 @@ public class FahrplanBean {
 	public List<HaltestelleDTO> getAllHaltestellen() {
 		return haltestelleDAO.getAll();
 	}
+	
+	public String forwardLinienabfolge(String bid) {
+		SessionUtils.getSession().setAttribute("bid", bid);
+		return "linienabfolge";
+	}
 
 	public void display() {
 		haltestelleDTO = haltestelleDAO.get(hid);
@@ -112,7 +118,7 @@ public class FahrplanBean {
 		uhrzeitHorizont = df.format(cal.getTime());
 	}
 
-	public List<FahrplanDTO> getFahrplan() {
+	public List<FahrplanDTO> fahrplanMethod() {
 		List<FahrplanDTO> fahrplanDTOs = new ArrayList<FahrplanDTO>();
 		List<FahrtDTO> allFahrtDTOs = new ArrayList<FahrtDTO>();
 		allFahrtDTOs = fahrtDAO.getAll();

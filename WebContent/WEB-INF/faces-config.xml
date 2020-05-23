@@ -52,5 +52,13 @@
             <to-view-id>/linienplan.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule> 
+    
+    <navigation-rule>
+        <from-view-id>/fahrplan.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>linienabfolge</from-outcome>
+            <to-view-id>/linienabfolge.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule> 
 
 </faces-config>
