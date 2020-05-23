@@ -13,6 +13,8 @@ public class BuslinieDTO implements Serializable {
 	private int nummer;
 	
 	private String richtung;
+	
+	private String richtungText;
 
 	private List<LinienabfolgeDTO> LinienabfolgeDTOs;
 
@@ -23,6 +25,11 @@ public class BuslinieDTO implements Serializable {
 		this.bid = buslinie.getBid();
 		this.nummer = buslinie.getNummer();
 		this.richtung = buslinie.getRichtung();
+		if(this.richtung.equals("H")) {
+			this.setRichtungText("Hinlinie");			
+		} else {
+			this.setRichtungText("Rücklinie");
+		}
 	}
 	
 	public Buslinie toEntity() {
@@ -65,6 +72,14 @@ public class BuslinieDTO implements Serializable {
 
 	public void setLinienabfolgeDTOs(List<LinienabfolgeDTO> linienabfolgeDTOs) {
 		LinienabfolgeDTOs = linienabfolgeDTOs;
+	}
+
+	public String getRichtungText() {
+		return richtungText;
+	}
+
+	public void setRichtungText(String richtungText) {
+		this.richtungText = richtungText;
 	}
 
 
