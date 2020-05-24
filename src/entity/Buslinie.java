@@ -6,7 +6,9 @@ import java.util.List;
 
 
 /**
- * The persistent class for the buslinie database table.
+ * JPA für Tabelle buslinie
+ * 
+ * @author Felix & Silas
  * 
  */
 @Entity

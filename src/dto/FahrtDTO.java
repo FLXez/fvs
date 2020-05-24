@@ -3,7 +3,12 @@ package dto;
 import java.io.Serializable;
 
 import entity.Fahrt;
-
+/**
+ * DTO für {@link Fahrt} = Viewmodel fürs Frontend
+ *
+ * @author Felix & Silas
+ *
+ */
 public class FahrtDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -27,7 +32,9 @@ public class FahrtDTO implements Serializable {
 		this.haltestelleSDTO = new HaltestelleDTO(fahrtEntity.getHaltestelleS());
 		this.setBuslinieDTO(new BuslinieDTO(fahrtEntity.getBuslinie()));
 	}
-	
+	/**
+	 * @return das DTO als Entity
+	 */
 	public Fahrt toEntity() {
 		Fahrt fahrt = new Fahrt();
 		

@@ -11,6 +11,13 @@ import dto.UserDTO;
 import util.NotificationUtils;
 import util.SessionUtils;
 
+/**
+ * 
+ * CDI-Bean für index.xhtml und registrierung.xhtml
+ *
+ * @author Felix & Silas
+ *
+ */
 @Named("editUser")
 @ApplicationScoped
 public class EditUserBean {
@@ -52,6 +59,9 @@ public class EditUserBean {
 		this.passwordC = passwordC;
 	}
 
+	/**
+	 * Registrierung eines Users
+	 */
 	public void register() {
 
 		if (!inputOkay("register")) {
@@ -70,6 +80,9 @@ public class EditUserBean {
 		userDTO = new UserDTO();
 	}
 
+	/**
+	 * Passwort Änderung
+	 */
 	public void changePassword() {
 
 		if (!inputOkay("changePassword")) {

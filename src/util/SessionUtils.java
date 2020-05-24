@@ -4,6 +4,12 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Hilfsklasse für Session
+ * 
+ * @author Felix & Silas
+ * 
+ */
 public class SessionUtils {
 
 	public static void invalidate() {

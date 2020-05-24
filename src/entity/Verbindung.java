@@ -6,7 +6,9 @@ import java.util.List;
 
 
 /**
- * The persistent class for the verbindung database table.
+ * JPA für Tabelle verbindung
+ * 
+ * @author Felix & Silas
  * 
  */
 @Entity

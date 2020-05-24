@@ -5,7 +5,9 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the haltestelle database table.
+ * JPA für Tabelle haltestelle
+ * 
+ * @author Felix & Silas
  * 
  */
 @Entity

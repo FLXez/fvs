@@ -10,7 +10,9 @@ import javax.persistence.NamedQuery;
 
 
 /**
- * The persistent class for the fahrt database table.
+ * JPA für Tabelle fahrt
+ * 
+ * @author Felix & Silas
  * 
  */
 @Entity

@@ -13,6 +13,14 @@ import dto.VerbindungDTO;
 import entity.Haltestelle;
 import util.NotificationUtils;
 
+/**
+ * 
+ * CDI-Bean für alte verbindung.xhtml
+ * @deprecated verbindungen werden über linienabfolge.xhtml erstellt
+ *
+ * @author Felix & Silas
+ *
+ */
 @Named("verbindungBean")
 @ApplicationScoped
 public class VerbindungBean {

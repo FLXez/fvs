@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 import entity.Verbindung;
 
+/**
+ * DTO für {@link Verbindung} = Viewmodel fürs Frontend
+ *
+ * @author Felix & Silas
+ *
+ */
 public class VerbindungDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +34,9 @@ public class VerbindungDTO implements Serializable {
 		this.haltestelleSDTO = new HaltestelleDTO(verbindungEntity.getHaltestelleS());
 
 	}
-	
+	/**
+	 * @return das DTO als Entity
+	 */
 	public Verbindung toEntity() {
 		Verbindung verbindung = new Verbindung();
 		

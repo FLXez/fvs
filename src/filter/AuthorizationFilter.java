@@ -12,6 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+/**
+ * Filter für Authorization
+ * Wird nicht in dem Maße verwendet, wie man es machen könnte.
+ * 
+ * @author Felix & Silas
+ * 
+ */
 @WebFilter(filterName = "AuthFilter", urlPatterns = { "*.xhtml" })
 public class AuthorizationFilter implements Filter {
 

@@ -13,6 +13,13 @@ import javax.persistence.Query;
 import dto.HaltestelleDTO;
 import entity.Haltestelle;
 
+/**
+ * 
+ * DAO für {@link Haltestelle} und {@link HaltestelleDTO}
+ *
+ * @author Felix & Silas
+ *
+ */
 @Stateless
 @LocalBean
 public class HaltestelleDAO implements DAO<Haltestelle, HaltestelleDTO> {
@@ -20,11 +27,17 @@ public class HaltestelleDAO implements DAO<Haltestelle, HaltestelleDTO> {
 	@PersistenceContext
 	EntityManager em;
 
+	/**
+	 * Haltestelle by ID
+	 */
 	@Override
 	public HaltestelleDTO get(int id) {		
 		return new HaltestelleDTO(em.find(Haltestelle.class, id));
 	}
 
+	/**
+	 * Alle Haltestellen
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<HaltestelleDTO> getAll() {		
@@ -38,6 +51,9 @@ public class HaltestelleDAO implements DAO<Haltestelle, HaltestelleDTO> {
 		return haltestelleDTOs;
 	}
 	
+	/**
+	 * Existiert die Haltestelle mit der Bezeichnung schon?
+	 */
 	public boolean existsByBezeichnung(String bezeichnung) {
 		Query q = em.createQuery("SELECT h.bezeichnung FROM Haltestelle h WHERE h.bezeichnung = '" + bezeichnung + "'");
 		try {

@@ -11,19 +11,29 @@ import javax.persistence.Query;
 
 import dto.LinienabfolgeDTO;
 import entity.Linienabfolge;
-
+/**
+ * 
+ * DAO für {@link Linienabfolge} und {@link LinienabfolgeDTO}
+ *
+ * @author Felix & Silas
+ *
+ */
 @Stateless
 @LocalBean
 public class LinienabfolgeDAO implements DAO<Linienabfolge, LinienabfolgeDTO> {
 
 	@PersistenceContext
 	EntityManager em;
-	
+	/**
+	 * Linienabfolge by ID
+	 */
 	@Override
 	public LinienabfolgeDTO get(int id) {
 		return new LinienabfolgeDTO(em.find(Linienabfolge.class, id));
 	}
-
+	/**
+	 * Linienabfolgen by BuslinieHin und BuslinieRück + Sortierung ASC/DESC
+	 */
 	@SuppressWarnings("unchecked")
 	public List<LinienabfolgeDTO> getByBuslinien(int bidh, int bidr, String sortierung) {
 		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.buslinieH.bid = '" + bidh + "' AND l.buslinieR.bid ='" + bidr + "' ORDER BY l.position " + sortierung + "");
@@ -35,7 +45,10 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge, LinienabfolgeDTO> {
 		
 		return linienabfolgeDTOs;
 	}
-	
+
+	/**
+	 * Linienabfolgen by BuslinieHin + Sortierung ASC/DESC
+	 */
 	@SuppressWarnings("unchecked")
 	public List<LinienabfolgeDTO> getByBuslinieH(int bidh, String sortierung) {
 		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.buslinieH.bid = '" + bidh + "' ORDER BY l.position " + sortierung + "");
@@ -48,6 +61,9 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge, LinienabfolgeDTO> {
 		return linienabfolgeDTOs;
 	}
 	
+	/**
+	 * Linienabfolgen by BuslinieRück + Sortierung ASC/DESC
+	 */
 	@SuppressWarnings("unchecked")
 	public List<LinienabfolgeDTO> getByBuslinieR(int bidr, String sortierung) {
 		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.buslinieR.bid = '" + bidr + "' ORDER BY l.position " + sortierung + "");
@@ -60,6 +76,9 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge, LinienabfolgeDTO> {
 		return linienabfolgeDTOs;
 	}
 	
+	/**
+	 * Linienabfolgen by HaltestelleStart ODER HaltestelleEnde + Sortierung ASC/DESC
+	 */
 	@SuppressWarnings("unchecked")
 	public List<LinienabfolgeDTO> getByHid(int hid, String sortierung) {
 		Query q = em.createQuery("SELECT l FROM Linienabfolge l WHERE l.verbindung.haltestelleS.hid = '" + hid + "' OR l.verbindung.haltestelleE.hid ='" + hid + "' GROUP BY l.buslinieH.bid, l.buslinieR.bid ORDER BY l.position " + sortierung + "");
@@ -72,6 +91,9 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge, LinienabfolgeDTO> {
 		return linienabfolgeDTOs;
 	}
 	
+	/**
+	 * Alle Linienabfolgen
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<LinienabfolgeDTO> getAll() {
@@ -85,6 +107,9 @@ public class LinienabfolgeDAO implements DAO<Linienabfolge, LinienabfolgeDTO> {
 		return linienabfolgeDTOs;
 	}
 
+	/**
+	 * Alle Linienabfolgen mit Sortierung
+	 */
 	@SuppressWarnings("unchecked")
 	public List<LinienabfolgeDTO> getAll(String sortierung) {
 		Query q = em.createQuery("SELECT l FROM Linienabfolge l ORDER BY l.position " + sortierung + "");

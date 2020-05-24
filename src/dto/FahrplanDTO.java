@@ -1,5 +1,12 @@
 package dto;
 
+/**
+ * Keinen direkten Entity Bezug
+ * Viewmodel wird nur in Fahrplan.xhtml benötigt
+ *
+ * @author Felix & Silas
+ *
+ */
 public class FahrplanDTO {
 	
 	BuslinieDTO buslinieDTO;
@@ -9,9 +16,6 @@ public class FahrplanDTO {
 	String uhrzeit;
 	
 	String verspaetung;
-	
-	String uhrzeitSort;
-	
 	
 	public FahrplanDTO() {
 		

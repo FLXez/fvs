@@ -13,6 +13,13 @@ import dto.BuslinieDTO;
 import util.NotificationUtils;
 import util.SessionUtils;
 
+/**
+ * 
+ * CDI-Bean für buslinie.xhtml
+ *
+ * @author Felix & Silas
+ *
+ */
 @Named("buslinieBean")
 @ApplicationScoped
 public class BuslinieBean {
@@ -39,16 +46,25 @@ public class BuslinieBean {
 		return buslinieDAO.getAll();
 	}
 
+	/**
+	 * Weiterleitung auf linienabfolge.xhtml
+	 */
 	public String forwardLinienabfolge(String bid) {
 		SessionUtils.getSession().setAttribute("bid", bid);
 		return "linienabfolge";
 	}
 
+	/**
+	 * Weiterleitung auf fahrt.xhtml
+	 */
 	public String forwardFahrt(String bid) {
 		SessionUtils.getSession().setAttribute("bid", bid);
 		return "fahrt";
 	}
 
+	/**
+	 * Hinzufügen einer Buslinie
+	 */
 	public void add() {
 
 		if (!inputOkay()) {

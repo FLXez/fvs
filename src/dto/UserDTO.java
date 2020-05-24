@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 import entity.User;
 
+/**
+ * DTO für {@link User} = Viewmodel fürs Frontend
+ *
+ * @author Felix & Silas
+ *
+ */
 public class UserDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -32,7 +38,9 @@ public class UserDTO implements Serializable {
 		this.vorname = userEntity.getVorname();
 		
 	}
-	
+	/**
+	 * @return das DTO als Entity
+	 */	
 	public User toEntity() {
 		User user = new User();
 		

@@ -13,6 +13,13 @@ import dto.HaltestelleDTO;
 import util.NotificationUtils;
 import util.SessionUtils;
 
+/**
+ * 
+ * CDI-Bean für haltestelle.xhtml
+ *
+ * @author Felix & Silas
+ *
+ */
 @Named("haltestelleBean")
 @ApplicationScoped
 public class HaltestelleBean {
@@ -43,11 +50,16 @@ public class HaltestelleBean {
 		return haltestelleDAO.get(id);
 	}
 	
+	/**
+	 * Weiterleitung auf linienhaltestellen.xhtml
+	 */
 	public String forwardLinienhaltestellen(String hid) {
 		SessionUtils.getSession().setAttribute("hid", hid);
 		return "linienhaltestellen";
 	}
-
+	/**
+	 * Hinzufügen von Haltestellen 
+	 */
 	public void add() {
 
 		if (!inputOkay()) {

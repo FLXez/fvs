@@ -12,6 +12,13 @@ import javax.persistence.Query;
 import dto.BuslinieDTO;
 import entity.Buslinie;
 
+/**
+ * 
+ * DAO für {@link Buslinie} und {@link BuslinieDTO}
+ *
+ * @author Felix & Silas
+ *
+ */
 @Stateless
 @LocalBean
 public class BuslinieDAO implements DAO<Buslinie, BuslinieDTO> {
@@ -19,11 +26,17 @@ public class BuslinieDAO implements DAO<Buslinie, BuslinieDTO> {
 	@PersistenceContext
 	EntityManager em;
 
+	/**
+	 * Buslinien by ID
+	 */
 	@Override
 	public BuslinieDTO get(int id) {
 		return new BuslinieDTO(em.find(Buslinie.class, id));
 	}
 
+	/**
+	 * Alle Buslinien
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<BuslinieDTO> getAll() {
@@ -37,6 +50,9 @@ public class BuslinieDAO implements DAO<Buslinie, BuslinieDTO> {
 		return buslinieDTOs;
 	}
 
+	/**
+	 * Buslinien by Nummer
+	 */
 	@SuppressWarnings("unchecked")
 	public List<BuslinieDTO> getByNummer(int nummer) {
 		Query q = em.createQuery("SELECT b FROM Buslinie b WHERE b.nummer='" + nummer + "' ORDER BY b.richtung ASC");
@@ -50,6 +66,9 @@ public class BuslinieDAO implements DAO<Buslinie, BuslinieDTO> {
 		return buslinieDTOs;
 	}
 
+	/**
+	 * Buslinie by Nummer und Richtung
+	 */
 	public BuslinieDTO getByNummerRichtung(int nummer, String richtung) {
 		Query q = em.createQuery(
 				"SELECT b FROM Buslinie b WHERE b.nummer= '" + nummer + "' AND b.richtung='" + richtung + "'",
@@ -58,6 +77,9 @@ public class BuslinieDAO implements DAO<Buslinie, BuslinieDTO> {
 		return new BuslinieDTO((Buslinie) q.getSingleResult());
 	}
 
+	/**
+	 * Gibt es die Nummer schon?
+	 */
 	@SuppressWarnings("unchecked")
 	public List<BuslinieDTO> existsByNummer(int nummer) {
 		Query q = em.createQuery("SELECT b.nummer FROM Buslinie b WHERE b.nummer= '" + nummer + "'");

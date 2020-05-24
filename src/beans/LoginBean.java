@@ -10,6 +10,13 @@ import dto.UserDTO;
 import util.NotificationUtils;
 import util.SessionUtils;
 
+/**
+ * 
+ * CDI-Bean für login.xhtml und logout Prozess
+ *
+ * @author Felix & Silas
+ *
+ */
 @Named("login")
 @ApplicationScoped
 public class LoginBean {
@@ -19,6 +26,7 @@ public class LoginBean {
 
 	UserDTO userDTO;
 
+	// init Methode um userDTO zu initialisieren
 	@PostConstruct
 	public void init() {
 		userDTO = new UserDTO();
@@ -32,6 +40,7 @@ public class LoginBean {
 		this.userDTO = userDTO;
 	}
 
+	// Abfrage ob angemeldeter User Manager ist
 	public boolean isManager() {
 		if(SessionUtils.getPrivilegien().equals("Manager")) {
 			return true;
@@ -40,6 +49,7 @@ public class LoginBean {
 		}
 	}
 
+	// Abfrage ob angemeldeter User Admin ist
 	public boolean isAdmin() {
 		if(SessionUtils.getPrivilegien().equals("Admin")) {
 			return true;
@@ -47,7 +57,8 @@ public class LoginBean {
 			return false;
 		}
 	}
-	
+
+	// Abfrage ob angemeldeter User was höherrangiges als Mitarbeiter ist
 	public boolean isNotMitarbeiter() {
 		if(SessionUtils.getPrivilegien().equals("Mitarbeiter")) {
 			return false;
@@ -57,8 +68,8 @@ public class LoginBean {
 	}
 	
 	/**
-	 * Eingaben werden validiert und Login-Prozess wird angestoßen Session wird ggf.
-	 * aufgebaut
+	 * Eingaben werden validiert und Login-Prozess wird angestoßen Session wird ggf. aufgebaut
+	 * Login
 	 */
 	public String validate() {
 		if (!userDAO.valid(userDTO)) {
@@ -79,7 +90,7 @@ public class LoginBean {
 	}
 
 	/**
-	 * Session wird zerstört
+	 * Session wird zerstört / Logout
 	 */
 	public String invalidate() {
 		NotificationUtils.showMessage(true, 0, "", SessionUtils.getEmail() + " hat sich abgemeldet.", "");

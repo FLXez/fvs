@@ -23,6 +23,13 @@ import dto.LinienabfolgeDTO;
 import util.NotificationUtils;
 import util.SessionUtils;
 
+/**
+ * 
+ * CDI-Bean für fahrt.xhtml
+ *
+ * @author Felix & Silas
+ *
+ */
 @Named("fahrtBean")
 @ApplicationScoped
 public class FahrtBean {
@@ -61,6 +68,9 @@ public class FahrtBean {
 	Pattern uP;
 	Matcher m;
 
+	/**
+	 * Initiales festlegen von Werten 
+	 */
 	@PostConstruct
 	public void init() {
 		uP = Pattern.compile("([0-1][0-9]|[2][0-3]):([0-5][0-9])");
@@ -77,6 +87,9 @@ public class FahrtBean {
 		feHaltestelleSDTOs = new ArrayList<HaltestelleDTO>();
 	}
 
+	/**
+	 * Reset / neuladen von Werten bei Seitenaufruf 
+	 */
 	public void onPageLoad() {
 		bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
 		BuslinieDTO buslinieDTO = buslinieDAO.get(bid);
@@ -130,6 +143,15 @@ public class FahrtBean {
 		return fahrtDAO.getByBuslinie(bid);
 	}
 
+	/**
+	 * Folgende zwei Methoden ermitteln alle möglichen Start- und Endhaltestellen
+	 * Umgekehrte Logik bei Rücklinie....
+	 * 
+	 * Während Hinlinie wie folgt fährt: sDTO1 -> eDTO1 = sDTO2 -> eDTO2
+	 * Fährt Rücklinie: eDTO2 -> sDTO2 = eDTO1 -> sDTO1
+	 * 
+	 * Deshalb mögliche sDTOs für eine Rücklinienfahrt = eDTOs und vice versa
+	 */
 	public List<HaltestelleDTO> getAllHaltestellenS() {
 		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
 		List<HaltestelleDTO> haltestelleDTOs = new ArrayList<HaltestelleDTO>();
@@ -168,6 +190,7 @@ public class FahrtBean {
 		return haltestelleDTOs;
 	}
 
+	// Fahrt wird hinzugefügt
 	public void add() {
 
 		if (!inputOkay()) {

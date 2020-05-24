@@ -5,7 +5,9 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the user database table.
+ * JPA für Tabelle user
+ * 
+ * @author Felix & Silas
  * 
  */
 @Entity

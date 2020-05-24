@@ -5,6 +5,12 @@ import java.util.List;
 
 import entity.Buslinie;
 
+/**
+ * DTO für {@link Buslinie} = Viewmodel fürs Frontend
+ *
+ * @author Felix & Silas
+ *
+ */
 public class BuslinieDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -14,13 +20,16 @@ public class BuslinieDTO implements Serializable {
 	
 	private String richtung;
 	
+	// Feld für ausgeschriebene Richtungsangabe fürs Frontend
 	private String richtungText;
 
 	private List<LinienabfolgeDTO> LinienabfolgeDTOs;
 
 	public BuslinieDTO() {
 	}
-	
+	/**
+	 * @return das DTO als Entity
+	 */
 	public BuslinieDTO(Buslinie buslinie) {
 		this.bid = buslinie.getBid();
 		this.nummer = buslinie.getNummer();

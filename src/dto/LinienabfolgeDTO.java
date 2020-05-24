@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 import entity.Linienabfolge;;
 
+/**
+ * DTO für {@link Linienabfolge} = Viewmodel fürs Frontend
+ *
+ * @author Felix & Silas
+ *
+ */
 public class LinienabfolgeDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -28,7 +34,9 @@ public class LinienabfolgeDTO implements Serializable {
 		this.buslinieRDTO = new BuslinieDTO(linienabfolgeEntity.getBuslinieR());
 		this.verbindungDTO = new VerbindungDTO(linienabfolgeEntity.getVerbindung());
 	}
-
+	/**
+	 * @return das DTO als Entity
+	 */
 	public Linienabfolge toEntity() {
 		Linienabfolge linienabfolge = new Linienabfolge();
 		

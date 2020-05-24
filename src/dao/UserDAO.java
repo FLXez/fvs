@@ -14,6 +14,13 @@ import javax.persistence.Query;
 import dto.UserDTO;
 import entity.User;
 
+/**
+ * 
+ * DAO für {@link User} und {@link UserDTO}
+ *
+ * @author Felix & Silas
+ *
+ */
 @Stateless
 @LocalBean
 public class UserDAO implements DAO<User, UserDTO> {
@@ -21,17 +28,26 @@ public class UserDAO implements DAO<User, UserDTO> {
 	@PersistenceContext
 	EntityManager em;
     
+	/**
+	 * User by ID
+	 */
 	@Override
 	public UserDTO get(int id) {		
 		return new UserDTO(em.find(User.class, id));		
 	}
 
+	/**
+	 * User über die Email ermitteln
+	 */
 	public UserDTO getByEmail(String email) {		
 		Query q = em.createNativeQuery("SELECT u.email, u.uid, u.privilegien, u.vorname, u.name FROM User u WHERE u.email = '" + email + "'", User.class);
 		
 		return new UserDTO((User) q.getSingleResult());
 	}
 	
+	/**
+	 * Existiert ein user mit der Email?
+	 */
 	public boolean existsByEmail(String email) {
 		Query q = em.createQuery("SELECT u.email FROM User u WHERE u.email = '" + email + "'");
 		try {
@@ -43,6 +59,9 @@ public class UserDAO implements DAO<User, UserDTO> {
 		}
 	}
 	
+	/**
+	 * Alle User
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<UserDTO> getAll() {
@@ -73,6 +92,9 @@ public class UserDAO implements DAO<User, UserDTO> {
 		em.remove(userDTO.toEntity());	
 	}
 	
+	/**
+	 * Usereingaben gültig? Passwort + Email - Login Prozess
+	 */
 	public boolean valid(UserDTO userDTO) {		
 		Query q = em.createQuery("SELECT u.email, u.passwort FROM User u WHERE u.email = '" + userDTO.getEmail() + "' and u.passwort = '" + userDTO.getPasswort() +"'");
 		try {

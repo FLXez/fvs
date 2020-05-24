@@ -19,7 +19,13 @@ import dto.LinienabfolgeDTO;
 import dto.VerbindungDTO;
 import util.NotificationUtils;
 import util.SessionUtils;
-
+/**
+ * 
+ * CDI-Bean für linienabfolge.xhtml
+ *
+ * @author Felix & Silas
+ *
+ */
 @Named("linienabfolgeBean")
 @ApplicationScoped
 public class LinienabfolgeBean {
@@ -50,6 +56,9 @@ public class LinienabfolgeBean {
 
 	int dauer;
 
+	/**
+	 * Initialisieren von Werten
+	 */
 	@PostConstruct
 	public void init() {
 		linienabfolge = new LinienabfolgeDTO();
@@ -65,6 +74,11 @@ public class LinienabfolgeBean {
 		verbindungDTO = new VerbindungDTO();
 	}
 
+	/**
+	 * Reset / Set von für die Verarbeitung wichtige Werte
+	 * bei Seitenaufruf 
+	 *
+	 */
 	public void onPageLoad() {
 		linienabfolge = new LinienabfolgeDTO();
 		bid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("bid"));
@@ -135,6 +149,7 @@ public class LinienabfolgeBean {
 		return linienabfolgeDAO.getAll();
 	}
 
+	// Überprüfung ob Hinlinie oder Rücklinie, je nachdem die Linienabfolge anders sortieren
 	public List<LinienabfolgeDTO> getAllLinienabfolgenBid() {
 		if (bid == buslinieHDTO.getBid()) {
 			return linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC");
@@ -143,6 +158,11 @@ public class LinienabfolgeBean {
 		}
 	}
 
+	/**
+	 * - Hinzufügen eines Linienabfolgeelements
+	 * - Eingabenprüfung
+	 * - Hinzufügen des Elements entweder am Anfang oder Ende der vorhandenen Linienabfolge
+	 */
 	public void add() {
 		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
 		linienabfolgeDTOs = linienabfolgeDAO.getByBuslinien(buslinieHDTO.getBid(), buslinieRDTO.getBid(), "ASC");
@@ -158,6 +178,8 @@ public class LinienabfolgeBean {
 			return;
 		}
 
+		// wenn es sich um eine Hinlinie handelt, dann Postion des Elements = Position Letztes Element +1
+		// Andernfalls Position des Elements = Position Erstes Element -1
 		if (bid == buslinieHDTO.getBid()) {
 			hAdd(linienabfolgeDTOs);
 		} else {
@@ -349,6 +371,8 @@ public class LinienabfolgeBean {
 		}
 	}
 
+	// Überprüfung ob Verbindung zwischen den Haltestellen in der Richtung schon exisitert
+	// Wenn ja, dann KEIH neues Element erzeugen.
 	private void checkVerbindung(VerbindungDTO v) {
 		if (!verbindungDAO.existsByHaltestellen(v.getHaltestelleSDTO().getHid(),
 				v.getHaltestelleEDTO().getHid())) {

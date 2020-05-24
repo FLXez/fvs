@@ -5,7 +5,9 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the linienabfolge database table.
+ * JPA für Tabelle linienabfolge
+ * 
+ * @author Felix & Silas
  * 
  */
 @Entity

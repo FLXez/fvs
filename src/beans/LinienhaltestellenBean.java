@@ -15,6 +15,13 @@ import dto.HaltestelleDTO;
 import dto.LinienabfolgeDTO;
 import util.SessionUtils;
 
+/**
+ * 
+ * CDI-Bean für linienhaltestellen.xhtml
+ *
+ * @author Felix & Silas
+ *
+ */
 @Named("linienhaltestellenBean")
 @ApplicationScoped
 public class LinienhaltestellenBean {
@@ -30,6 +37,7 @@ public class LinienhaltestellenBean {
 	
 	int hid;
 
+	// Initialisieren und Setzen von wichtigen Werten
 	@PostConstruct
 	public void init() {
 		haltestelleDTO = new HaltestelleDTO();
@@ -37,12 +45,14 @@ public class LinienhaltestellenBean {
 		haltestelleDTO = haltestelleDAO.get(hid);
 	}
 
+	// Bei Seitenaufruf Daten neusetzen
 	public void onPageLoad() {
 		haltestelleDTO = new HaltestelleDTO();
 		hid = Integer.parseInt((String) SessionUtils.getSession().getAttribute("hid"));
 		haltestelleDTO = haltestelleDAO.get(hid);
 	}
 	
+	// Weiterleitung auf den Linienplan
 	public String forwardLinienplan(int bid, int hid) {
 		SessionUtils.getSession().setAttribute("bid", bid);
 		SessionUtils.getSession().setAttribute("hid", hid);
@@ -57,6 +67,8 @@ public class LinienhaltestellenBean {
 		this.haltestelleDTO = haltestelleDTO;
 	}
 
+	// Alle Buslinnien ermitteln, die die Haltestelle in ihrer
+	// Linienabfolge beinhalten
 	public List<BuslinieDTO> getAllByHid() {
 		List<LinienabfolgeDTO> linienabfolgeDTOs = new ArrayList<LinienabfolgeDTO>();
 		linienabfolgeDTOs = linienabfolgeDAO.getByHid(haltestelleDTO.getHid(), "ASC");

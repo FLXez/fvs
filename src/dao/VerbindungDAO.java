@@ -14,6 +14,13 @@ import dto.VerbindungDTO;
 import entity.Verbindung;
 
 
+/**
+ * 
+ * DAO für {@link Verbindung} und {@link VerbindungDTO}
+ *
+ * @author Felix & Silas
+ *
+ */
 @Stateless
 @LocalBean
 public class VerbindungDAO implements DAO<Verbindung, VerbindungDTO> {
@@ -21,11 +28,17 @@ public class VerbindungDAO implements DAO<Verbindung, VerbindungDTO> {
 	@PersistenceContext
 	EntityManager em;
 	
+	/**
+	 * Verbindung by ID
+	 */
 	@Override
 	public VerbindungDTO get(int id) {
 		return new VerbindungDTO(em.find(Verbindung.class, id));
 	}
-	
+
+	/**
+	 * Alle Verbindungen
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<VerbindungDTO> getAll() {
@@ -39,16 +52,25 @@ public class VerbindungDAO implements DAO<Verbindung, VerbindungDTO> {
 		return verbindungDTOs;	
 	}
 	
+	/**
+	 * Verbindung by starthaltestelle
+	 * @deprecated nur in VerbindungBean genutzt
+	 */	
 	public VerbindungDTO getByHaltestelleS(int hidS) {
 		Query q = em.createQuery("SELECT v FROM Verbindung v WHERE v.haltestelleS.hid = '" + hidS + "' AND v.haltestelleE.hid = NULL", Verbindung.class);
 		return new VerbindungDTO((Verbindung) q.getSingleResult());
 	}
-
+	/**
+	 * Verbindung by Haltestellen
+	 */
 	public VerbindungDTO getByHaltestellen(int hidS, int hidE) {
 		Query q = em.createQuery("SELECT v FROM Verbindung v WHERE v.haltestelleS.hid = '" + hidS + "' AND v.haltestelleE.hid = '" + hidE + "'", Verbindung.class);
 		return new VerbindungDTO((Verbindung) q.getSingleResult());
 	}
 	
+	/**
+	 * Existiert die Verbindung mit den Haltestellen?
+	 */
 	public boolean existsByHaltestellen(int hidS, int hidE) {
 		Query q = em.createQuery("SELECT v.haltestelleS.hid , v.haltestelleE.hid FROM Verbindung v WHERE v.haltestelleS.hid = '" + hidS + "' AND v.haltestelleE.hid = '" + hidE + "'");
 		try {

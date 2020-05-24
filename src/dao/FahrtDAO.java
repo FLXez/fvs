@@ -11,7 +11,13 @@ import javax.persistence.Query;
 
 import dto.FahrtDTO;
 import entity.Fahrt;
-
+/**
+ * 
+ * DAO für {@link Fahrt} und {@link FahrtDTO}
+ *
+ * @author Felix & Silas
+ *
+ */
 @Stateless
 @LocalBean
 public class FahrtDAO implements DAO<Fahrt, FahrtDTO> {
@@ -19,11 +25,17 @@ public class FahrtDAO implements DAO<Fahrt, FahrtDTO> {
 	@PersistenceContext
 	EntityManager em;
 	
+	/**
+	 * Fahrt by ID
+	 */
 	@Override
 	public FahrtDTO get(int id) {
 		return new FahrtDTO(em.find(Fahrt.class, id));
 	}
 
+	/**
+	 * Fahrten by Buslinie
+	 */
 	@SuppressWarnings("unchecked")
 	public List<FahrtDTO> getByBuslinie(int bid) {
 		Query q = em.createQuery("SELECT f FROM Fahrt f WHERE f.buslinie.bid ='" + bid +"' ORDER BY f.uhrzeit ASC");
@@ -36,6 +48,9 @@ public class FahrtDAO implements DAO<Fahrt, FahrtDTO> {
 		return fahrtDTOs;
 	}
 	
+	/**
+	 * Alle Fahrten
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<FahrtDTO> getAll() {
