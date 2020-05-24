@@ -39,7 +39,7 @@ public class UserDTO implements Serializable {
 		
 	}
 	/**
-	 * @return das DTO als Entity
+	 * @return {@link UserDTO} als {@link User}
 	 */	
 	public User toEntity() {
 		User user = new User();

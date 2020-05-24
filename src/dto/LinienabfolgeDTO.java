@@ -35,7 +35,7 @@ public class LinienabfolgeDTO implements Serializable {
 		this.verbindungDTO = new VerbindungDTO(linienabfolgeEntity.getVerbindung());
 	}
 	/**
-	 * @return das DTO als Entity
+	 * @return {@link LinienabfolgeDTO} als {@link Linienabfolge}
 	 */
 	public Linienabfolge toEntity() {
 		Linienabfolge linienabfolge = new Linienabfolge();

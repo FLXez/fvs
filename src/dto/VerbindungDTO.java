@@ -35,7 +35,7 @@ public class VerbindungDTO implements Serializable {
 
 	}
 	/**
-	 * @return das DTO als Entity
+	 * @return {@link VerbindungDTO} als {@link Verbindung}
 	 */
 	public Verbindung toEntity() {
 		Verbindung verbindung = new Verbindung();

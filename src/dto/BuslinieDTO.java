@@ -28,7 +28,7 @@ public class BuslinieDTO implements Serializable {
 	public BuslinieDTO() {
 	}
 	/**
-	 * @return das DTO als Entity
+	 * @return {@link Buslinie} als {@link BuslinieDTO}
 	 */
 	public BuslinieDTO(Buslinie buslinie) {
 		this.bid = buslinie.getBid();

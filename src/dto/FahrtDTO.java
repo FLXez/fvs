@@ -33,7 +33,7 @@ public class FahrtDTO implements Serializable {
 		this.setBuslinieDTO(new BuslinieDTO(fahrtEntity.getBuslinie()));
 	}
 	/**
-	 * @return das DTO als Entity
+	 * @return {@link FahrtDTO} als {@link Fahrt}
 	 */
 	public Fahrt toEntity() {
 		Fahrt fahrt = new Fahrt();

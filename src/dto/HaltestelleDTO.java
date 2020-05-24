@@ -27,7 +27,7 @@ public class HaltestelleDTO implements Serializable {
 		
 	}
 	/**
-	 * @return das DTO als Entity
+	 * @return {@link HaltestelleDTO} als {@link Haltestelle}
 	 */
 	public Haltestelle toEntity() {
 		Haltestelle haltestelle = new Haltestelle();
