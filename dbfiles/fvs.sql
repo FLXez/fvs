@@ -23,7 +23,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `buslinie`
+-- Tabellenstruktur fï¿½r Tabelle `buslinie`
 --
 
 CREATE TABLE `buslinie` (
@@ -33,7 +33,7 @@ CREATE TABLE `buslinie` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `buslinie`
+-- Daten fï¿½r Tabelle `buslinie`
 --
 
 INSERT INTO `buslinie` (`bid`, `nummer`, `Richtung`) VALUES
@@ -57,7 +57,7 @@ INSERT INTO `buslinie` (`bid`, `nummer`, `Richtung`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `fahrt`
+-- Tabellenstruktur fï¿½r Tabelle `fahrt`
 --
 
 CREATE TABLE `fahrt` (
@@ -69,7 +69,7 @@ CREATE TABLE `fahrt` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `fahrt`
+-- Daten fï¿½r Tabelle `fahrt`
 --
 
 INSERT INTO `fahrt` (`fid`, `bid`, `hidS`, `hidE`, `uhrzeit`) VALUES
@@ -96,7 +96,7 @@ INSERT INTO `fahrt` (`fid`, `bid`, `hidS`, `hidE`, `uhrzeit`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `haltestelle`
+-- Tabellenstruktur fï¿½r Tabelle `haltestelle`
 --
 
 CREATE TABLE `haltestelle` (
@@ -105,7 +105,7 @@ CREATE TABLE `haltestelle` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `haltestelle`
+-- Daten fï¿½r Tabelle `haltestelle`
 --
 
 INSERT INTO `haltestelle` (`hid`, `bezeichnung`) VALUES
@@ -123,7 +123,7 @@ INSERT INTO `haltestelle` (`hid`, `bezeichnung`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `linienabfolge`
+-- Tabellenstruktur fï¿½r Tabelle `linienabfolge`
 --
 
 CREATE TABLE `linienabfolge` (
@@ -135,7 +135,7 @@ CREATE TABLE `linienabfolge` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `linienabfolge`
+-- Daten fï¿½r Tabelle `linienabfolge`
 --
 
 INSERT INTO `linienabfolge` (`lid`, `bidh`, `bidr`, `vid`, `position`) VALUES
@@ -161,7 +161,7 @@ INSERT INTO `linienabfolge` (`lid`, `bidh`, `bidr`, `vid`, `position`) VALUES
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `user`
+-- Tabellenstruktur fï¿½r Tabelle `user`
 --
 
 CREATE TABLE `user` (
@@ -174,18 +174,18 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `user`
+-- Daten fï¿½r Tabelle `user`
 --
 
 INSERT INTO `user` (`uid`, `vorname`, `name`, `email`, `passwort`, `privilegien`) VALUES
-(1, 'Admin', 'Admin', 'admin@admin.it', '', 'Admin'),
+(1, 'Admin', 'Admin', 'admin@admin.it', 'admin', 'Admin'),
 (2, 'Manager', 'Test', 'manager@test.fvs', 'manager', 'Manager'),
 (3, 'Mitarbeiter', 'Test', 'mitarbeiter@test.fvs', 'mitarbeiter', 'Mitarbeiter');
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `verbindung`
+-- Tabellenstruktur fï¿½r Tabelle `verbindung`
 --
 
 CREATE TABLE `verbindung` (
@@ -196,7 +196,7 @@ CREATE TABLE `verbindung` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Daten für Tabelle `verbindung`
+-- Daten fï¿½r Tabelle `verbindung`
 --
 
 INSERT INTO `verbindung` (`vid`, `hidS`, `hidE`, `dauer`) VALUES
@@ -223,13 +223,13 @@ INSERT INTO `verbindung` (`vid`, `hidS`, `hidE`, `dauer`) VALUES
 --
 
 --
--- Indizes für die Tabelle `buslinie`
+-- Indizes fï¿½r die Tabelle `buslinie`
 --
 ALTER TABLE `buslinie`
   ADD PRIMARY KEY (`bid`);
 
 --
--- Indizes für die Tabelle `fahrt`
+-- Indizes fï¿½r die Tabelle `fahrt`
 --
 ALTER TABLE `fahrt`
   ADD PRIMARY KEY (`fid`),
@@ -238,13 +238,13 @@ ALTER TABLE `fahrt`
   ADD KEY `fkey_f_hide` (`hidE`);
 
 --
--- Indizes für die Tabelle `haltestelle`
+-- Indizes fï¿½r die Tabelle `haltestelle`
 --
 ALTER TABLE `haltestelle`
   ADD PRIMARY KEY (`hid`);
 
 --
--- Indizes für die Tabelle `linienabfolge`
+-- Indizes fï¿½r die Tabelle `linienabfolge`
 --
 ALTER TABLE `linienabfolge`
   ADD PRIMARY KEY (`lid`),
@@ -253,14 +253,14 @@ ALTER TABLE `linienabfolge`
   ADD KEY `fkey_l_bidr` (`bidr`);
 
 --
--- Indizes für die Tabelle `user`
+-- Indizes fï¿½r die Tabelle `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`uid`),
   ADD UNIQUE KEY `email` (`email`);
 
 --
--- Indizes für die Tabelle `verbindung`
+-- Indizes fï¿½r die Tabelle `verbindung`
 --
 ALTER TABLE `verbindung`
   ADD PRIMARY KEY (`vid`),
@@ -268,36 +268,36 @@ ALTER TABLE `verbindung`
   ADD KEY `fkey_v_hide` (`hidE`);
 
 --
--- AUTO_INCREMENT für exportierte Tabellen
+-- AUTO_INCREMENT fï¿½r exportierte Tabellen
 --
 
 --
--- AUTO_INCREMENT für Tabelle `buslinie`
+-- AUTO_INCREMENT fï¿½r Tabelle `buslinie`
 --
 ALTER TABLE `buslinie`
   MODIFY `bid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
--- AUTO_INCREMENT für Tabelle `fahrt`
+-- AUTO_INCREMENT fï¿½r Tabelle `fahrt`
 --
 ALTER TABLE `fahrt`
   MODIFY `fid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
--- AUTO_INCREMENT für Tabelle `haltestelle`
+-- AUTO_INCREMENT fï¿½r Tabelle `haltestelle`
 --
 ALTER TABLE `haltestelle`
   MODIFY `hid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
--- AUTO_INCREMENT für Tabelle `linienabfolge`
+-- AUTO_INCREMENT fï¿½r Tabelle `linienabfolge`
 --
 ALTER TABLE `linienabfolge`
   MODIFY `lid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
--- AUTO_INCREMENT für Tabelle `user`
+-- AUTO_INCREMENT fï¿½r Tabelle `user`
 --
 ALTER TABLE `user`
   MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT für Tabelle `verbindung`
+-- AUTO_INCREMENT fï¿½r Tabelle `verbindung`
 --
 ALTER TABLE `verbindung`
   MODIFY `vid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
