@@ -17,11 +17,13 @@
 			</p>
 			<hr noshade="noshade" size="5"
 				style="width: 100%; text-align: center;" />
-			<p>
-				<a href="./registrieren.xhtml">Nutzer registrieren</a>
-			</p>
-			<hr noshade="noshade" size="5"
-				style="width: 100%; text-align: center;" />
+			<h:panelGroup layout="block" rendered="#{login.isNotMitarbeiter()}">
+				<p>
+					<a href="./registrieren.xhtml">Nutzer registrieren</a>
+				</p>
+				<hr noshade="noshade" size="5"
+					style="width: 100%; text-align: center;" />
+			</h:panelGroup>
 			<p>
 				<a href="./fahrplan.xhtml">Fahrplan</a>
 			</p>
