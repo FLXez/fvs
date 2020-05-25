@@ -44,7 +44,7 @@ public class AuthorizationFilter implements Filter {
 			if (reqURI.indexOf("/login.xhtml") >= 0
 					|| (session != null && session.getAttribute("privilegien").equals("Admin"))
 					|| (session != null && session.getAttribute("privilegien").equals("Manager"))
-					|| (session != null && session.getAttribute("privilegien").equals("Mitarbeiter") && reqURI.indexOf("/mitarbeiter/") >= 0)			
+					|| (session != null && session.getAttribute("privilegien").equals("Mitarbeiter"))			
 					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/buslinien.xhtml") >= 0)
 					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/fahrplan.xhtml") >= 0)
 					|| (session != null && session.getAttribute("privilegien") != null && reqURI.indexOf("/fahrt.xhtml") >= 0)
